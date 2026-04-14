@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICON LABS — Coming Soon</title>
+<meta name="description" content="ICON LABS builds AI systems, scalable platforms and automated workflows. Coming Soon — La magie opère.">
+<meta property="og:title" content="ICON LABS — Coming Soon">
+<meta property="og:description" content="Una révolution AI en cours. Coming Soon.">
+<meta property="og:image" content="logo.png">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0B0B0B;
+  --white:#FFFFFF;
+  --blue:#2563EB;
+  --purple:#7C3AED;
+  --green:#10B981;
+  --g1:#141414;
+  --g2:#1A1A1A;
+  --g3:#242424;
+  --g4:#444;
+  --g5:#777;
+  --g6:#AAAAAA;
+  --g7:#DDDDDD;
+}
+
+html{
+  font-size:16px;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'DM Mono',monospace;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+img{
+  display:block;
+  max-width:100%;
+  height:auto;
+}
+
+/* BACKGROUND DECORATIVE */
+body::before{
+  content:'';
+  position:fixed;
+  top:-200px;
+  right:-200px;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle,rgba(37,99,235,0.06) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+  border-radius:50%;
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  bottom:-250px;
+  left:-150px;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,rgba(124,58,237,0.04) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+  border-radius:50%;
+}
+
+/* HERO SECTION */
+.coming-soon-container{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:48px 24px;
+  text-align:center;
+  gap:56px;
+}
+
+/* LOGO */
+.logo-wrap{
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUpDelay1 .8s ease forwards;
+}
+
+.logo-wrap img{
+  width:120px;
+  height:auto;
+  filter:invert(1);
+  margin:0 auto;
+}
+
+/* CONTENT WRAP */
+.content-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+  max-width:700px;
+  margin:0 auto;
+}
+
+/* COMING SOON TITLE */
+.coming-soon-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,12vw,120px);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-2px;
+  color:var(--white);
+  margin:0;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUpDelay2 .8s ease forwards;
+}
+
+/* TAGLINE "LA MAGIE OPÈRE" */
+.tagline{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(18px,3vw,32px);
+  font-weight:600;
+  letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--purple) 50%,var(--green) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin:0;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUpDelay3 .8s ease forwards;
+}
+
+/* DESCRIPTION */
+.description{
+  font-size:clamp(13px,2vw,16px);
+  color:var(--g6);
+  line-height:1.8;
+  max-width:520px;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUpDelay4 .8s ease forwards;
+}
+
+/* NEWSLETTER FORM */
+.newsletter-form{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:450px;
+  gap:16px;
+  margin-top:24px;
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeUpDelay5 .8s ease forwards;
+}
+
+.form-group{
+  display:flex;
+  gap:8px;
+  width:100%;
+}
+
+.form-group input{
+  flex:1;
+  padding:14px 16px;
+  background:var(--g1);
+  border:1px solid var(--g3);
+  color:var(--white);
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.5px;
+  outline:none;
+  transition:all .3s ease;
+}
+
+.form-group input:focus{
+  border-color:var(--blue);
+  background:var(--g2);
+  box-shadow:0 0 0 2px rgba(37,99,235,0.1);
+}
+
+.form-group input::placeholder{
+  color:var(--g4);
+}
+
+.form-group button{
+  padding:14px 28px;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--purple) 100%);
+  color:var(--white);
+  border:none;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .3s ease;
+  white-space:nowrap;
+}
+
+.form-group button:hover{
+  opacity:.9;
+  transform:translateY(-2px);
+}
+
+.form-group button:active{
+  transform:translateY(0);
+}
+
+/* CONFIRMATION MESSAGE */
+.form-message{
+  font-size:12px;
+  letter-spacing:1px;
+  text-align:center;
+  min-height:20px;
+  color:var(--green);
+  opacity:0;
+  transition:opacity .3s ease;
+}
+
+.form-message.success{
+  opacity:1;
+}
+
+.form-message.error{
+  color:#EF4444;
+}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{
+  position:absolute;
+  bottom:40px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--g4);
+  text-transform:uppercase;
+  animation:float 3s ease-in-out infinite;
+  opacity:.6;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0px)}
+  50%{transform:translateY(8px)}
+}
+
+/* ANIMATIONS */
+@keyframes fadeUpDelay1{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+  animation-delay:.1s;
+}
+
+@keyframes fadeUpDelay2{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUpDelay3{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUpDelay4{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUpDelay5{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* SCROLL-TRIGGERED ANIMATIONS */
+.fade-in-up{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+
+.fade-in-up.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE DESIGN */
+@media(max-width:768px){
+  .coming-soon-container{
+    padding:40px 20px;
+    gap:40px;
+  }
+
+  .logo-wrap img{
+    width:90px;
+  }
+
+  .coming-soon-title{
+    font-size:clamp(40px,10vw,80px);
+    letter-spacing:-1px;
+  }
+
+  .tagline{
+    font-size:clamp(16px,2.5vw,26px);
+  }
+
+  .description{
+    font-size:clamp(12px,1.8vw,14px);
+  }
+
+  .form-group{
+    flex-direction:column;
+  }
+
+  .form-group input,
+  .form-group button{
+    width:100%;
+  }
+}
+
+@media(max-width:480px){
+  .coming-soon-container{
+    padding:24px 16px;
+    gap:32px;
+  }
+
+  .logo-wrap img{
+    width:70px;
+  }
+
+  .coming-soon-title{
+    font-size:36px;
+    letter-spacing:-0.5px;
+  }
+
+  .tagline{
+    font-size:18px;
+  }
+
+  .description{
+    font-size:12px;
+  }
+
+  .scroll-indicator{
+    display:none;
+  }
+}
+
+/* ACCESSIBILITY */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="coming-soon-container">
+  
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <img src="logo.png" alt="Icon Labs Logo">
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content-wrap">
+    
+    <!-- TITLE -->
+    <h1 class="coming-soon-title">Coming Soon</h1>
+
+    <!-- TAGLINE WITH GRADIENT -->
+    <p class="tagline">La magie opère</p>
+
+    <!-- DESCRIPTION -->
+    <p class="description">
+      ICON LABS construit des systèmes IA, des plateformes scalables et des workflows automatisés pour les startups et entreprises en croissance. Quelque chose d'extraordinaire arrive.
+    </p>
+
+    <!-- NEWSLETTER FORM -->
+    <form class="newsletter-form" id="newsletterForm">
+      <div class="form-group">
+        <input 
+          type="email" 
+          id="emailInput" 
+          placeholder="Votre email"
+          required
+          aria-label="Adresse email"
+        >
+        <button type="submit" aria-label="S'inscrire à la newsletter">
+          S'inscrire
+        </button>
+      </div>
+      <div class="form-message" id="formMessage"></div>
+    </form>
+
+  </div>
+
+  <!-- SCROLL INDICATOR -->
+  <div class="scroll-indicator">↓ Scroll</div>
+
+</div>
+
+<script>
+// INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
+const observerOptions = {
+  threshold:0.1,
+  rootMargin:'0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Observe all fade-in-up elements
+document.querySelectorAll('.fade-in-up').forEach(el => {
+  observer.observe(el);
+});
+
+// NEWSLETTER FORM HANDLING
+const form = document.getElementById('newsletterForm');
+const emailInput = document.getElementById('emailInput');
+const formMessage = document.getElementById('formMessage');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const email = emailInput.value.trim();
+  
+  // Simple email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if(!emailRegex.test(email)){
+    formMessage.textContent = '❌ Veuillez entrer un email valide';
+    formMessage.classList.remove('success');
+    formMessage.classList.add('error');
+    return;
+  }
+  
+  // Simulate success / store in localStorage for MVP
+  try{
+    let emails = JSON.parse(localStorage.getItem('iconLabsEmails') || '[]');
+    if(!emails.includes(email)){
+      emails.push(email);
+      localStorage.setItem('iconLabsEmails', JSON.stringify(emails));
+    }
+    
+    formMessage.textContent = '✓ Merci ! La magie commence...';
+    formMessage.classList.remove('error');
+    formMessage.classList.add('success');
+    
+    // Reset form
+    setTimeout(() => {
+      emailInput.value = '';
+      formMessage.textContent = '';
+      formMessage.classList.remove('success');
+    }, 3000);
+    
+    console.log('Newsletter signup:', email);
+    console.log('Total signups:', emails.length);
+  } catch(err){
+    console.error('Error saving email:', err);
+    formMessage.textContent = '⚠ Erreur. Veuillez réessayer.';
+    formMessage.classList.add('error');
+  }
+});
+
+// FADE-IN ANIMATIONS ON PAGE LOAD (already handled by CSS animations)
+// Additional: log page load for analytics
+console.log('🎨 Icon Labs Coming Soon — La magie opère');
+</script>
+
+</body>
+</html>
