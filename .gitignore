@@ -3,13 +3,17 @@ node_modules/
 .output/
 .data/
 dist/
-tasks/
 *.log
+.DS_Store
+
+# Secrets — .env.example reste suivi, il ne contient que des noms de variables
 .env
 .env.*
 !.env.example
-.DS_Store
 
 # tasks/ -> lien symbolique vers le coffre central (jamais commité)
 tasks
-.vercel/
+tasks/
+
+# Lien local vers le projet Vercel (projectId/orgId, jeton OIDC)
+.vercel
