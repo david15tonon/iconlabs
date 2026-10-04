@@ -1,0 +1,14 @@
+{
+  "name": "Icon Labs",
+  "short_name": "Icon Labs",
+  "description": "Studio d'ingénierie créative — Afrique de l'Ouest.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F1EC",
+  "theme_color": "#F4F1EC",
+  "icons": [
+    { "src": "/brand/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/brand/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/brand/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ]
+}

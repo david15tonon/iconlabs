@@ -1,0 +1,15 @@
+node_modules/
+.nuxt/
+.output/
+.data/
+dist/
+tasks/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# tasks/ -> lien symbolique vers le coffre central (jamais commité)
+tasks
+.vercel/

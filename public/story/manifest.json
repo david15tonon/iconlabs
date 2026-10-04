@@ -1,0 +1,37 @@
+{
+  "pattern": "/story/frame-%04d.webp",
+  "count": 135,
+  "width": 1280,
+  "height": 720,
+  "poster": "/story/poster.jpg",
+  "totalBytes": 607576,
+  "beats": [
+    {
+      "id": "opening",
+      "from": 0,
+      "to": 29
+    },
+    {
+      "id": "transition-a",
+      "from": 30,
+      "to": 54
+    },
+    {
+      "id": "craft",
+      "from": 55,
+      "to": 89
+    },
+    {
+      "id": "transition-b",
+      "from": 90,
+      "to": 109
+    },
+    {
+      "id": "ship",
+      "from": 110,
+      "to": 134
+    }
+  ],
+  "source": "placeholder-vector",
+  "generatedAt": "2026-10-01"
+}

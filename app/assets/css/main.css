@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Icon Labs — tokens de design
+   Source unique : BRAND.md, à la racine du dépôt. Chaque valeur ci-dessous y
+   est justifiée et ses contrastes y sont mesurés. Aucune couleur, aucune
+   police, aucune mesure de colonne ne s'écrit ailleurs que dans ce fichier.
+   ========================================================================== */
+
+:root {
+  /* — Papier, encre, signal —
+     Deux pôles et une couleur signature. Depuis le 2 octobre 2026 le papier
+     est le sol : le site se lit en clair, l'encre n'est plus un fond mais une
+     marque. Les noms n'ont pas changé de sens, ils ont changé de rôle —
+     « encre » désigne ce qui s'écrit, « papier » ce sur quoi on écrit.      */
+  --paper:       #F4F1EC;  /* le sol : fond général, chaud                   */
+  --paper-raise: #FFFFFF;  /* l'élément blanc : bandes et cartes surélevées  */
+  --paper-line:  #CBC6BE;  /* bordure affirmée, au survol                    */
+
+  --ink:      #0B0B0B;  /* titres, texte sur aplat signal  (17,47 / papier)  */
+  --ink-soft: #2A2621;  /* texte courant                   (13,34 / papier)  */
+  --ink-mute: #6A635B;  /* texte secondaire                 (5,25 / papier)  */
+
+  --signal:      #F2360A;  /* vermillon — aplats pleins, filets, barres      */
+  --signal-deep: #C62A06;  /* même couleur assombrie : la seule admise pour
+                              du texte, le vermillon plein ne passant pas
+                              sur papier (3,51) ni sur blanc                 */
+
+  /* Le papier avec alpha : le header posé sur le contenu qui défile. */
+  --paper-veil: rgba(244, 241, 236, 0.82);
+
+  /* Les filets sont de l'encre diluée, non plus du papier dilué. */
+  --hairline:      rgba(11, 11, 11, 0.12);
+  --hairline-soft: rgba(11, 11, 11, 0.06);
+
+  /* — Typographie —
+     Display : axe optique, tient du petit titre au très grand.
+     Texte   : proportionnelle de lecture.
+     Étiquette : monospace, réservée aux capitales et aux chiffres.          */
+  --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --text:    'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --label:   'Martian Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Échelle fluide, recalibrée sur les métriques de Bricolage Grotesque :
+     sa hauteur d'x est plus généreuse que celle de Syne, les grands corps
+     descendent donc d'un cran pour que les césures écrites à la main dans
+     content/site.ts ne débordent pas.                                       */
+  --fs-xs:  clamp(0.625rem,  0.59rem + 0.18vw, 0.6875rem);
+  --fs-sm:  clamp(0.75rem,   0.72rem + 0.18vw, 0.8125rem);
+  --fs-base:clamp(0.9375rem, 0.89rem + 0.24vw, 1.0625rem);
+  --fs-lg:  clamp(1.0625rem, 0.99rem + 0.38vw, 1.25rem);
+  --fs-xl:  clamp(1.5rem,    1.27rem + 1.1vw,  2.125rem);
+  --fs-2xl: clamp(2.125rem,  1.55rem + 2.9vw,  4rem);
+  --fs-3xl: clamp(2.5rem,    1.6rem + 4.6vw,   6rem);
+
+  /* — Largeurs de colonne —
+     En `ch` : la mesure suit la police, pas une largeur figée.              */
+  --measure-tight: 44ch;
+  --measure:       54ch;
+  --measure-wide:  62ch;
+
+  /* — Rythme — */
+  --gutter: clamp(1.25rem, 1rem + 2.5vw, 4rem);
+  --section: clamp(5rem, 3rem + 9vw, 11rem);
+  --maxw: 1440px;
+
+  /* — Mouvement — */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-weight: 400;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.97;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+a { color: inherit; text-decoration: none; }
+img, svg, video, canvas { display: block; max-width: 100%; }
+button, input, textarea { font: inherit; color: inherit; }
+
+/* Sur aplat vermillon le texte est en encre (4,97) : le papier n'y passe
+   qu'au-delà de 24 px, ce qui n'est jamais le cas d'une sélection. */
+::selection { background: var(--signal); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* -------------------------------------------------------------- utilitaires */
+
+.shell {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Étiquette : le seul endroit où la monospace a droit de cité. */
+.kicker {
+  font-family: var(--label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 400;
+}
+
+/* Numéro de section — repère de progression de la page, de 01 à 05.
+   Pastille pleine, et non du texte vermillon : les cartes des services et
+   les étapes de la méthode portent déjà un numéro en --signal-deep, au
+   même corps et dans la même monospace. Deux « 01 » de sens différents
+   seraient alors indistinguables dans la même section. L'aplat les sépare.
+   Texte en --paper sur --signal-deep : 4,99 — AA (BRAND.md, règle 3).   */
+.kicker-num {
+  display: inline-block;
+  background: var(--signal-deep);
+  color: var(--paper);
+  padding: 0.35em 0.6em 0.3em;
+  margin-right: 0.9em;
+  letter-spacing: 0.12em;
+}
+
+.lede {
+  font-size: var(--fs-lg);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: var(--measure);
+}
+
+.rule {
+  height: 1px;
+  background: var(--hairline);
+  border: 0;
+}
+
+/* Saut au contenu — premier élément focusable de la page. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+}
+.skip:focus { left: 1rem; top: 1rem; }
+
+/* --------------------------------------- respect de « mouvement réduit » */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------- apparition au défilement */
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.9s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease) var(--reveal-delay, 0ms);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ------------------------------------------------------- blocs de section */
+
+.section { padding-block: var(--section); }
+
+.sectionHead {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 5vw, 5rem);
+}
+.sectionHead h2 {
+  font-size: var(--fs-2xl);
+  white-space: pre-line;
+}
