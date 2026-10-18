@@ -73,25 +73,22 @@ export const cta = {
 export const story = [
   {
     id: 'opening',
-    kicker:  t('Studio d’ingénierie créative', 'Creative engineering studio'),
     heading: t('La plupart des sites sont\ndes documents.',
                'Most websites are\ndocuments.'),
-    body:    t('Nous en faisons des expériences — conçues, animées et codées par la même équipe, du premier trait au déploiement.',
-               'We make them experiences — designed, animated and coded by the same team, from first stroke to deploy.'),
+    body:    t('Nous en faisons des expériences : conçues, animées et codées par la même équipe, du premier trait au déploiement.',
+               'We make them experiences: designed, animated and coded by the same team, from first stroke to deploy.'),
     action:  'primary' as const,
   },
   {
     id: 'craft',
-    kicker:  t('L’atelier', 'The workshop'),
     heading: t('Une structure avant\nun habillage.',
                'Structure before\ndecoration.'),
-    body:    t('Chaque expérience commence par une architecture : parcours, hiérarchie, performance. Le mouvement vient après, et il sert le propos — jamais l’inverse.',
-               'Every experience starts as architecture: flow, hierarchy, performance. Motion comes after, and it serves the point — never the other way round.'),
+    body:    t('Chaque expérience commence par une architecture : parcours, hiérarchie, performance. Le mouvement vient après, et il sert le propos. Jamais l’inverse.',
+               'Every experience starts as architecture: flow, hierarchy, performance. Motion comes after, and it serves the point. Never the other way round.'),
     action:  null,
   },
   {
     id: 'ship',
-    kicker:  t('La mise en ligne', 'Shipping'),
     heading: t('Livré, mesuré,\nà vous.',
                'Shipped, measured,\nyours.'),
     body:    t('Code propre, documentation, passation. Vous êtes autonome dès le premier jour — pas de dépendance au studio.',
@@ -101,19 +98,12 @@ export const story = [
 ]
 
 /* ------------------------------------------------------------------ services */
-/* `index` : le numéro de section, repère de progression de la page. Le récit
-   au scroll n'en porte pas — il est l'ouverture, pas une étape. Les sections
-   numérotées se suivent de 01 à 05 ; le numéro s'écrit dans l'étiquette.    */
-
 export const servicesIntro = {
-  index:   '01',
-  kicker:  t('Ce que nous faisons', 'What we do'),
   heading: t('Quatre façons de\ntravailler ensemble.', 'Four ways to\nwork together.'),
 }
 
 export const services = [
   {
-    num: '01',
     slug: 'sites-experiences',
     title: t('Sites & expériences sur mesure',   'Custom sites & experiences'),
     body:  t('Un site vitrine, une landing de lancement ou une marque entière mise en mouvement. Direction artistique, animation au scroll, code de production.',
@@ -121,7 +111,6 @@ export const services = [
     tags:  ['Direction artistique', 'Motion', 'Nuxt / Next', 'WebGL'],
   },
   {
-    num: '02',
     slug: 'plateformes',
     title: t('Plateformes & applications web',   'Web platforms & apps'),
     body:  t('Tableaux de bord, outils internes, SaaS complets. Même exigence d’expérience, appliquée à des produits que l’on utilise tous les jours.',
@@ -129,7 +118,6 @@ export const services = [
     tags:  ['Architecture', 'Design système', 'API', 'CI/CD'],
   },
   {
-    num: '03',
     slug: 'produits-ia',
     title: t('Produits IA & automatisation',     'AI products & automation'),
     body:  t('Agents, intégration LLM, RAG, et automatisation de processus. L’ingénierie qui tient en production, pas la démo qui casse au premier vrai utilisateur.',
@@ -137,7 +125,6 @@ export const services = [
     tags:  ['LLM', 'RAG', 'Agents', 'n8n / MCP'],
   },
   {
-    num: '04',
     slug: 'mvp',
     title: t('MVP en 2 à 4 semaines',            'MVP in 2 to 4 weeks'),
     body:  t('De l’idée validée au produit en ligne. Périmètre défini, prix fixe, démos chaque semaine. Vous parlez à vos clients, nous construisons.',
@@ -165,8 +152,6 @@ export const markers = {
 /* ---------------------------------------------------------------- différence */
 
 export const differenceIntro = {
-  index:   '02',
-  kicker:  t('Notre différence', 'What sets us apart'),
   heading: t('Une seule équipe,\ndu premier trait au déploiement.',
              'One team,\nfrom first stroke to deploy.'),
   lede:    t('La plupart des prestataires tiennent un maillon : le design, ou le code, ou l’hébergement. Nous tenons la chaîne — et c’est ce qui nous autorise à vous conseiller.',
@@ -181,8 +166,8 @@ export const difference = [
   },
   {
     title: t('Pas d’intermédiaire', 'No middle layer'),
-    body:  t('Chaque projet appartient à un ingénieur qui a déjà livré en production. Vous lui parlez directement, chaque semaine, démo à l’appui — il n’y a personne à prévenir avant lui.',
-             'Every project is owned by an engineer who has already shipped to production. You talk to them directly, every week, demo in hand — there is nobody to go through first.'),
+    body:  t('Chaque projet appartient à un ingénieur qui a déjà livré en production. Vous lui parlez directement, chaque semaine, démo à l’appui. Il n’y a personne à prévenir avant lui.',
+             'Every project is owned by an engineer who has already shipped to production. You talk to them directly, every week, demo in hand. There is nobody to go through first.'),
   },
   {
     title: t('Autonome à la livraison', 'Autonomous on delivery'),
@@ -194,8 +179,6 @@ export const difference = [
 /* ------------------------------------------------------------------- méthode */
 
 export const processIntro = {
-  index:   '03',
-  kicker:  t('Méthode', 'Process'),
   heading: t('Du brief à la\nmise en ligne.', 'From brief to\nlaunch.'),
 }
 
@@ -226,8 +209,6 @@ export const processSteps = [
 /* -------------------------------------------------------------------- studio */
 
 export const studioIntro = {
-  index:   '04',
-  kicker:  t('Le studio', 'The studio'),
   heading: t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
   body: [
     t('Icon Labs est un studio d’ingénierie créative basé en Afrique de l’Ouest. Nous concevons des expériences web : la direction artistique, le mouvement et le code de production sortent de la même équipe.',
@@ -256,8 +237,6 @@ export const values = [
 /* ----------------------------------------------------------------------- FAQ */
 
 export const faqIntro = {
-  index:   '05',
-  kicker:  t('Questions fréquentes', 'Common questions'),
   heading: t('Ce qu’on nous\ndemande le plus.', 'What we get\nasked most.'),
 }
 
@@ -285,11 +264,9 @@ export const faq = [
 /* ------------------------------------------------------------------- contact */
 
 export const contact = {
-  index:   '06',
-  kicker:  t('Contact', 'Contact'),
   heading: t('Parlons de ce que\nvous construisez.', 'Let’s talk about what\nyou are building.'),
-  body:    t('Un appel de 30 minutes, gratuit. On regarde votre projet, on vous dit franchement si nous sommes les bons — et si non, vers qui aller.',
-             'A free 30-minute call. We look at your project and tell you honestly whether we are the right fit — and if not, who is.'),
+  body:    t('Un appel de 30 minutes, gratuit. On regarde votre projet, on vous dit franchement si nous sommes les bons, et si non, vers qui aller.',
+             'A free 30-minute call. We look at your project and tell you honestly whether we are the right fit, and if not, who is.'),
   fields: {
     name:    t('Nom', 'Name'),
     email:   t('E-mail', 'Email'),
@@ -326,7 +303,6 @@ type Bullet = { title: T; body: T }
 
 export type ServicePage = {
   slug: string
-  index: string
   nav: T
   title: T
   lede: T
@@ -341,7 +317,6 @@ export type ServicePage = {
 export const servicePages: ServicePage[] = [
   {
     slug: 'sites-experiences',
-    index: '01',
     nav: t('Sites & expériences', 'Sites & experiences'),
     title: t('Un site dont on se\nsouvient le lendemain.', 'A site people still\nremember tomorrow.'),
     lede: t('Une marque mise en mouvement : direction artistique, animation au scroll, et le code de production qui tient derrière.',
@@ -385,7 +360,6 @@ export const servicePages: ServicePage[] = [
 
   {
     slug: 'plateformes',
-    index: '02',
     nav: t('Plateformes & applications', 'Platforms & apps'),
     title: t('Un produit qu’on utilise\ntous les jours.', 'A product people use\nevery day.'),
     lede: t('Tableaux de bord, outils internes, SaaS complets. La même exigence d’expérience, appliquée à ce qui sert au travail.',
@@ -427,7 +401,6 @@ export const servicePages: ServicePage[] = [
 
   {
     slug: 'produits-ia',
-    index: '03',
     nav: t('Produits IA & automatisation', 'AI products & automation'),
     title: t('De l’IA qui tient\nen production.', 'AI that holds up\nin production.'),
     lede: t('Agents, intégration LLM, RAG, automatisation de processus. L’ingénierie qui survit au premier vrai utilisateur, pas la démo qui impressionne en réunion.',
@@ -470,23 +443,22 @@ export const servicePages: ServicePage[] = [
 
   {
     slug: 'mvp',
-    index: '04',
     nav: t('MVP en 2 à 4 semaines', 'MVP in 2 to 4 weeks'),
     title: t('De l’idée au produit\nen ligne, en un mois.', 'From idea to live\nproduct, in a month.'),
     lede: t('Périmètre défini, prix fixe, démo chaque semaine. Vous parlez à vos clients, nous construisons.',
             'Defined scope, fixed price, weekly demos. You talk to customers, we build.'),
     tags: ['Prix fixe', 'Démo hebdo', 'Déploiement inclus'],
     includes: [
-      { title: t('Semaine 0 — on coupe', 'Week 0 — cutting'),
+      { title: t('Semaine 0 : on coupe', 'Week 0: cutting'),
         body:  t('Ce qui reste est ce qui prouve l’idée, rien d’autre. Un MVP se définit d’abord par ce qu’il ne fait pas.',
                  'What survives is what proves the idea, nothing else. An MVP is defined first by what it does not do.') },
-      { title: t('Semaines 1 à 3 — on construit', 'Weeks 1 to 3 — building'),
+      { title: t('Semaines 1 à 3 : on construit', 'Weeks 1 to 3: building'),
         body:  t('Une démo fonctionnelle chaque semaine, sur une vraie adresse que vous pouvez partager. Pas une maquette cliquable.',
                  'A working demo every week, on a real address you can share. Not a clickable mockup.') },
-      { title: t('Dernière semaine — on met en ligne', 'Final week — shipping'),
+      { title: t('Dernière semaine : on met en ligne', 'Final week: shipping'),
         body:  t('Déploiement, nom de domaine, mesure d’usage branchée, passation. La mise en ligne fait partie du forfait.',
                  'Deployment, domain, usage analytics wired in, handoff. Launch is part of the price.') },
-      { title: t('Après — vous décidez', 'After — your call'),
+      { title: t('Après : vous décidez', 'After: your call'),
         body:  t('On s’arrête, on continue sur un deuxième sprint, ou vous reprenez en interne. Les trois sont des issues normales.',
                  'We stop, we run a second sprint, or you take it in-house. All three are normal outcomes.') },
     ],
@@ -503,8 +475,8 @@ export const servicePages: ServicePage[] = [
       t('Vous acceptez de couper.', 'You are willing to cut.'),
     ],
     fitNo: [
-      t('Le périmètre doit tout contenir : alors ce n’est pas un MVP, c’est une plateforme — et c’est une autre page.',
-        'The scope has to contain everything: then it is not an MVP, it is a platform — and that is another page.'),
+      t('Le périmètre doit tout contenir : alors ce n’est pas un MVP, c’est une plateforme, et c’est une autre page.',
+        'The scope has to contain everything: then it is not an MVP, it is a platform, and that is another page.'),
       t('Personne chez vous ne peut trancher en une journée.', 'Nobody on your side can settle a question within a day.'),
     ],
     example: t('Un périmètre-type, et non un client : une place de marché à deux faces réduite à son cœur — inscription, annonce, recherche, mise en relation. Le paiement attend la phase 2. En ligne à la fin de la quatrième semaine.',
@@ -515,8 +487,6 @@ export const servicePages: ServicePage[] = [
 /* ------------------------------------------------------------ page : méthode */
 
 export const methodePage = {
-  index:   '01',
-  kicker:  t('Méthode', 'Process'),
   title:   t('Comment un projet se passe,\nétape par étape.', 'How a project runs,\nstep by step.'),
   lede:    t('Quatre étapes, des jalons datés, un prix fixe. À tout moment vous savez où en est le projet et ce qu’il vous reste à décider.',
              'Four steps, dated milestones, a fixed price. At any point you know where the project stands and what is left for you to decide.'),
@@ -530,22 +500,18 @@ export const methodePage = {
     give:    t('Vous recevez', 'You receive'),
     take:    t('Nous attendons', 'We need'),
     rows: [
-      { num: '01',
-        gives: t('Un compte rendu écrit, et un avis franc : si nous ne sommes pas les bons, nous le disons et nous vous orientons ailleurs.',
+      { gives: t('Un compte rendu écrit, et un avis franc : si nous ne sommes pas les bons, nous le disons et nous vous orientons ailleurs.',
                  'A written summary, and a straight answer: if we are not the right fit, we say so and point you elsewhere.'),
         needs: t('Trente minutes, et la personne qui décide.', 'Thirty minutes, and the person who decides.') },
-      { num: '02',
-        gives: t('Périmètre, livrables, stack, calendrier et prix fixe. Un document, pas une fourchette.',
+      { gives: t('Périmètre, livrables, stack, calendrier et prix fixe. Un document, pas une fourchette.',
                  'Scope, deliverables, stack, schedule and fixed price. A document, not a range.'),
         needs: t('Une réponse, oui ou non. Une proposition n’est pas une négociation sans fin.',
                  'An answer, yes or no. A proposal is not an open-ended negotiation.') },
-      { num: '03',
-        gives: t('Une démo fonctionnelle chaque semaine, sur une adresse que vous pouvez partager autour de vous.',
+      { gives: t('Une démo fonctionnelle chaque semaine, sur une adresse que vous pouvez partager autour de vous.',
                  'A working demo every week, on an address you can share around you.'),
         needs: t('Une heure par semaine, et des retours groupés plutôt qu’au fil de l’eau.',
                  'An hour a week, and feedback gathered rather than dripped.') },
-      { num: '04',
-        gives: t('Le dépôt, la documentation, les accès, et le transfert de propriété intellectuelle.',
+      { gives: t('Le dépôt, la documentation, les accès, et le transfert de propriété intellectuelle.',
                  'The repository, the documentation, the credentials, and the IP transfer.'),
         needs: t('Une personne désignée pour recevoir la passation.', 'One named person to receive the handoff.') },
     ],
@@ -571,8 +537,6 @@ export const methodePage = {
 /* ------------------------------------------------------------- page : studio */
 
 export const studioPage = {
-  index:   '02',
-  kicker:  t('Le studio', 'The studio'),
   title:   t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
   lede:    t('Icon Labs est un studio d’ingénierie créative basé en Afrique de l’Ouest. La direction artistique, le mouvement et le code de production sortent de la même équipe.',
              'Icon Labs is a creative engineering studio based in West Africa. Art direction, motion and production code all come from the same team.'),
@@ -617,6 +581,6 @@ export const studioPage = {
 
 export const pageCta = {
   heading: t('Parlons de ce que\nvous construisez.', 'Let’s talk about what\nyou are building.'),
-  body:    t('Un appel de 30 minutes, gratuit. On regarde votre projet, et on vous dit franchement si nous sommes les bons — et si non, vers qui aller.',
-             'A free 30-minute call. We look at your project and tell you honestly whether we are the right fit — and if not, who is.'),
+  body:    t('Un appel de 30 minutes, gratuit. On regarde votre projet, et on vous dit franchement si nous sommes les bons, et si non, vers qui aller.',
+             'A free 30-minute call. We look at your project and tell you honestly whether we are the right fit, and if not, who is.'),
 }

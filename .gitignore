@@ -17,3 +17,8 @@ tasks/
 
 # Lien local vers le projet Vercel (projectId/orgId, jeton OIDC)
 .vercel
+
+# Scripts de contrôle jetables, écrits dans le dépôt pour que la résolution
+# ESM trouve node_modules (cf. tasks/lessons.md) — jamais du code du site
+/.*.mjs
+.taste-skill/

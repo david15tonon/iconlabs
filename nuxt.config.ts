@@ -44,13 +44,20 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        /* Deux familles, et seulement deux (DESIGN.md § Typography).
+           Syne en 700 et 800 porte l'affichage ; Instrument Sans en 400 et
+           500 porte tout ce qui se lit. Martian Mono disparaît : elle servait
+           aux étiquettes et aux numéros de section, deux dispositifs
+           supprimés, et la charte réserve la monospace au code littéral —
+           il n'y en a aucun sur le site, DM Mono n'est donc pas chargée.
+           `css2` sert latin et latin-ext dans la même feuille, découpés par
+           `unicode-range` : les accents français sont couverts. */
         {
           rel: 'stylesheet',
           href:
             'https://fonts.googleapis.com/css2' +
-            '?family=Bricolage+Grotesque:opsz,wght@12..96,400..800' +
-            '&family=Instrument+Sans:wght@400..600' +
-            '&family=Martian+Mono:wght@300..500' +
+            '?family=Syne:wght@700;800' +
+            '&family=Instrument+Sans:wght@400;500' +
             '&display=swap',
         },
       ],

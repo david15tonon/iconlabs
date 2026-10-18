@@ -1,55 +1,64 @@
 /* ==========================================================================
    Icon Labs — tokens de design
-   Source unique : BRAND.md, à la racine du dépôt. Chaque valeur ci-dessous y
-   est justifiée et ses contrastes y sont mesurés. Aucune couleur, aucune
-   police, aucune mesure de colonne ne s'écrit ailleurs que dans ce fichier.
+   Source unique : DESIGN.md, à la racine du dépôt (version alpha, 2026-10-18),
+   qui remplace BRAND.md v2 dont il reprend la palette telle quelle, contrastes
+   compris. Aucune couleur, aucune police, aucune mesure de colonne ne s'écrit
+   ailleurs que dans ce fichier.
    ========================================================================== */
 
 :root {
   /* — Papier, encre, signal —
-     Deux pôles et une couleur signature. Depuis le 2 octobre 2026 le papier
-     est le sol : le site se lit en clair, l'encre n'est plus un fond mais une
-     marque. Les noms n'ont pas changé de sens, ils ont changé de rôle —
-     « encre » désigne ce qui s'écrit, « papier » ce sur quoi on écrit.      */
+     Deux pôles et une couleur signature. Le papier est le sol, l'encre est ce
+     qui s'écrit dessus. Proportion 80 / 15 / 5 : quatre apparitions du
+     vermillon par page, pas cinq.                                           */
   --paper:       #F4F1EC;  /* le sol : fond général, chaud                   */
-  --paper-raise: #FFFFFF;  /* l'élément blanc : bandes et cartes surélevées  */
-  --paper-line:  #CBC6BE;  /* bordure affirmée, au survol                    */
+  --paper-raise: #FFFFFF;  /* le seul niveau de surélévation du système      */
 
   --ink:      #0B0B0B;  /* titres, texte sur aplat signal  (17,47 / papier)  */
   --ink-soft: #2A2621;  /* texte courant                   (13,34 / papier)  */
   --ink-mute: #6A635B;  /* texte secondaire                 (5,25 / papier)  */
 
-  --signal:      #F2360A;  /* vermillon — aplats pleins, filets, barres      */
+  --signal:      #F2360A;  /* vermillon — il occupe des surfaces, il ne
+                              souligne pas                                   */
   --signal-deep: #C62A06;  /* même couleur assombrie : la seule admise pour
                               du texte, le vermillon plein ne passant pas
                               sur papier (3,51) ni sur blanc                 */
 
-  /* Le papier avec alpha : le header posé sur le contenu qui défile. */
-  --paper-veil: rgba(244, 241, 236, 0.82);
+  /* Bordure de champ de formulaire. Rien d'autre : la charte interdit de
+     séparer deux surfaces par un filet, le champ de saisie est la seule
+     exception nommée — un champ doit se voir.                               */
+  --outline: #CBC6BE;
 
-  /* Les filets sont de l'encre diluée, non plus du papier dilué. */
-  --hairline:      rgba(11, 11, 11, 0.12);
-  --hairline-soft: rgba(11, 11, 11, 0.06);
+  /* Le papier opaque sous la barre de navigation. Ni verre dépoli, ni flou :
+     la charte les exclut tous les deux.                                     */
+  --paper-bar: #F4F1EC;
 
   /* — Typographie —
-     Display : axe optique, tient du petit titre au très grand.
-     Texte   : proportionnelle de lecture.
-     Étiquette : monospace, réservée aux capitales et aux chiffres.          */
-  --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+     Deux familles, pas trois. Syne porte l'affichage, Instrument Sans porte
+     tout ce qui se lit. DM Mono n'est pas déclarée ici : la charte la réserve
+     au code littéral, et il n'y a aucun bloc de code sur le site.           */
+  --display: 'Syne', ui-sans-serif, system-ui, sans-serif;
   --text:    'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-  --label:   'Martian Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  /* Échelle fluide, recalibrée sur les métriques de Bricolage Grotesque :
-     sa hauteur d'x est plus généreuse que celle de Syne, les grands corps
-     descendent donc d'un cran pour que les césures écrites à la main dans
-     content/site.ts ne débordent pas.                                       */
-  --fs-xs:  clamp(0.625rem,  0.59rem + 0.18vw, 0.6875rem);
-  --fs-sm:  clamp(0.75rem,   0.72rem + 0.18vw, 0.8125rem);
-  --fs-base:clamp(0.9375rem, 0.89rem + 0.24vw, 1.0625rem);
-  --fs-lg:  clamp(1.0625rem, 0.99rem + 0.38vw, 1.25rem);
-  --fs-xl:  clamp(1.5rem,    1.27rem + 1.1vw,  2.125rem);
-  --fs-2xl: clamp(2.125rem,  1.55rem + 2.9vw,  4rem);
-  --fs-3xl: clamp(2.5rem,    1.6rem + 4.6vw,   6rem);
+  /* Échelle fluide. Les valeurs hautes sont celles de DESIGN.md (valeurs de
+     bureau) ; les planchers tiennent les deux règles de la charte : aucun
+     texte sous 13 px, et Syne jamais sous 32 px — en deçà elle s'effondre,
+     donc tout titre plus petit passe à Instrument Sans 500.
+
+     Une seule valeur s'écarte de la table : `display-xl` y vaut 160 px, il
+     est plafonné ici à 96. Les titres du récit portent des césures écrites à
+     la main dans `content/site.ts`, calibrées sur ce corps ; à 160 px elles
+     déborderaient, et la charte range la réduction du corps en dernier
+     recours justement parce qu'on coupe les mots d'abord — ici ils le sont
+     déjà. C'est le seul emploi de ce niveau sur le site.                    */
+  --fs-xs:        0.8125rem;                                     /* 13       */
+  --fs-sm:        0.9375rem;                                     /* 15       */
+  --fs-base:      clamp(0.9375rem, 0.90rem + 0.17vw, 1.0625rem); /* 15 → 17  */
+  --fs-lg:        clamp(1.0625rem, 1.03rem + 0.17vw, 1.1875rem); /* 17 → 19  */
+  --fs-statement: clamp(1.375rem,  1.00rem + 1.60vw, 2.25rem);   /* 22 → 36  */
+  --fs-xl:        clamp(2rem,      1.72rem + 1.40vw, 3rem);      /* 32 → 48  */
+  --fs-2xl:       clamp(2rem,      1.30rem + 3.60vw, 4.5rem);    /* 32 → 72  */
+  --fs-3xl:       clamp(2.75rem,   1.10rem + 7.30vw, 6rem);      /* 44 →  96 */
 
   /* — Largeurs de colonne —
      En `ch` : la mesure suit la police, pas une largeur figée.              */
@@ -57,14 +66,34 @@
   --measure:       54ch;
   --measure-wide:  62ch;
 
-  /* — Rythme — */
-  --gutter: clamp(1.25rem, 1rem + 2.5vw, 4rem);
-  --section: clamp(5rem, 3rem + 9vw, 11rem);
+  /* — Rythme —
+     Multiples de 8 px, avec un demi-pas de 4 px. L'écart entre deux sections
+     est nettement plus grand que tout écart à l'intérieur d'une section :
+     c'est ce rapport qui tient la page, pas les filets.                     */
+  --sp-xs:  4px;
+  --sp-sm:  8px;
+  --sp-md:  16px;
+  --sp-lg:  32px;
+  --sp-xl:  64px;
+  --sp-2xl: 96px;
+
+  --gutter:  clamp(1.25rem, 1rem + 2.5vw, 4rem);  /*  20 →  64 */
+  --section: clamp(5rem,    3rem + 9vw,  11rem);  /*  80 → 176 */
   --maxw: 1440px;
 
-  /* — Mouvement — */
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  /* — Mouvement —
+     Valeurs de DESIGN.md, elles-mêmes tirées de la méthode d'Emil Kowalski :
+     les courbes natives de CSS sont trop molles pour de l'interface. Elles
+     vivent ici et non dans le schéma de tokens, qui ne couvre pas le
+     mouvement.                                                              */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);     /* entrées et sorties   */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* déplacement à l'écran*/
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* panneau glissant     */
+
+  --duration-press:    140ms;   /* retour d'appui, changement d'état         */
+  --duration-tooltip:  160ms;   /* infobulle, petit popover                  */
+  --duration-dropdown: 200ms;   /* menu, sélecteur                           */
+  --duration-overlay:  320ms;   /* modale, panneau, apparition au défilement */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,17 +109,29 @@ body {
   font-family: var(--text);
   font-weight: 400;
   font-size: var(--fs-base);
-  line-height: 1.6;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4 {
+/* Syne porte l'affichage, et seulement lui : au-dessous de 32 px elle perd
+   ses jonctions. h3 et h4, qui vivent sous ce seuil, sont donc en Instrument
+   Sans 500 — c'est la graisse qui les distingue, pas la famille.            */
+h1, h2 {
   font-family: var(--display);
-  font-weight: 800;
-  line-height: 0.97;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+h3, h4 {
+  font-family: var(--text);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
@@ -117,29 +158,22 @@ button, input, textarea { font: inherit; color: inherit; }
   padding-inline: var(--gutter);
 }
 
-/* Étiquette : le seul endroit où la monospace a droit de cité. */
-.kicker {
-  font-family: var(--label);
+/* Étiquette de petit corps : casse de phrase, jamais de capitales espacées,
+   jamais de monospace. 13 px est le plancher absolu du système.             */
+.label {
   font-size: var(--fs-xs);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
   color: var(--ink-mute);
-  font-weight: 400;
 }
 
-/* Numéro de section — repère de progression de la page, de 01 à 05.
-   Pastille pleine, et non du texte vermillon : les cartes des services et
-   les étapes de la méthode portent déjà un numéro en --signal-deep, au
-   même corps et dans la même monospace. Deux « 01 » de sens différents
-   seraient alors indistinguables dans la même section. L'aplat les sépare.
-   Texte en --paper sur --signal-deep : 4,99 — AA (BRAND.md, règle 3).   */
-.kicker-num {
-  display: inline-block;
-  background: var(--signal-deep);
-  color: var(--paper);
-  padding: 0.35em 0.6em 0.3em;
-  margin-right: 0.9em;
-  letter-spacing: 0.12em;
+/* Le panneau : le seul niveau de surélévation. Une bande de section et un
+   panneau posé dedans portent le même blanc ; ils se distinguent par
+   l'espace, pas par une troisième teinte. Plein, sans contour, sans ombre.  */
+.panel {
+  background: var(--paper-raise);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .lede {
@@ -149,10 +183,16 @@ button, input, textarea { font: inherit; color: inherit; }
   max-width: var(--measure);
 }
 
-.rule {
-  height: 1px;
-  background: var(--hairline);
-  border: 0;
+/* Une phrase posée en grand : un seul emploi par bloc, 25 mots environ.
+   Au-delà, c'est un titre et la règle des deux lignes s'applique.           */
+.statement {
+  font-family: var(--text);
+  font-size: var(--fs-statement);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  max-width: var(--measure-wide);
 }
 
 /* Saut au contenu — premier élément focusable de la page. */
@@ -180,12 +220,17 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ------------------------------------------------- apparition au défilement */
 
+/* Registre marketing, pas interface : la charte autorise le dépassement des
+   300 ms pour ce seul cas. Le déplacement reste court — 12 px, le temps
+   d'éviter un saut, pas de faire un effet — et part de l'opacité, jamais
+   d'une échelle nulle. Le contenu reste lisible si le script échoue :
+   `v-reveal` ne pose la classe qu'une fois monté.                           */
 .reveal {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, 12px, 0);
   transition:
-    opacity 0.9s var(--ease) var(--reveal-delay, 0ms),
-    transform 0.9s var(--ease) var(--reveal-delay, 0ms);
+    opacity var(--duration-overlay) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--duration-overlay) var(--ease-out) var(--reveal-delay, 0ms);
 }
 .reveal.is-in { opacity: 1; transform: none; }
 
@@ -200,5 +245,16 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .sectionHead h2 {
   font-size: var(--fs-2xl);
-  white-space: pre-line;
 }
+
+/* Césures écrites à la main.
+   Les titres de `content/site.ts` portent des `\n` posés à l'œil, calibrés
+   sur les grandes largeurs. La charte impose deux lignes au maximum **à
+   toutes les largeurs** : sur un écran étroit, une ligne écrite pour 1440 px
+   se replie et le titre en compte trois ou quatre. On rend donc la main au
+   navigateur sous 560 px — il coupe où ça entre, et les deux lignes sont
+   préservées. La règle vit ici et non dans chaque composant : elle est la
+   même partout, et une feuille globale ne peut pas surcharger un style
+   `scoped` sans `!important`. */
+.breaks { white-space: pre-line; }
+@media (max-width: 560px) { .breaks { white-space: normal; } }

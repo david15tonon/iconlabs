@@ -58,12 +58,11 @@ const feedback = computed(() => {
   <section id="contact" class="section">
     <div class="shell inner">
       <div v-reveal>
-        <p class="kicker"><span class="kicker-num">{{ contact.index }}</span>{{ tr(contact.kicker) }}</p>
-        <h2>{{ tr(contact.heading) }}</h2>
+        <h2 class="breaks">{{ tr(contact.heading) }}</h2>
         <p class="lede">{{ tr(contact.body) }}</p>
         <p class="direct">
           <a :href="`mailto:${brand.email}`">{{ brand.email }}</a>
-          <span class="note">{{ tr(cta.callNote) }}</span>
+          <span class="note label">{{ tr(cta.callNote) }}</span>
         </p>
       </div>
 
@@ -100,21 +99,18 @@ const feedback = computed(() => {
 }
 
 .inner { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
-h2 { font-size: var(--fs-2xl); white-space: pre-line; margin: 1rem 0 1.5rem; }
+/* Moitié gauche d'une grille 1 / 1 : à 72 px le titre s'y repliait sur
+   quatre lignes. */
+h2 { font-size: var(--fs-xl); margin: 0 0 1.5rem; }
 
 /* Rien n'est atténué sur cet aplat. L'encre y tient à 4,97 et le seuil AA
-   est à 4,50 : à 72 % d'opacité on tombe à 3,71, et l'étiquette, la note et
-   les libellés du formulaire — tous à 11 px — passaient sous le seuil. Ce
-   défaut était antérieur à la refonte ; la hiérarchie est désormais portée
-   par le corps et la graisse, qui ne coûtent rien au contraste. */
-#contact .kicker,
+   est à 4,50 : à 72 % d'opacité on tombe à 3,71, et la note comme les
+   libellés du formulaire — tous au plancher de 13 px — passeraient sous le
+   seuil. La hiérarchie est portée par le corps et la graisse, qui ne coûtent
+   rien au contraste. */
 #contact .lede,
 #contact .note,
 #contact label span { color: var(--ink); }
-
-/* Et cette pastille s'inverse ici : --signal-deep sur l'aplat --signal ne
-   se détacherait pas. Encre et papier, comme le bouton d'envoi (17,47). */
-#contact .kicker-num { background: var(--ink); color: var(--paper); }
 
 .direct { margin-top: 2rem; display: grid; gap: 0.5rem; }
 .direct a {
@@ -123,40 +119,45 @@ h2 { font-size: var(--fs-2xl); white-space: pre-line; margin: 1rem 0 1.5rem; }
   border-bottom: 1px solid currentColor;
   justify-self: start;
 }
-.note { font-size: var(--fs-xs); letter-spacing: 0.14em; text-transform: uppercase; }
+.note { font-size: var(--fs-xs); }
 
 form { display: grid; gap: 1.25rem; }
 label { display: grid; gap: 0.5rem; }
-label span {
-  font-size: var(--fs-xs);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
+label span { font-size: var(--fs-xs); font-weight: 500; }
+
+/* Le champ de saisie est la seule exception nommée par la charte à la règle
+   « pas de filet » : un champ doit se voir. Il est donc plein — blanc, le
+   seul niveau de surélévation — et bordé d'`--outline`. Le focus change le
+   remplissage de la bordure, jamais par un halo flou. */
 input, textarea {
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid rgb(11 11 11 / 0.35);
-  padding: 0.75rem 0;
+  background: var(--paper-raise);
+  color: var(--ink);
+  border: 1px solid var(--outline);
+  padding: var(--sp-md);
   resize: vertical;
-  transition: border-color 0.3s var(--ease);
+  transition: border-color var(--duration-press) var(--ease-out);
 }
-input:focus, textarea:focus { outline: none; border-bottom-color: var(--ink); }
+input:focus, textarea:focus { outline: none; border-color: var(--ink); }
 
 button {
   justify-self: start;
   margin-top: 0.75rem;
   background: var(--ink);
   color: var(--paper);
-  border: 1px solid var(--ink);
-  padding: 0.9rem 2rem;
+  border: 0;
+  padding: var(--sp-md) var(--sp-lg);
   font-size: var(--fs-sm);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  transition:
+    background var(--duration-press) var(--ease-out),
+    color var(--duration-press) var(--ease-out);
 }
-button:hover:not(:disabled) { background: transparent; color: var(--ink); }
-button:disabled { opacity: 0.55; cursor: progress; }
+button:hover:not(:disabled) { background: var(--paper); color: var(--ink); }
+/* L'état en attente se distingue par le ton, pas par l'opacité : papier sur
+   `--ink-mute` donne 5,25, le même rapport que l'inverse — l'opacité, elle,
+   aurait fait passer le libellé sous le seuil. */
+button:disabled { background: var(--ink-mute); cursor: progress; }
 
 /* Un message d'état se lit : pas d'opacité ici non plus (cf. plus haut). */
 .feedback { font-size: var(--fs-sm); color: var(--ink); max-width: var(--measure); }

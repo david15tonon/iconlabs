@@ -62,11 +62,8 @@ export function useLocale() {
     // Rester sur /fr/methode en affichant l'anglais produirait une page dont
     // l'URL ment, et que le prochain rendu serveur contredirait.
     const current = prefixOf(route.path)
-    console.log('[dbg]', performance.now().toFixed(0), 'setLocale', next, 'path=', route.path, 'current=', current)
     if (current && current !== `/${next}`) {
-      const target = `/${next}${route.path.slice(current.length)}${route.hash}`
-      console.log('[dbg] navigateTo', target)
-      Promise.resolve(navigateTo(target)).then((r) => console.log('[dbg] ok', JSON.stringify({ type: (r)?.type, msg: (r)?.message, from: (r)?.from?.fullPath, to: (r)?.to?.fullPath }))).catch((e) => console.log('[dbg] err', String(e)))
+      navigateTo(`/${next}${route.path.slice(current.length)}${route.hash}`)
     }
   }
 

@@ -19,7 +19,7 @@ const { url } = useSiteHead({
    complète vit sur la home ; on la désigne ici comme sujet. */
 useJsonLd(() => ({
   '@type': 'AboutPage',
-  name: tr(studioPage.kicker),
+  name: tr(studioPage.title).replace('\n', ' '),
   description: tr(studioPage.lede),
   url: url.value,
   mainEntity: ORG,
@@ -28,12 +28,7 @@ useJsonLd(() => ({
 </script>
 
 <template>
-  <PageHero
-    :index="studioPage.index"
-    :kicker="studioPage.kicker"
-    :title="studioPage.title"
-    :lede="studioPage.lede"
-  />
+  <PageHero :title="studioPage.title" :lede="studioPage.lede" />
 
   <section class="section">
     <div class="shell inner">
@@ -52,9 +47,7 @@ useJsonLd(() => ({
         </ul>
 
         <h2 class="second">{{ tr(studioPage.valuesHeading) }}</h2>
-        <ul class="values">
-          <li v-for="(value, i) in values" :key="i">{{ tr(value) }}</li>
-        </ul>
+        <p class="values">{{ values.map((v) => tr(v)).join(' · ') }}</p>
       </div>
     </div>
   </section>
@@ -83,53 +76,44 @@ useJsonLd(() => ({
 .origin {
   color: var(--signal-deep) !important;
   font-size: var(--fs-xs) !important;
-  font-family: var(--label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-weight: 500;
   margin-top: 0.75rem;
 }
 
+/* Titres de colonne en casse de phrase : plus de capitales espacées, plus de
+   monospace — la charte la réserve au code littéral. */
 .aside h2 {
-  font-family: var(--label);
-  font-size: var(--fs-xs);
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
+  font-family: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--ink);
   margin-bottom: 1rem;
 }
 .aside .second { margin-top: 2.5rem; }
 
-.team { list-style: none; display: grid; border-top: 1px solid var(--hairline); }
+/* La liste d'équipe n'est plus réglée par un filet sous chaque ligne, et les
+   valeurs ne sont plus des boîtes contournées de 1 px : espace et ton. */
+.team { list-style: none; display: grid; gap: 0.85rem; }
 .team li {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
   justify-content: space-between;
   align-items: baseline;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--hairline);
 }
-.team strong { font-family: var(--display); font-size: var(--fs-lg); font-weight: 700; }
+.team strong { font-size: var(--fs-lg); font-weight: 500; }
 .team span { font-size: var(--fs-sm); color: var(--ink-mute); }
 
-.values { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem; }
-.values li {
-  font-size: var(--fs-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  border: 1px solid var(--hairline);
-  padding: 0.35rem 0.7rem;
-}
+.values { color: var(--ink-mute); font-size: var(--fs-xs); }
 
-.limits { background: var(--paper-raise); border-top: 1px solid var(--hairline); }
+/* Bande blanche : le pas de ton tient la section, les filets ont sauté. */
+.limits { background: var(--paper-raise); }
 .limits h2 { font-size: var(--fs-2xl); margin-bottom: 1rem; }
 .limits header { margin-bottom: clamp(2rem, 4vw, 3.5rem); }
-.limits ul { list-style: none; border-top: 1px solid var(--hairline); }
+.limits ul { list-style: none; display: grid; gap: clamp(1rem, 2vw, 1.5rem); }
 .limits li {
-  padding: clamp(1.25rem, 2.5vw, 2rem) 0;
-  border-bottom: 1px solid var(--hairline);
   font-size: var(--fs-lg);
   max-width: var(--measure-wide);
 }

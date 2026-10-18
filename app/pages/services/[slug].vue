@@ -54,18 +54,11 @@ useJsonLd(() => ({
 </script>
 
 <template>
-  <PageHero
-    :index="page.index"
-    :kicker="page.nav"
-    :title="page.title"
-    :lede="page.lede"
-  />
+  <PageHero :title="page.title" :lede="page.lede" />
 
   <section class="section">
     <div class="shell">
-      <ul class="tags" v-reveal>
-        <li v-for="tag in page.tags" :key="tag">{{ tag }}</li>
-      </ul>
+      <p class="tags" v-reveal>{{ page.tags.join(' · ') }}</p>
 
       <h2 class="head" v-reveal="60">{{ tr({ fr: 'Ce que ça comprend', en: 'What it includes' }) }}</h2>
       <ul class="includes">
@@ -114,45 +107,45 @@ useJsonLd(() => ({
 </template>
 
 <style scoped>
-.tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-.tags li {
+/* Les mots-clés étaient des boîtes contournées de 1 px : ils redeviennent une
+   ligne de texte secondaire. */
+.tags {
   font-size: var(--fs-xs);
-  letter-spacing: 0.1em;
   color: var(--ink-mute);
-  border: 1px solid var(--hairline);
-  padding: 0.3rem 0.65rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .head { font-size: var(--fs-2xl); margin-bottom: clamp(1.75rem, 3vw, 3rem); }
 
-.includes { list-style: none; display: grid; border-top: 1px solid var(--hairline); }
+/* Chaque point est un panneau blanc sur le papier : le pas de ton remplace
+   le filet d'ouverture et celui qui fermait chaque ligne. */
+.includes { list-style: none; display: grid; gap: var(--sp-sm); }
 .includes li {
   display: grid;
   gap: 0.6rem;
-  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
-  border-bottom: 1px solid var(--hairline);
+  background: var(--paper-raise);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
 }
-.includes h3 { font-size: var(--fs-lg); font-weight: 700; }
+.includes h3 { font-size: var(--fs-lg); }
 .includes p { color: var(--ink-soft); max-width: var(--measure-wide); }
 
-.outcome { background: var(--paper-raise); border-block: 1px solid var(--hairline); }
+/* Bande blanche, bornée par le ton et non par deux filets. */
+.outcome { background: var(--paper-raise); }
 .cols, .fit { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
+
+/* Titres de colonne en casse de phrase, sans monospace ni capitales. */
 .outcome h2, .fit h2 {
-  font-family: var(--label);
-  font-size: var(--fs-xs);
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
   margin-bottom: 1.25rem;
 }
 .outcome h2 { color: var(--ink-mute); }
 
-.list { list-style: none; display: grid; border-top: 1px solid var(--hairline); }
-.list li {
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--hairline);
-  font-size: var(--fs-lg);
-}
+.list { list-style: none; display: grid; gap: 0.85rem; }
+.list li { font-size: var(--fs-lg); max-width: var(--measure-wide); }
 .example p { color: var(--ink-soft); max-width: var(--measure); }
 
 .fit ul { list-style: none; display: grid; gap: 1rem; }
@@ -166,7 +159,7 @@ useJsonLd(() => ({
 .fit > div:last-child  li::before { content: '\2212'; color: var(--ink-mute); }
 
 @media (min-width: 880px) {
-  .includes { grid-template-columns: 1fr 1fr; column-gap: clamp(2rem, 5vw, 5rem); }
+  .includes { grid-template-columns: 1fr 1fr; }
   .cols { grid-template-columns: 1fr 1fr; }
   .fit { grid-template-columns: 1fr 1fr; }
 }

@@ -391,8 +391,7 @@ onBeforeUnmount(() => {
           ref="copyEls"
           class="copy"
         >
-          <p class="kicker">{{ tr(scene.kicker) }}</p>
-          <h2 class="title">{{ tr(scene.heading) }}</h2>
+          <h2 class="title breaks">{{ tr(scene.heading) }}</h2>
           <p class="lede">{{ tr(scene.body) }}</p>
           <a v-if="scene.action" class="action" href="#contact">
             {{ scene.action === 'call' ? tr(cta.call) : tr(cta.primary) }}
@@ -401,7 +400,7 @@ onBeforeUnmount(() => {
         </article>
       </div>
 
-      <button class="skip" type="button" @click="skip">
+      <button class="skipStory" type="button" @click="skip">
         {{ tr({ fr: 'Passer l’animation', en: 'Skip the animation' }) }}
       </button>
 
@@ -441,30 +440,53 @@ onBeforeUnmount(() => {
   margin-inline: auto;
 }
 
-.copy { max-width: var(--measure-wide); }
+/* Le bloc ne se borne plus : c'est le chapô qui porte sa propre mesure
+   (`.lede`, 54 ch), et le titre qui règle la sienne par son corps. Un cap
+   commun aux deux forçait le titre à se replier sur quatre lignes. */
+.copy { max-width: none; }
 
+/* Les titres du récit portent des césures écrites à la main dans
+   `content/site.ts`, et la charte impose deux lignes au maximum **à toutes
+   les largeurs**. Le corps se règle donc sur la largeur réellement
+   disponible — la fenêtre moins les deux gouttières — et non sur la fenêtre :
+   mesurée au navigateur, la ligne la plus longue (« La plupart des sites
+   sont ») fait 1184 px à 96 px, soit 0,0811 px de large par pixel de corps ; le
+   coefficient retenu est 0,0790, une marge de 3 % — à égalité exacte le
+   navigateur replie quand même.
+   Le plancher est à 2 rem, taille minimale de Syne. */
 .title {
-  font-size: var(--fs-3xl);
-  margin: 0.5rem 0 1.25rem;
-  white-space: pre-line;
+  font-size: clamp(2rem, calc(0.0790 * (100vw - 2 * var(--gutter))), 6rem);
+  margin: 0 0 1.25rem;
 }
 
+/* Bouton plein, et non une boîte contournée de 1 px : l'aplat vermillon est
+   l'action principale de l'ouverture. Au survol le fond s'assombrit et le
+   texte passe en papier — l'encre ne tient que 3,50 sur `--signal-deep`. */
 .action {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   margin-top: 2rem;
-  padding: 0.95rem 1.6rem;
-  border: 1px solid var(--signal);
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--signal);
   color: var(--ink);
   font-size: var(--fs-sm);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+  font-weight: 500;
+  transition:
+    background var(--duration-press) var(--ease-out),
+    color var(--duration-press) var(--ease-out);
 }
-.action:hover { background: var(--signal); }
+.action:hover { background: var(--signal-deep); color: var(--paper); }
 
-.skip, .progress { display: none; }
+/* `skipStory`, et non `skip` : `.skip` est l'utilitaire global du lien
+   d'évitement (app.vue), qui pose `position:absolute; left:-9999px; top:0;
+   z-index:999`. Un style scoped n'annule pas une règle globale de même
+   spécificité — le bouton héritait donc de `left:-9999px` et de `top:0`, et
+   comme la règle épinglée ci-dessous lui donne `right` et `bottom`, il
+   s'étirait en une boîte de dix mille pixels par-dessus tout le récit, à
+   z-index 999. Invisible tant que son fond était `none`, mais elle
+   interceptait déjà les clics sur le texte et sur le bouton d'appel. */
+.skipStory, .progress { display: none; }
 
 /* ------------------------------------------------------------------------
    Ne pas écrire `:global(html[...]) .story` : le compilateur de styles
@@ -520,9 +542,9 @@ html[data-story='pinned'] .copy {
   left: var(--gutter);
   right: var(--gutter);
   bottom: clamp(5rem, 12vh, 9rem);
-  /* Largeur réglée sur le titre, pas sur le texte : à ~92 px, une mesure en
-     `ch` de corps de texte couperait « Une structure » en deux. */
-  max-width: min(42rem, 46vw);
+  /* Aucun cap : les bords gauche et droit sont déjà posés sur les gouttières,
+     et c'est le corps du titre qui garantit la règle des deux lignes. Le
+     cap précédent (42 rem) la rendait impossible à tenir. */
   opacity: 0;
   visibility: hidden;
   will-change: opacity, transform;
@@ -531,25 +553,21 @@ html[data-story='pinned'] .copy {
 /* Le texte reste cliquable et sélectionnable ; seule la couche est neutre. */
 html[data-story='pinned'] .copy > * { pointer-events: auto; }
 
-html[data-story='pinned'] .skip {
+html[data-story='pinned'] .skipStory {
   display: block;
   position: absolute;
   right: var(--gutter);
   bottom: 1.5rem;
-  background: none;
-  border: 1px solid var(--hairline);
-  color: var(--ink-mute);
-  padding: 0.5rem 1rem;
+  background: var(--paper-raise);
+  border: 0;
+  color: var(--ink-soft);
+  padding: 0.55rem 1rem;
   font-size: var(--fs-xs);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-weight: 500;
   cursor: pointer;
-  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+  transition: color var(--duration-press) var(--ease-out);
 }
-html[data-story='pinned'] .skip:hover {
-  color: var(--ink);
-  border-color: var(--paper-line);
-}
+html[data-story='pinned'] .skipStory:hover { color: var(--ink); }
 
 html[data-story='pinned'] .progress {
   display: block;
@@ -558,7 +576,7 @@ html[data-story='pinned'] .progress {
   right: 0;
   bottom: 0;
   height: 2px;
-  background: var(--hairline-soft);
+  background: var(--outline);
 }
 html[data-story='pinned'] .progress i {
   display: block;
@@ -573,8 +591,7 @@ html[data-story='pinned'] .progress i {
   html[data-story='pinned'] .copy {
     bottom: auto;
     top: 14vh;
-    max-width: none;
   }
-  html[data-story='pinned'] .skip { bottom: 1rem; right: 1rem; }
+  html[data-story='pinned'] .skipStory { bottom: 1rem; right: 1rem; }
 }
 </style>

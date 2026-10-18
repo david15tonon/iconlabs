@@ -9,8 +9,7 @@ import { prefixOf } from '~/composables/useSite'
  * `event.context.locale` (server/middleware/geo-locale.ts) : les deux
  * décisions concordent, donc l'hydratation ne signale aucun écart.
  */
-export default defineNuxtRouteMiddleware((to, from) => {
-  if (import.meta.client) console.log('[dbg] mw', from.fullPath, '->', to.fullPath)
+export default defineNuxtRouteMiddleware((to) => {
   const prefix = prefixOf(to.path)
   if (!prefix) return
 

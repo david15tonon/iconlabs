@@ -9,7 +9,7 @@ const year = new Date().getFullYear()
   <footer class="foot">
     <div class="shell inner">
       <div class="brand">
-        <img src="/brand/lockup-ink.svg" :alt="brand.wordmark" width="292" height="64" />
+        <img src="/brand/lockup-ink.svg" :alt="brand.wordmark" width="600" height="483" />
         <p>{{ tr(brand.tagline) }}</p>
         <p class="origin">{{ tr(brand.origin) }}</p>
       </div>
@@ -42,23 +42,34 @@ const year = new Date().getFullYear()
 </template>
 
 <style scoped>
-.foot { border-top: 1px solid var(--hairline); padding-top: clamp(3rem, 6vw, 5rem); }
+/* Le pied de page suit toujours un aplat vermillon — la section contact sur
+   la home, le bloc d'appel sur les pages internes. Le filet qui l'ouvrait
+   doublait donc une séparation déjà faite par le ton ; il a disparu, comme
+   celui qui détachait la ligne légale. */
+.foot { padding-top: clamp(3rem, 6vw, 5rem); }
 .inner {
   display: grid;
   gap: 2.5rem;
   padding-bottom: clamp(3rem, 6vw, 5rem);
 }
-.brand img { width: 148px; height: auto; margin-bottom: 1.25rem; }
+.brand img { width: 148px; height: auto; margin-bottom: 1.5rem; }
 .brand p { color: var(--ink-mute); font-size: var(--fs-sm); }
-.origin { color: var(--signal-deep) !important; letter-spacing: 0.14em; text-transform: uppercase; font-size: var(--fs-xs) !important; margin-top: 0.5rem; }
+.origin {
+  color: var(--signal-deep) !important;
+  font-size: var(--fs-xs) !important;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
 
 .col { display: grid; gap: 0.6rem; align-content: start; }
+/* Titre de colonne : casse de phrase et graisse 500, plus de capitales
+   espacées en monospace. */
 .col h2 {
-  font-family: var(--label);
-  font-size: var(--fs-xs);
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
   color: var(--ink);
   margin-bottom: 0.4rem;
 }
@@ -66,7 +77,7 @@ const year = new Date().getFullYear()
   font-size: var(--fs-sm);
   color: var(--ink-mute);
   justify-self: start;
-  transition: color 0.3s var(--ease);
+  transition: color var(--duration-press) var(--ease-out);
 }
 .col a:hover { color: var(--ink); }
 
@@ -76,7 +87,6 @@ const year = new Date().getFullYear()
   gap: 1rem;
   justify-content: space-between;
   padding-bottom: 2.5rem;
-  border-top: 1px solid var(--hairline-soft);
   padding-top: 1.5rem;
   font-size: var(--fs-xs);
   color: var(--ink-mute);

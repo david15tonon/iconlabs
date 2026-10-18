@@ -22,12 +22,6 @@ const route = useRoute()
  * le cookie ne doit suivre que l'adresse d'entrée.
  */
 onMounted(() => {
-  const r = useRouter()
-  const push = r.push.bind(r), rep = r.replace.bind(r)
-  // @ts-expect-error debug
-  r.push = (...a) => { console.log('[dbg] push', JSON.stringify(a[0]), new Error().stack?.split('\n').slice(1, 5).join(' <- ')); return push(...a) }
-  // @ts-expect-error debug
-  r.replace = (...a) => { console.log('[dbg] replace', JSON.stringify(a[0]), new Error().stack?.split('\n').slice(1, 5).join(' <- ')); return rep(...a) }
   const prefix = prefixOf(route.path)
   if (prefix) setLocale(prefix.slice(1) as 'fr' | 'en')
 })

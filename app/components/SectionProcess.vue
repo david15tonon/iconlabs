@@ -8,8 +8,7 @@ const { tr, localePath } = useLocale()
   <section id="process" class="section bg">
     <div class="shell">
       <header class="sectionHead" v-reveal>
-        <p class="kicker"><span class="kicker-num">{{ processIntro.index }}</span>{{ tr(processIntro.kicker) }}</p>
-        <h2>{{ tr(processIntro.heading) }}</h2>
+        <h2 class="breaks">{{ tr(processIntro.heading) }}</h2>
       </header>
 
       <ol class="steps">
@@ -17,7 +16,7 @@ const { tr, localePath } = useLocale()
           <span class="num">{{ step.num }}</span>
           <h3>{{ tr(step.title) }}</h3>
           <p>{{ tr(step.body) }}</p>
-          <span class="meta">{{ tr(step.meta) }}</span>
+          <span class="meta label">{{ tr(step.meta) }}</span>
         </li>
       </ol>
 
@@ -29,45 +28,40 @@ const { tr, localePath } = useLocale()
 </template>
 
 <style scoped>
-.more {
-  display: inline-block;
-  margin-top: clamp(2rem, 4vw, 3.5rem);
-  font-family: var(--label);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--signal-deep);
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 0.25rem;
-  transition: color 0.3s var(--ease);
-}
-.more::after { content: ' \2192'; }
-.more:hover { color: var(--ink); }
+/* Bande blanche, et les étapes posées dessus sans panneau ni filet : la
+   grille de 1 px qui les séparait était un filet déguisé en gouttière. Seul
+   l'espace les tient maintenant.
 
+   Le numéro reste, et lui seul : c'est un vrai `<ol>`, l'ordre des étapes
+   compte, et la charte autorise la numérotation à cette condition. */
 .bg { background: var(--paper-raise); }
 
 .steps {
   list-style: none;
   display: grid;
-  gap: 1px;
-  background: var(--hairline);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: clamp(2rem, 3.5vw, 3rem);
 }
 .steps li {
-  background: var(--paper-raise);
-  padding: clamp(1.5rem, 2.5vw, 2.25rem);
   display: grid;
   align-content: start;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
-.num { font-size: var(--fs-xs); color: var(--signal-deep); letter-spacing: 0.2em; }
-.steps h3 { font-size: var(--fs-lg); font-weight: 700; }
+.num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-deep); }
+.steps h3 { font-size: var(--fs-lg); }
 .steps p { color: var(--ink-soft); font-size: var(--fs-sm); }
-.meta {
-  font-size: var(--fs-xs);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-top: 0.4rem;
+.meta { margin-top: 0.4rem; }
+
+.more {
+  display: inline-block;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--signal-deep);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.2rem;
+  transition: color var(--duration-press) var(--ease-out);
 }
+.more::after { content: ' \2192'; }
+.more:hover { color: var(--ink); }
 </style>
