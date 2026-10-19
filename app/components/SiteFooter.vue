@@ -9,7 +9,7 @@ const year = new Date().getFullYear()
   <footer class="foot">
     <div class="shell inner">
       <div class="brand">
-        <img src="/brand/lockup-ink.svg" :alt="brand.wordmark" width="600" height="483" />
+        <img src="/brand/lockup.svg" :alt="brand.wordmark" width="600" height="483" />
         <p>{{ tr(brand.tagline) }}</p>
         <p class="origin">{{ tr(brand.origin) }}</p>
       </div>
@@ -53,9 +53,9 @@ const year = new Date().getFullYear()
   padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 .brand img { width: 148px; height: auto; margin-bottom: 1.5rem; }
-.brand p { color: var(--ink-mute); font-size: var(--fs-sm); }
+.brand p { color: var(--on-ground-mute); font-size: var(--fs-sm); }
 .origin {
-  color: var(--signal-deep) !important;
+  color: var(--signal-text) !important;
   font-size: var(--fs-xs) !important;
   font-weight: 500;
   margin-top: 0.5rem;
@@ -70,16 +70,16 @@ const year = new Date().getFullYear()
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0;
-  color: var(--ink);
+  color: var(--on-ground);
   margin-bottom: 0.4rem;
 }
 .col a {
   font-size: var(--fs-sm);
-  color: var(--ink-mute);
+  color: var(--on-ground-mute);
   justify-self: start;
   transition: color var(--duration-press) var(--ease-out);
 }
-.col a:hover { color: var(--ink); }
+.col a:hover { color: var(--on-ground); }
 
 .legal {
   display: flex;
@@ -89,7 +89,7 @@ const year = new Date().getFullYear()
   padding-bottom: 2.5rem;
   padding-top: 1.5rem;
   font-size: var(--fs-xs);
-  color: var(--ink-mute);
+  color: var(--on-ground-mute);
 }
 
 @media (min-width: 680px) { .inner { grid-template-columns: repeat(3, 1fr); } }

@@ -35,7 +35,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'theme-color', content: '#F4F1EC' }  // --paper, cf. BRAND.md,
+        { name: 'theme-color', content: '#0B0B0B' }  // --ground, cf. DESIGN.md,
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/brand/favicon.svg' },
@@ -45,11 +45,11 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         /* Deux familles, et seulement deux (DESIGN.md § Typography).
-           Syne en 700 et 800 porte l'affichage ; Instrument Sans en 400 et
-           500 porte tout ce qui se lit. Martian Mono disparaît : elle servait
-           aux étiquettes et aux numéros de section, deux dispositifs
-           supprimés, et la charte réserve la monospace au code littéral —
-           il n'y en a aucun sur le site, DM Mono n'est donc pas chargée.
+           Syne en 700 et 800 porte l'affichage ; DM Mono en 300, 400 et 500
+           porte tout ce qui se lit. Ce sont les deux familles de la charte
+           de marque `iconlabs-brand.html`, qui fait loi depuis le
+           2026-10-18. Instrument Sans disparaît avec la version alpha de
+           DESIGN.md, qui prétendait remplacer cette charte.
            `css2` sert latin et latin-ext dans la même feuille, découpés par
            `unicode-range` : les accents français sont couverts. */
         {
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
           href:
             'https://fonts.googleapis.com/css2' +
             '?family=Syne:wght@700;800' +
-            '&family=Instrument+Sans:wght@400;500' +
+            '&family=DM+Mono:wght@300;400;500' +
             '&display=swap',
         },
       ],

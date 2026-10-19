@@ -469,14 +469,14 @@ onBeforeUnmount(() => {
   margin-top: 2rem;
   padding: var(--sp-md) var(--sp-lg);
   background: var(--signal);
-  color: var(--ink);
+  color: var(--on-ground);
   font-size: var(--fs-sm);
   font-weight: 500;
   transition:
     background var(--duration-press) var(--ease-out),
     color var(--duration-press) var(--ease-out);
 }
-.action:hover { background: var(--signal-deep); color: var(--paper); }
+.action:hover { background: var(--signal-text); color: var(--ground); }
 
 /* `skipStory`, et non `skip` : `.skip` est l'utilitaire global du lien
    d'évitement (app.vue), qui pose `position:absolute; left:-9999px; top:0;
@@ -511,7 +511,7 @@ html[data-story='pinned'] .stage {
   top: 0;
   height: 100svh;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--ground);
 }
 
 html[data-story='pinned'] .poster {
@@ -558,16 +558,16 @@ html[data-story='pinned'] .skipStory {
   position: absolute;
   right: var(--gutter);
   bottom: 1.5rem;
-  background: var(--paper-raise);
+  background: var(--ground-raise);
   border: 0;
-  color: var(--ink-soft);
+  color: var(--on-ground-soft);
   padding: 0.55rem 1rem;
   font-size: var(--fs-xs);
   font-weight: 500;
   cursor: pointer;
   transition: color var(--duration-press) var(--ease-out);
 }
-html[data-story='pinned'] .skipStory:hover { color: var(--ink); }
+html[data-story='pinned'] .skipStory:hover { color: var(--on-ground); }
 
 html[data-story='pinned'] .progress {
   display: block;

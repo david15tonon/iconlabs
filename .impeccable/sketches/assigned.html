@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Icon Labs — trois passes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0B0B0B; --white:#FFFFFF;
+    --blue:#2563EB; --purple:#7C3AED; --green:#10B981;
+    --g1:#141414; --g2:#1E1E1E; --g3:#2A2A2A; --g5:#8A8A86; --g6:#BBBBB5;
+    --pad:56px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{width:1440px;background:var(--black);color:var(--white);
+       font-family:'DM Mono',monospace;font-size:14px;position:relative}
+  ::selection{background:var(--blue);color:var(--white)}
+  h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-.035em}
+
+  /* Les repères de calage : la marque d'une sérigraphie, une croix par encre,
+     volontairement décalées de 2 px — c'est le décalage qui prouve les passes. */
+  .reg{position:absolute;width:26px;height:26px}
+  .reg::before,.reg::after{content:'';position:absolute;background:currentColor}
+  .reg::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-.5px)}
+  .reg::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-.5px)}
+  .reg.b{color:var(--blue)} .reg.p{color:var(--purple);transform:translate(2px,2px)}
+  .reg.g{color:var(--green);transform:translate(-2px,2px)}
+
+  header{position:sticky;top:0;height:92px;padding:0 var(--pad);background:var(--black);
+         display:flex;align-items:center;justify-content:space-between;z-index:20}
+  .lockup{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em}
+  .lockup i{font-style:normal;color:var(--green)}
+  nav{display:flex;align-items:center;gap:30px;font-size:13px;letter-spacing:.04em;color:var(--g6)}
+  .lang b{color:var(--white);font-weight:400}
+  .cta{background:var(--blue);color:var(--white);padding:11px 20px;font-size:13px;
+       letter-spacing:.03em;font-weight:500}
+
+  /* ---------------------------------------------------- 01 · la feuille */
+  .sheet{position:relative;padding:34px var(--pad) 0;min-height:760px;
+         display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:64px;align-content:start}
+  .sheet>*{min-width:0}
+  h1{font-weight:800;font-size:104px;line-height:.88;letter-spacing:-.045em;text-transform:uppercase}
+  /* Une ligne par passe d'encre. Le blanc est le papier qui traverse. */
+  h1 .l1{color:var(--white);display:block}
+  h1 .l2{color:var(--blue);display:block;margin-left:.06em}
+  h1 .l3{color:var(--white);display:block}
+  h1 em{font-style:normal;color:var(--green)}
+  .credits{margin-top:40px;font-size:14px;line-height:1.75;color:var(--g6);max-width:52ch}
+  .credits b{color:var(--white);font-weight:500}
+  /* La ligne d'imprimeur : elle se signe au pied de la feuille, pas au-dessus
+     du titre — un colophon, jamais une étiquette. */
+  .colophon{grid-column:1/-1;margin-top:56px;padding:16px 0 0;border-top:1px solid var(--g3);
+            display:flex;justify-content:space-between;font-size:13px;color:var(--g5);letter-spacing:.06em}
+
+  /* Le bloc de dates d'une affiche de concert = les créneaux d'appel réels. */
+  .dates{border-top:2px solid var(--white);padding-top:18px}
+  .dates h2{font-weight:700;font-size:15px;letter-spacing:.02em;text-transform:uppercase;margin-bottom:4px}
+  .dates p{font-size:13px;color:var(--g6);margin-bottom:20px}
+  .slot{display:flex;align-items:baseline;justify-content:space-between;
+        padding:13px 0;border-bottom:1px solid var(--g3)}
+  .slot .d{font-family:'Syne',sans-serif;font-weight:700;font-size:21px;letter-spacing:-.02em}
+  .slot .h{font-size:13px;color:var(--g6)}
+  .slot .go{font-size:13px;color:var(--white);letter-spacing:.06em}
+  .slot.full .d,.slot.full .h,.slot.full .go{color:var(--g5)}
+  .book{display:block;margin-top:22px;background:var(--white);color:var(--black);
+        text-align:center;padding:15px;font-size:13px;font-weight:500;letter-spacing:.02em}
+
+  /* La barre d'encres : 80 / 15 / 5 / 5, rendue littérale. Elle sépare les
+     passes au lieu d'un filet. */
+  .inks{display:flex;height:34px;margin:0 var(--pad);font-size:13px;letter-spacing:.08em}
+  .inks span{display:flex;align-items:center;padding-left:10px}
+  .i-k{flex:80;background:var(--g2);color:var(--g6)}
+  .i-b{flex:15;background:var(--blue);color:var(--white)}
+  .i-p{flex:5;background:var(--purple);color:var(--white)}
+  .i-g{flex:5;background:var(--green);color:var(--black)}
+
+  section{padding:104px var(--pad) 0;position:relative}
+  .lede{font-size:15px;line-height:1.8;color:var(--g6);max-width:62ch}
+  h2.big{font-weight:800;font-size:60px;line-height:.95;text-transform:uppercase}
+  h2.big em{font-style:normal;color:var(--blue)}
+
+  /* ------------------------------------------------- 02 · les repères */
+  /* Trois engagements, une encre chacun. Pas des moyennes : des promesses. */
+  .marks{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px}
+  .mk{padding:30px 28px 26px;border-top:3px solid}
+  .mk:nth-child(1){border-color:var(--white)}
+  .mk:nth-child(2){border-color:var(--blue)}
+  .mk:nth-child(3){border-color:var(--green)}
+  .mk .v{font-family:'Syne',sans-serif;font-weight:800;font-size:72px;line-height:1;letter-spacing:-.045em}
+  .mk:nth-child(2) .v{color:var(--blue)} .mk:nth-child(3) .v{color:var(--green)}
+  .mk .l{margin-top:12px;font-size:13px;line-height:1.6;color:var(--g6);max-width:26ch}
+
+  /* ------------------------------------------- 03 · les six compétences */
+  /* Six passes d'encre, pas six cartes : chaque ligne est une bande pleine
+     largeur, son nom en grand, sa matière à droite. */
+  .pass{display:grid;grid-template-columns:52px 1fr 1fr;gap:26px;align-items:baseline;
+        padding:26px 0;border-top:1px solid var(--g3)}
+  .pass:last-child{border-bottom:1px solid var(--g3)}
+  .pass .n{font-size:13px;color:var(--g5)}
+  .pass h3{font-weight:700;font-size:34px;letter-spacing:-.03em}
+  .pass:nth-child(2) h3{color:var(--blue)}
+  .pass:nth-child(4) h3{color:var(--green)}
+  .pass:nth-child(6) h3{color:var(--purple)}
+  .pass p{font-size:13px;line-height:1.7;color:var(--g6)}
+
+  /* --------------------------------------------- 04 · les réalisations */
+  /* La face de chaque réalisation est un résumé complet en soi : on n'a pas
+     besoin de l'ouvrir pour savoir ce qui a été construit. */
+  .works{margin-top:44px;border-top:2px solid var(--white)}
+  .w{display:grid;grid-template-columns:48px 1fr 290px 132px;gap:28px;align-items:start;
+     padding:28px 0;border-bottom:1px solid var(--g3)}
+  .w .n{font-size:13px;color:var(--g5);padding-top:10px}
+  .w h3{font-weight:700;font-size:38px;line-height:1;letter-spacing:-.035em}
+  .w .pl{margin-top:9px;font-size:13px;color:var(--g6)}
+  .w .mt{font-size:13px;line-height:1.7;color:var(--g6);padding-top:6px}
+  .w .cat{justify-self:end;font-size:13px;letter-spacing:.06em;padding:4px 9px;
+          background:var(--g2);color:var(--g6);white-space:nowrap}
+  .w.live .cat{background:var(--green);color:var(--black)}
+  .w.wip h3{color:var(--g6)} .w.wip .cat{background:var(--g3);color:var(--white)}
+  .w.hl h3{color:var(--blue)}
+
+  /* --------------------------------------------- 05 · notre différence */
+  .diff{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px}
+  .dcell{padding:32px 30px;border-left:1px solid var(--g3)}
+  .dcell:first-child{border-left:0;padding-left:0}
+  .dcell h3{font-weight:700;font-size:21px;letter-spacing:-.02em;margin-bottom:14px}
+  .dcell p{font-size:13px;line-height:1.75;color:var(--g6)}
+
+  /* ------------------------------------------------------ 06 · méthode */
+  /* Quatre passes dans l'ordre : la séquence porte l'information, les numéros
+     sont donc du contenu et non de la décoration. */
+  .steps{margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr)}
+  .st{padding:26px 24px 30px;border-top:3px solid var(--g3)}
+  .st:nth-child(1){border-color:var(--white)}
+  .st:nth-child(2){border-color:var(--blue)}
+  .st:nth-child(3){border-color:var(--purple)}
+  .st:nth-child(4){border-color:var(--green)}
+  .st .n{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em}
+  .st h3{font-weight:700;font-size:20px;margin:14px 0 10px;letter-spacing:-.02em}
+  .st p{font-size:13px;line-height:1.7;color:var(--g6)}
+  .st .m{margin-top:14px;font-size:13px;color:var(--g5);letter-spacing:.05em}
+
+  /* ------------------------------------------------------- 07 · studio */
+  .studio{display:grid;grid-template-columns:1fr 420px;gap:72px;align-items:start}
+  .studio .body p{font-size:15px;line-height:1.85;color:var(--g6);margin-top:18px;max-width:58ch}
+  .crew{border-top:2px solid var(--white);padding-top:18px}
+  .crew .p{display:flex;justify-content:space-between;align-items:baseline;
+           padding:14px 0;border-bottom:1px solid var(--g3)}
+  .crew .p b{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em}
+  .crew .p span{font-size:13px;color:var(--g6)}
+  .vals{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+  .vals span{font-size:13px;letter-spacing:.05em;padding:5px 11px;background:var(--g2);color:var(--g6)}
+
+  /* ---------------------------------------------------------- 08 · FAQ */
+  .faq{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+  .qa{padding:24px 0;border-top:1px solid var(--g3)}
+  .qa h3{font-weight:700;font-size:19px;letter-spacing:-.02em;margin-bottom:10px}
+  .qa p{font-size:13px;line-height:1.75;color:var(--g6)}
+
+  /* ------------------------------------------------------ 09 · contact */
+  /* Dernière passe : l'encre bleue prend toute la feuille. */
+  .contact{margin-top:112px;background:var(--blue);padding:84px var(--pad) 72px;
+           display:grid;grid-template-columns:1fr 440px;gap:72px;position:relative}
+  .contact h2{font-weight:800;font-size:66px;line-height:.95;text-transform:uppercase;letter-spacing:-.04em}
+  .contact .lede{color:#D7E3FD;margin-top:22px;max-width:46ch}
+  .form label{display:block;font-size:13px;letter-spacing:.06em;color:#D7E3FD;margin:0 0 7px}
+  .form .fld{background:transparent;border:1px solid #6E9AF5;padding:13px 14px;
+             color:var(--white);font-size:14px;margin-bottom:18px}
+  .form .fld.area{height:96px}
+  .form .send{background:var(--white);color:var(--blue);padding:15px;text-align:center;
+              font-weight:500;font-size:14px;letter-spacing:.02em}
+  .orb{margin-top:18px;font-size:13px;color:#D7E3FD;text-align:center}
+
+  footer{padding:46px var(--pad) 40px;display:flex;justify-content:space-between;
+         align-items:flex-end;font-size:13px;color:var(--g5)}
+  footer .cols{display:flex;gap:64px}
+  footer .cols div{display:flex;flex-direction:column;gap:9px}
+  footer .cols b{color:var(--white);font-weight:500;font-family:'Syne',sans-serif;font-size:13px;letter-spacing:.04em}
+  footer a{color:var(--g6);text-decoration:none}
+</style></head><body>
+
+  <div class="reg b" style="left:18px;top:110px"></div>
+  <div class="reg p" style="left:18px;top:110px"></div>
+  <div class="reg g" style="right:18px;top:110px"></div>
+
+  <header>
+    <div class="lockup">ICON LABS<i>.</i></div>
+    <nav>
+      <span>Ce que nous faisons</span><span>Réalisations</span><span>Méthode</span><span>Le labo</span>
+      <span class="lang"><b>FR</b> / EN</span>
+      <span class="cta">Réserver un appel</span>
+    </nav>
+  </header>
+
+  <!-- 01 · LA FEUILLE ------------------------------------------------- -->
+  <div class="sheet">
+    <div>
+      <h1><span class="l1">De l'idée</span><span class="l2">au système</span><span class="l3">en <em>production</em>.</span></h1>
+      <div class="credits">
+        Laboratoire d'ingénierie AI indépendant. Agents, RAG, plateformes,
+        automatisation — nous construisons les systèmes et nous les mettons en
+        production.<br>
+        <b>Sept livrés</b> — Cotonou, Lomé, Abidjan · <b>Six compétences</b> · Le prix se discute en appel.
+      </div>
+    </div>
+
+    <aside class="dates">
+      <h2>Prochains créneaux</h2>
+      <p>Appel de 30 min, gratuit, sans engagement.</p>
+      <div class="slot"><span class="d">Lun 20</span><span class="h">09:00 GMT+1</span><span class="go">RÉSERVER</span></div>
+      <div class="slot"><span class="d">Lun 20</span><span class="h">14:30 GMT+1</span><span class="go">RÉSERVER</span></div>
+      <div class="slot full"><span class="d">Mar 21</span><span class="h">complet</span><span class="go">—</span></div>
+      <div class="slot"><span class="d">Mer 22</span><span class="h">11:00 GMT+1</span><span class="go">RÉSERVER</span></div>
+      <span class="book">Voir tout le calendrier</span>
+    </aside>
+
+    <div class="colophon">
+      <span>ICON LABS · LABORATOIRE D'INGÉNIERIE AI · COTONOU, BÉNIN</span>
+      <span>BUILT IN WEST AFRICA. SCALED WORLDWIDE.</span>
+      <span>QUATRE ENCRES · NOIR, BLEU, VIOLET, VERT</span>
+    </div>
+  </div>
+
+  <div class="inks" style="margin-top:56px">
+    <span class="i-k">NOIR / BLANC — 80</span>
+    <span class="i-b">BLEU 15</span>
+    <span class="i-p">VIOLET 5</span>
+    <span class="i-g">VERT 5</span>
+  </div>
+
+  <!-- 02 · LES REPÈRES ------------------------------------------------ -->
+  <section>
+    <h2 class="big">Des engagements,<br>pas des <em>moyennes</em>.</h2>
+    <div class="marks">
+      <div class="mk"><div class="v">2–4</div><div class="l">semaines du brief à la mise en ligne</div></div>
+      <div class="mk"><div class="v">100 %</div><div class="l">du code transféré à la livraison</div></div>
+      <div class="mk"><div class="v">0</div><div class="l">chef de projet entre vous et l'ingénieur</div></div>
+    </div>
+  </section>
+
+  <!-- 03 · CE QUE NOUS FAISONS ---------------------------------------- -->
+  <section>
+    <h2 class="big">Ce que nous<br>faisons.</h2>
+    <p class="lede" style="margin-top:22px">Six compétences, tenues par la même équipe. Rien n'est sous-traité.</p>
+    <div style="margin-top:44px">
+      <div class="pass"><span class="n">01</span><h3>Produits IA</h3><p>Agents, intégration LLM, RAG, chatbots, pipelines de données. De la preuve de concept au système qui tourne devant des clients réels.</p></div>
+      <div class="pass"><span class="n">02</span><h3>Plateformes & SaaS</h3><p>Applications web, tableaux de bord, outils internes. Architecture, interface et déploiement sortent de la même table.</p></div>
+      <div class="pass"><span class="n">03</span><h3>Automatisation</h3><p>n8n, Make, Zapier, scripts sur mesure. Les tâches répétitives quittent vos équipes et deviennent des flux surveillés.</p></div>
+      <div class="pass"><span class="n">04</span><h3>Recherche & prototypage</h3><p>Recherche appliquée et prototypes rapides, pour trancher une question technique avant d'engager un budget de production.</p></div>
+      <div class="pass"><span class="n">05</span><h3>MVP en 2 à 4 semaines</h3><p>De l'idée au produit fonctionnel. Périmètre écrit, jalons datés, sources transférées à la livraison.</p></div>
+      <div class="pass"><span class="n">06</span><h3>Sites & expériences</h3><p>Sites sur mesure, direction artistique et mouvement compris. Une compétence parmi six, jamais l'identité de la maison.</p></div>
+    </div>
+  </section>
+
+  <!-- 04 · LES RÉALISATIONS ------------------------------------------- -->
+  <section>
+    <h2 class="big">Sept systèmes,<br>en <em>production</em>.</h2>
+    <p class="lede" style="margin-top:22px">Clients réels, nommés avec leur accord. Chaque ligne dit ce qui a été construit : il n'y a rien à ouvrir pour le savoir.</p>
+    <div class="works">
+      <div class="w live"><span class="n">01</span><div><h3>MIA CORPORATE</h3><div class="pl">Beauté &amp; bien-être · Cotonou, Bénin</div></div><div class="mt">Agent de qualification sur base documentaire, réservation en trois étapes, relances automatiques. RAG, agents, Cal.com, EmailJS.</div><span class="cat">FULL AI MVP</span></div>
+      <div class="w live"><span class="n">02</span><div><h3>AURORA PÂTISSERIE</h3><div class="pl">Restauration &amp; pâtisserie · Lomé, Togo</div></div><div class="mt">Refonte du catalogue, moteur de recommandations, commandes WhatsApp automatisées.</div><span class="cat">PRODUCTION SPRINT</span></div>
+      <div class="w live hl"><span class="n">03</span><div><h3>TRANSKO</h3><div class="pl">Logistique &amp; transport · Cotonou, Bénin</div></div><div class="mt">Agent d'affectation des coursiers, optimisation de tournées, tableau de bord expéditeur en temps réel.</div><span class="cat">FULL AI MVP</span></div>
+      <div class="w live"><span class="n">04</span><div><h3>BELLA HAIR STUDIO</h3><div class="pl">Beauté &amp; mode · Abidjan, Côte d'Ivoire</div></div><div class="mt">Assistant conversationnel WhatsApp branché au catalogue, automatisation du service client.</div><span class="cat">PRODUCTION SPRINT</span></div>
+      <div class="w live"><span class="n">05</span><div><h3>IMMO ELITE</h3><div class="pl">Immobilier · Cotonou, Bénin</div></div><div class="mt">Revue d'infrastructure, plan de migration vers une recherche sémantique, feuille de route chiffrée.</div><span class="cat">STACK AUDIT</span></div>
+      <div class="w live"><span class="n">06</span><div><h3>GREEN HARVEST</h3><div class="pl">Agro-alimentaire · Abidjan, Côte d'Ivoire</div></div><div class="mt">Architecture cible des données, priorisation de la feuille de route IA, gouvernance, montée en compétence de l'équipe.</div><span class="cat">FRACTIONAL AI CTO</span></div>
+      <div class="w wip"><span class="n">07</span><div><h3>ADJANI PRIVÉ</h3><div class="pl">Mode, héritage yoruba · Cotonou, Bénin</div></div><div class="mt">E-commerce de marque, direction artistique comprise. Pas encore en ligne — la fiche existe, le lien viendra.</div><span class="cat">EN COURS</span></div>
+    </div>
+  </section>
+
+  <!-- 05 · NOTRE DIFFÉRENCE ------------------------------------------- -->
+  <section>
+    <h2 class="big">Une seule équipe,<br>du premier trait<br>au <em>déploiement</em>.</h2>
+    <p class="lede" style="margin-top:22px">La plupart des prestataires tiennent un maillon : le design, ou le code, ou l'hébergement. Nous tenons la chaîne — et c'est ce qui nous autorise à vous conseiller.</p>
+    <div class="diff">
+      <div class="dcell"><h3>Structure d'abord,<br>effet ensuite</h3><p>Chaque projet commence par une architecture : parcours, hiérarchie, performance. Le mouvement vient après, et il sert le propos. C'est aussi pourquoi les sites que nous livrons restent rapides.</p></div>
+      <div class="dcell"><h3>Pas<br>d'intermédiaire</h3><p>Chaque projet appartient à un ingénieur qui a déjà livré en production. Vous lui parlez directement, chaque semaine, démo à l'appui. Il n'y a personne à prévenir avant lui.</p></div>
+      <div class="dcell"><h3>Autonome<br>à la livraison</h3><p>Transfert de propriété, documentation, accès. La maintenance mensuelle existe, elle n'est jamais imposée : personne ne reste client parce qu'il ne peut pas partir.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 · MÉTHODE ----------------------------------------------------- -->
+  <section>
+    <h2 class="big">Du brief à la<br>mise en ligne.</h2>
+    <div class="steps">
+      <div class="st"><div class="n">01</div><h3>Appel de cadrage</h3><p>30 minutes pour comprendre le problème, la stack, le délai et le budget. Pas de pitch.</p><div class="m">GRATUIT · 30 MIN</div></div>
+      <div class="st"><div class="n">02</div><h3>Proposition chiffrée</h3><p>Périmètre, livrables, stack et prix fixe. Vous savez exactement ce que vous achetez avant de signer.</p><div class="m">2–3 JOURS</div></div>
+      <div class="st"><div class="n">03</div><h3>Sprint de conception &amp; build</h3><p>Maquettes animées, puis code. Démo fonctionnelle chaque semaine, communication directe avec l'ingénieur qui construit.</p><div class="m">1–4 SEMAINES</div></div>
+      <div class="st"><div class="n">04</div><h3>Livraison &amp; passation</h3><p>Déploiement, documentation, transfert complet de propriété. Maintenance mensuelle en option, jamais imposée.</p><div class="m">PROPRIÉTÉ TOTALE</div></div>
+    </div>
+  </section>
+
+  <!-- 07 · LE LABO ----------------------------------------------------- -->
+  <section>
+    <div class="studio">
+      <div class="body">
+        <h2 class="big">Trois personnes,<br>une seule table.</h2>
+        <p>Icon Labs est un laboratoire d'ingénierie AI indépendant basé en Afrique de l'Ouest. La direction artistique, le mouvement et le code de production sortent de la même équipe.</p>
+        <p>Pas de chef de projet entre vous et la personne qui construit. Chaque projet appartient à un ingénieur qui a déjà livré en production.</p>
+        <p>Notre flux de travail augmenté par l'IA nous donne une vitesse que les studios traditionnels n'atteignent pas, à un coût qui rend inutile l'embauche d'un CTO à temps plein.</p>
+      </div>
+      <aside>
+        <div class="crew">
+          <div class="p"><b>David Tonon</b><span>Fondateur · Ingénieur IA &amp; web</span></div>
+          <div class="p"><b>Kenneth Kpanou</b><span>Motion designer</span></div>
+          <div class="p"><b>Emmanuel Attiba</b><span>Contenu &amp; croissance</span></div>
+        </div>
+        <div class="vals">
+          <span>Résilience</span><span>Innovation</span><span>Créativité</span>
+          <span>Satisfaction client</span><span>Connaître ses limites</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 08 · FAQ --------------------------------------------------------- -->
+  <section>
+    <h2 class="big">Ce qu'on nous<br>demande le plus.</h2>
+    <div class="faq">
+      <div class="qa"><h3>En combien de temps livrez-vous ?</h3><p>Un sprint se livre en 2 semaines, un MVP complet en 4. Ce sont des engagements, pas des estimations : nous ne prenons pas plus de projets que nous ne pouvons en livrer.</p></div>
+      <div class="qa"><h3>En quoi êtes-vous différents d'un freelance ?</h3><p>Nous fonctionnons comme un laboratoire : design, motion et ingénierie au même endroit, avec des jalons définis. Vous ne coordonnez pas trois prestataires.</p></div>
+      <div class="qa"><h3>Travaillez-vous avec des fondateurs non techniques ?</h3><p>Oui. Notre rôle est de rendre la technique invisible : vous restez sur le produit et le marché, nous prenons l'ingénierie.</p></div>
+      <div class="qa"><h3>À qui appartient le code après livraison ?</h3><p>À vous, entièrement. Transfert de propriété intellectuelle à la livraison, sans verrou ni licence cachée.</p></div>
+      <div class="qa"><h3>Pouvez-vous reprendre une stack existante ?</h3><p>Dans la plupart des cas, oui : Python, TypeScript, React, Next.js, Nuxt, Django, FastAPI, Node, Docker, PostgreSQL. Dites-nous la vôtre pendant l'appel.</p></div>
+      <div class="qa"><h3>Et après la mise en ligne ?</h3><p>30 jours de support inclus. Ensuite, un forfait mensuel de maintenance et d'évolutions, sans engagement de durée.</p></div>
+    </div>
+  </section>
+
+  <!-- 09 · CONTACT ----------------------------------------------------- -->
+  <div class="contact">
+    <div class="reg g" style="right:18px;top:18px"></div>
+    <div>
+      <h2>Parlons de ce que<br>vous construisez.</h2>
+      <p class="lede">Un appel de 30 minutes, gratuit. On regarde votre projet, on vous dit franchement si nous sommes les bons, et si non, vers qui aller.</p>
+    </div>
+    <div class="form">
+      <label>NOM</label><div class="fld">&nbsp;</div>
+      <label>E-MAIL</label><div class="fld">&nbsp;</div>
+      <label>VOTRE PROJET EN DEUX LIGNES</label><div class="fld area">&nbsp;</div>
+      <div class="send">Envoyer</div>
+      <div class="orb">ou réservez directement un créneau · contact@iconlabs.dev</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="cols">
+      <div><b>CE QUE NOUS FAISONS</b><a>Produits IA</a><a>Plateformes &amp; SaaS</a><a>Automatisation</a><a>MVP 2–4 semaines</a></div>
+      <div><b>LE LABO</b><a>Qui nous sommes</a><a>Méthode</a><a>Réalisations</a><a>Questions fréquentes</a></div>
+      <div><b>CONTACT</b><a>contact@iconlabs.dev</a><a>Cotonou, Bénin</a><a>Réserver un appel</a></div>
+    </div>
+    <div style="text-align:right">
+      <div class="lockup" style="font-size:17px">ICON LABS<i>.</i></div>
+      <div style="margin-top:9px">© 2026 · Tous droits réservés.</div>
+    </div>
+  </footer>
+</body></html>

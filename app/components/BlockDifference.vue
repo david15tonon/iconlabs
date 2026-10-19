@@ -23,7 +23,7 @@ const { tr } = useLocale()
 </template>
 
 <style scoped>
-/* Trois colonnes de texte nu sur le papier, et rien d'autre. Le filet qui
+/* Trois colonnes de texte nu sur le sol, et rien d'autre. Le filet qui
    ouvrait la liste a disparu sans être remplacé : la section qui précède est
    une grille de panneaux blancs et celle qui suit est une bande blanche —
    deux sections voisines n'ont jamais la même composition, donc celle-ci est
@@ -35,7 +35,7 @@ const { tr } = useLocale()
 }
 .grid > li { display: grid; align-content: start; gap: 0.75rem; }
 h3 { font-size: var(--fs-lg); }
-p { color: var(--ink-soft); font-size: var(--fs-sm); max-width: var(--measure-tight); }
+p { color: var(--on-ground-soft); font-size: var(--fs-sm); max-width: var(--measure-tight); }
 
 @media (min-width: 880px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 </style>

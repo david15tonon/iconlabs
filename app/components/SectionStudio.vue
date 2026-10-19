@@ -33,7 +33,7 @@ const { tr, localePath } = useLocale()
 </template>
 
 <style scoped>
-/* Section sur le papier : la méthode qui précède est une bande blanche, et
+/* Section sur le sol : la méthode qui précède est une bande surélevée, et
    deux sections voisines ne partagent pas la même composition. Le titre tient
    la colonne de gauche, la prose celle de droite.
 
@@ -43,10 +43,10 @@ const { tr, localePath } = useLocale()
 /* Colonne de gauche d'une grille 1 / 1,15 : le corps se règle sur elle,
    pas sur la page. */
 h2 { font-size: var(--fs-xl); margin-bottom: 1rem; }
-.origin { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-deep); }
+.origin { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-text); }
 
 .prose { display: grid; gap: 1.5rem; }
-.prose p { color: var(--ink-soft); max-width: var(--measure-wide); }
+.prose p { color: var(--on-ground-soft); max-width: var(--measure-wide); }
 
 .team { list-style: none; display: grid; gap: 0.75rem; margin-top: 0.5rem; }
 .team li {
@@ -58,22 +58,22 @@ h2 { font-size: var(--fs-xl); margin-bottom: 1rem; }
   max-width: var(--measure-wide);
 }
 .team strong { font-weight: 500; }
-.team span { color: var(--ink-mute); font-size: var(--fs-sm); }
+.team span { color: var(--on-ground-mute); font-size: var(--fs-sm); }
 
-.values { color: var(--ink-mute) !important; font-size: var(--fs-xs); }
+.values { color: var(--on-ground-mute) !important; font-size: var(--fs-xs); }
 
 .more {
   justify-self: start;
   margin-top: clamp(0.5rem, 2vw, 1rem);
   font-size: var(--fs-sm);
   font-weight: 500;
-  color: var(--signal-deep);
+  color: var(--signal-text);
   border-bottom: 1px solid currentColor;
   padding-bottom: 0.2rem;
   transition: color var(--duration-press) var(--ease-out);
 }
 .more::after { content: ' \2192'; }
-.more:hover { color: var(--ink); }
+.more:hover { color: var(--on-ground); }
 
 @media (min-width: 980px) { .inner { grid-template-columns: 1fr 1.15fr; } }
 </style>

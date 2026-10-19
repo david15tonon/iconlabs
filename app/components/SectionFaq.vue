@@ -35,7 +35,7 @@ const openIndex = ref<number | null>(0)
 </template>
 
 <style scoped>
-/* Chaque question est un panneau blanc sur le papier. Les deux filets qui
+/* Chaque question est un panneau surélevé sur le sol. Les deux filets qui
    réglaient la liste ont disparu : c'est le pas de ton qui dit où une
    question finit et où la suivante commence, et le demi-pas de grille qui
    les espace. */
@@ -57,9 +57,9 @@ button {
   font: inherit;
   transition: color var(--duration-press) var(--ease-out);
 }
-button:hover { color: var(--signal-deep); }
-.sign { color: var(--signal-deep); font-size: var(--fs-lg); }
+button:hover { color: var(--signal-text); }
+.sign { color: var(--signal-text); font-size: var(--fs-lg); }
 
 .answer { padding-bottom: clamp(1.1rem, 2vw, 1.5rem); }
-.answer p { color: var(--ink-soft); max-width: var(--measure-wide); }
+.answer p { color: var(--on-ground-soft); max-width: var(--measure-wide); }
 </style>

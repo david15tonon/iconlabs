@@ -15,8 +15,10 @@ const t = (fr: string, en: string): T => ({ fr, en })
 export const brand = {
   name: 'icon labs',
   wordmark: 'Icon Labs',
-  tagline: t('Structure d’abord, effet ensuite.', 'Structure first, effect second.'),
-  origin: t('Conçu en Afrique de l’Ouest. Déployé partout.', 'Built in West Africa. Shipped worldwide.'),
+  tagline: t('On montre ce qui tourne, pas ce qu’on promet.', 'We show what runs, not what we promise.'),
+  /* Signature de la charte de marque, dans sa formulation exacte : elle ne se
+     traduit pas, c'est une devise. */
+  origin: t('Built in West Africa. Scaled worldwide.', 'Built in West Africa. Scaled worldwide.'),
   email: 'contact@iconlabs.dev',
   domain: 'iconlabs.qzz.io',
   linkedin: 'https://www.linkedin.com/company/iconlabs',   // TODO: confirmer l'URL réelle
@@ -31,10 +33,10 @@ export const brand = {
    vise la home — depuis une page interne, elle y ramène.                    */
 
 export const nav = [
-  { to: '/#story',    label: t('L’approche', 'Approach') },
   { to: '/#services', label: t('Ce que nous faisons', 'What we do') },
+  { to: '/#work',     label: t('Réalisations', 'Work') },
   { to: '/methode',   label: t('Méthode', 'Process') },
-  { to: '/studio',    label: t('Le studio', 'Studio') },
+  { to: '/studio',    label: t('Le labo', 'The lab') },
   { to: '/#contact',  label: t('Contact', 'Contact') },
 ]
 
@@ -51,10 +53,11 @@ export const footerNav = [
     ],
   },
   {
-    title: t('Le studio', 'The studio'),
+    title: t('Le labo', 'The lab'),
     links: [
       { to: '/methode',  label: t('Méthode', 'Process') },
       { to: '/studio',   label: t('Qui nous sommes', 'Who we are') },
+      { to: '/#work',    label: t('Réalisations', 'Work') },
       { to: '/#faq',     label: t('Questions fréquentes', 'Common questions') },
     ],
   },
@@ -66,6 +69,62 @@ export const cta = {
   call:      t('Réserver un appel de 30 min', 'Book a 30-min call'),
   callNote:  t('Gratuit · 30 min · sans engagement', 'Free · 30 min · no commitment'),
 }
+
+/* ------------------------------------------------------------- la feuille */
+/* Le premier écran. Trois lignes, trois passes d'encre : le blanc est le
+   papier qui traverse, le bleu porte le système, le vert porte l'acquis.
+   Les césures sont écrites à la main, calibrées sur `--fs-3xl` (104 px). */
+
+export const hero = {
+  lines: [
+    { ink: 'paper'  as const, fr: 'De l’idée', en: 'From idea' },
+    { ink: 'signal' as const, fr: 'au système', en: 'to a system' },
+    { ink: 'paper'  as const, fr: 'en ', en: 'in ' },
+  ],
+  /* Le dernier mot, sur la troisième ligne, porte la troisième encre. */
+  lastWord: { ink: 'state' as const, ...t('production.', 'production.') },
+  body: t('Laboratoire d’ingénierie AI indépendant. Agents, RAG, plateformes, automatisation — nous construisons les systèmes et nous les mettons en production.',
+          'Independent AI engineering lab. Agents, RAG, platforms, automation — we build the systems and we put them in production.'),
+  facts: t('**Sept livrés** — Cotonou, Lomé, Abidjan · **Six compétences** · Le prix se discute en appel.',
+           '**Seven shipped** — Cotonou, Lomé, Abidjan · **Six capabilities** · Pricing is discussed on the call.'),
+  /* Le bloc de dates d'une affiche de concert, à sa place sur la feuille.
+     ⚠️ Aucun créneau n'est écrit ici : les disponibilités réelles viennent de
+     Cal.com, et en inventer serait affirmer une disponibilité qu'on n'a pas.
+     Le bloc porte donc ce qui est vrai sans source externe — la nature de
+     l'appel — et l'action. Voir tasks/todo.md. */
+  booking: {
+    heading: t('Réserver un appel', 'Book a call'),
+    note:    t('Trente minutes, gratuit, sans engagement.', 'Thirty minutes, free, no commitment.'),
+    rows: [
+      { k: t('Durée', 'Length'),   v: t('30 min', '30 min') },
+      { k: t('Prix', 'Price'),     v: t('Gratuit', 'Free') },
+      { k: t('Avec', 'With'),      v: t('L’ingénieur, pas un commercial', 'The engineer, not a salesperson') },
+      { k: t('Fuseau', 'Timezone'), v: t('GMT+1 · Cotonou', 'GMT+1 · Cotonou') },
+    ],
+    action: t('Voir les créneaux', 'See available slots'),
+  },
+  /* Le colophon se signe au PIED de la feuille, jamais au-dessus du titre :
+     DESIGN.md interdit l'étiquette en surplomb d'un titre. */
+  colophon: [
+    t('Icon Labs · Laboratoire d’ingénierie AI · Cotonou, Bénin',
+      'Icon Labs · AI engineering lab · Cotonou, Benin'),
+    t('Built in West Africa. Scaled worldwide.',
+      'Built in West Africa. Scaled worldwide.'),
+    t('Quatre encres · noir, bleu, violet, vert',
+      'Four inks · black, blue, purple, green'),
+  ],
+}
+
+/* ------------------------------------------------------- la barre d'encres */
+/* La règle 80 / 15 / 5 / 5 de la charte, rendue littérale : les largeurs sont
+   les proportions. Elle sépare deux passes à la place d'un filet. */
+
+export const inks = [
+  { role: 'ground', flex: 80, label: t('Noir / blanc — 80', 'Black / white — 80') },
+  { role: 'signal', flex: 15, label: t('Bleu 15', 'Blue 15') },
+  { role: 'accent', flex: 5,  label: t('Violet 5', 'Purple 5') },
+  { role: 'state',  flex: 5,  label: t('Vert 5', 'Green 5') },
+]
 
 /* ------------------------------------------------- scènes du récit au scroll */
 /* Le texte de chaque scène apparaît par-dessus l'animation épinglée.          */
@@ -97,10 +156,45 @@ export const story = [
   },
 ]
 
-/* ------------------------------------------------------------------ services */
+/* ------------------------------------------------------------- compétences */
+/* Six compétences — l'arbitrage de l'utilisateur du 2026-10-18 : les cinq de
+   la charte de marque, plus les sites qu'il vend réellement (PRODUCT.md
+   § Capabilities). Quatre d'entre elles ont une page dédiée, deux n'en ont
+   pas : `page: null` et aucun lien. On n'invente pas une route pour faire
+   symétrique.                                                               */
+
 export const servicesIntro = {
-  heading: t('Quatre façons de\ntravailler ensemble.', 'Four ways to\nwork together.'),
+  heading: t('Ce que nous\nfaisons.', 'What we\ndo.'),
+  lede:    t('Six compétences, tenues par la même équipe. Rien n’est sous-traité.',
+             'Six capabilities, held by the same team. Nothing is subcontracted.'),
 }
+
+export const skills = [
+  { page: 'produits-ia',
+    title: t('Produits IA', 'AI products'),
+    body:  t('Agents, intégration LLM, RAG, chatbots, pipelines de données. De la preuve de concept au système qui tourne devant des clients réels.',
+             'Agents, LLM integration, RAG, chatbots, data pipelines. From proof of concept to a system running in front of real customers.') },
+  { page: 'plateformes',
+    title: t('Plateformes & SaaS', 'Platforms & SaaS'),
+    body:  t('Applications web, tableaux de bord, outils internes. Architecture, interface et déploiement sortent de la même table.',
+             'Web apps, dashboards, internal tools. Architecture, interface and deployment all come from the same table.') },
+  { page: 'produits-ia',
+    title: t('Automatisation', 'Automation'),
+    body:  t('n8n, Make, Zapier, scripts sur mesure. Les tâches répétitives quittent vos équipes et deviennent des flux surveillés.',
+             'n8n, Make, Zapier, custom scripts. Repetitive work leaves your team and becomes a monitored flow.') },
+  { page: null,
+    title: t('Recherche & prototypage', 'Research & prototyping'),
+    body:  t('Recherche appliquée et prototypes rapides, pour trancher une question technique avant d’engager un budget de production.',
+             'Applied research and fast prototypes, to settle a technical question before committing a production budget.') },
+  { page: 'mvp',
+    title: t('MVP en 2 à 4 semaines', 'MVP in 2 to 4 weeks'),
+    body:  t('De l’idée au produit fonctionnel. Périmètre écrit, jalons datés, sources transférées à la livraison.',
+             'From idea to working product. Written scope, dated milestones, sources transferred on delivery.') },
+  { page: 'sites-experiences',
+    title: t('Sites & expériences', 'Sites & experiences'),
+    body:  t('Sites sur mesure, direction artistique et mouvement compris. Une compétence parmi six, jamais l’identité de la maison.',
+             'Custom sites, art direction and motion included. One capability among six, never the identity of the house.') },
+]
 
 export const services = [
   {
@@ -132,6 +226,101 @@ export const services = [
     tags:  ['Prix fixe', 'Démo hebdo', 'Déploiement inclus'],
   },
 ]
+
+/* --------------------------------------------------------- les réalisations */
+/* Sept clients réels, nommés avec leur accord — confirmé par l'utilisateur le
+   2026-10-18, source `~/Téléchargements/Iconlabs-main/` (PRODUCT.md
+   § Evidence on Hand).
+
+   ⚠️ Trois règles tiennent ce tableau :
+   1. Aucune ligne ne s'ajoute sans une source fournie par le studio.
+   2. Aucun témoignage, aucun chiffre d'affaires, aucune métrique de
+      performance, aucun logo client : PRODUCT.md les nomme comme des absences
+      à ne jamais combler au jugé.
+   3. Adjani Privé n'est pas en ligne : sa fiche existe, elle ne porte aucun
+      lien sortant. C'est une décision de l'utilisateur, pas un oubli.
+
+   `summary` n'est pas une accroche : c'est le résumé complet. DESIGN.md veut
+   qu'on sache ce qui a été construit sans avoir à ouvrir la fiche.          */
+
+export const workIntro = {
+  heading: t('Sept systèmes,\nen production.', 'Seven systems,\nin production.'),
+  lede:    t('Clients réels, nommés avec leur accord. Chaque ligne dit ce qui a été construit : il n’y a rien à ouvrir pour le savoir.',
+             'Real clients, named with their consent. Each line says what was built: there is nothing to open to find out.'),
+}
+
+export type WorkStatus = 'live' | 'wip'
+
+export const work = [
+  {
+    name: 'MIA Corporate',
+    status: 'live' as WorkStatus,
+    category: t('Full AI MVP', 'Full AI MVP'),
+    sector:   t('Beauté & bien-être', 'Beauty & wellness'),
+    place:    t('Cotonou, Bénin', 'Cotonou, Benin'),
+    summary:  t('Agent de qualification sur base documentaire, réservation en trois étapes, relances automatiques. RAG, agents, Cal.com, EmailJS.',
+                'Document-grounded qualification agent, three-step booking, automatic follow-ups. RAG, agents, Cal.com, EmailJS.'),
+  },
+  {
+    name: 'Aurora Pâtisserie',
+    status: 'live' as WorkStatus,
+    category: t('Production Sprint', 'Production Sprint'),
+    sector:   t('Restauration & pâtisserie', 'Food & pastry'),
+    place:    t('Lomé, Togo', 'Lomé, Togo'),
+    summary:  t('Refonte du catalogue, moteur de recommandations, commandes WhatsApp automatisées.',
+                'Catalogue rebuild, recommendation engine, automated WhatsApp ordering.'),
+  },
+  {
+    name: 'Transko',
+    status: 'live' as WorkStatus,
+    category: t('Full AI MVP', 'Full AI MVP'),
+    sector:   t('Logistique & transport', 'Logistics & transport'),
+    place:    t('Cotonou, Bénin', 'Cotonou, Benin'),
+    summary:  t('Agent d’affectation des coursiers, optimisation de tournées, tableau de bord expéditeur en temps réel.',
+                'Courier assignment agent, route optimisation, real-time shipper dashboard.'),
+  },
+  {
+    name: 'Bella Hair Studio',
+    status: 'live' as WorkStatus,
+    category: t('Production Sprint', 'Production Sprint'),
+    sector:   t('Beauté & mode', 'Beauty & fashion'),
+    place:    t('Abidjan, Côte d’Ivoire', 'Abidjan, Ivory Coast'),
+    summary:  t('Assistant conversationnel WhatsApp branché au catalogue, automatisation du service client.',
+                'WhatsApp conversational assistant wired to the catalogue, customer service automation.'),
+  },
+  {
+    name: 'Immo Elite',
+    status: 'live' as WorkStatus,
+    category: t('Stack Audit', 'Stack Audit'),
+    sector:   t('Immobilier', 'Real estate'),
+    place:    t('Cotonou, Bénin', 'Cotonou, Benin'),
+    summary:  t('Revue d’infrastructure, plan de migration vers une recherche sémantique, feuille de route chiffrée.',
+                'Infrastructure review, migration plan towards semantic search, costed roadmap.'),
+  },
+  {
+    name: 'Green Harvest',
+    status: 'live' as WorkStatus,
+    category: t('Fractional AI CTO', 'Fractional AI CTO'),
+    sector:   t('Agro-alimentaire', 'Agri-food'),
+    place:    t('Abidjan, Côte d’Ivoire', 'Abidjan, Ivory Coast'),
+    summary:  t('Architecture cible des données, priorisation de la feuille de route IA, gouvernance, montée en compétence de l’équipe.',
+                'Target data architecture, AI roadmap prioritisation, governance, team upskilling.'),
+  },
+  {
+    name: 'Adjani Privé',
+    status: 'wip' as WorkStatus,
+    category: t('Sites & expériences', 'Sites & experiences'),
+    sector:   t('Mode, héritage yoruba', 'Fashion, Yoruba heritage'),
+    place:    t('Cotonou, Bénin', 'Cotonou, Benin'),
+    summary:  t('E-commerce de marque, direction artistique comprise. Pas encore en ligne — la fiche existe, le lien viendra.',
+                'Brand e-commerce, art direction included. Not live yet — the entry exists, the link will follow.'),
+  },
+]
+
+export const workStatus = {
+  live: t('Livré', 'Shipped'),
+  wip:  t('En cours', 'In progress'),
+}
 
 /* ------------------------------------------------------------------ repères */
 /* ⚠️ Ce ne sont PAS des métriques : ce sont des engagements déjà écrits
@@ -211,8 +400,8 @@ export const processSteps = [
 export const studioIntro = {
   heading: t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
   body: [
-    t('Icon Labs est un studio d’ingénierie créative basé en Afrique de l’Ouest. Nous concevons des expériences web : la direction artistique, le mouvement et le code de production sortent de la même équipe.',
-      'Icon Labs is a creative engineering studio based in West Africa. We design web experiences: art direction, motion and production code all come from the same team.'),
+    t('Icon Labs est un laboratoire d’ingénierie AI indépendant, basé en Afrique de l’Ouest. Produits IA, plateformes, automatisation : l’architecture, l’interface et le code de production sortent de la même équipe.',
+      'Icon Labs is an independent AI engineering lab based in West Africa. AI products, platforms, automation: architecture, interface and production code all come from the same team.'),
     t('Pas de chef de projet entre vous et la personne qui construit. Chaque projet appartient à un ingénieur qui a déjà livré en production.',
       'No project manager between you and the person building. Every project is owned by an engineer who has already shipped to production.'),
     t('Notre flux de travail augmenté par l’IA nous donne une vitesse que les studios traditionnels n’atteignent pas, à un coût qui rend inutile l’embauche d’un CTO à temps plein.',
@@ -245,8 +434,8 @@ export const faq = [
     a: t('Un sprint se livre en 2 semaines, un MVP complet en 4. Ce sont des engagements, pas des estimations : nous ne prenons pas plus de projets que nous ne pouvons en livrer.',
          'A sprint ships in 2 weeks, a full MVP in 4. These are commitments, not estimates: we never take on more than we can deliver.') },
   { q: t('En quoi êtes-vous différents d’un freelance ?', 'How are you different from a freelancer?'),
-    a: t('Nous fonctionnons comme un studio : design, motion et ingénierie au même endroit, avec des jalons définis. Vous ne coordonnez pas trois prestataires.',
-         'We work as a studio: design, motion and engineering in one place, with defined milestones. You are not coordinating three vendors.') },
+    a: t('Nous fonctionnons comme un laboratoire : conception, ingénierie et mise en production au même endroit, avec des jalons définis. Vous ne coordonnez pas trois prestataires.',
+         'We work as a lab: design, engineering and shipping in one place, with defined milestones. You are not coordinating three vendors.') },
   { q: t('Travaillez-vous avec des fondateurs non techniques ?', 'Do you work with non-technical founders?'),
     a: t('Oui. Notre rôle est de rendre la technique invisible : vous restez sur le produit et le marché, nous prenons l’ingénierie.',
          'Yes. Our job is to make the technical invisible: you stay on product and market, we take the engineering.') },
@@ -281,9 +470,10 @@ export const footer = {
 }
 
 export const seo = {
-  title: t('Icon Labs — Studio d’ingénierie créative', 'Icon Labs — Creative engineering studio'),
-  description: t('Icon Labs conçoit des expériences web sur mesure : direction artistique, animation et code de production par la même équipe. Afrique de l’Ouest, projets dans le monde entier.',
-                 'Icon Labs designs custom web experiences: art direction, motion and production code from one team. Based in West Africa, shipping worldwide.'),
+  title: t('Icon Labs — Laboratoire d’ingénierie AI',
+           'Icon Labs — Independent AI engineering lab'),
+  description: t('Icon Labs transforme des idées complexes en systèmes réels : produits IA, plateformes, automatisation. Sept systèmes livrés à Cotonou, Lomé et Abidjan. Le prix se discute en appel.',
+                 'Icon Labs turns complex ideas into real systems: AI products, platforms, automation. Seven systems shipped in Cotonou, Lomé and Abidjan. Pricing is discussed on the call.'),
 }
 
 /* ===========================================================================
@@ -538,8 +728,8 @@ export const methodePage = {
 
 export const studioPage = {
   title:   t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
-  lede:    t('Icon Labs est un studio d’ingénierie créative basé en Afrique de l’Ouest. La direction artistique, le mouvement et le code de production sortent de la même équipe.',
-             'Icon Labs is a creative engineering studio based in West Africa. Art direction, motion and production code all come from the same team.'),
+  lede:    t('Icon Labs est un laboratoire d’ingénierie AI indépendant, basé en Afrique de l’Ouest. L’architecture, l’interface et le code de production sortent de la même équipe.',
+             'Icon Labs is an independent AI engineering lab based in West Africa. Architecture, interface and production code all come from the same team.'),
 
   /* Les paragraphes de la page, distincts de ceux du bloc de la home : le
      chapô ci-dessus reprend déjà le premier de `studioIntro.body`, et les

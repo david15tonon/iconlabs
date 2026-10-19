@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Icon Labs — le panneau de chantier</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0B0B0B;--white:#FFFFFF;--blue:#2563EB;--purple:#7C3AED;--green:#10B981;
+        --g1:#141414;--g2:#1E1E1E;--g3:#2A2A2A;--g5:#8A8A86;--g6:#BBBBB5;--pad:56px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1440px;background:var(--black);color:var(--white);font-family:'DM Mono',monospace;font-size:14px}
+  ::selection{background:var(--blue);color:var(--white)}
+  h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-.035em}
+
+  header{position:sticky;top:0;height:88px;padding:0 var(--pad);background:var(--black);
+         display:flex;align-items:center;justify-content:space-between;z-index:20}
+  .lockup{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em}
+  .lockup i{font-style:normal;color:var(--green)}
+  nav{display:flex;align-items:center;gap:28px;font-size:13px;color:var(--g6);letter-spacing:.04em}
+  nav b{color:var(--white);font-weight:400}
+  .cta{background:var(--blue);color:var(--white);padding:11px 20px;font-weight:500}
+
+  /* La plaque : tout ce que cette page affirme est posé dans un cadre, comme
+     une déclaration publique. Le cadre n'est pas un ornement, c'est le format. */
+  .plaque{margin:4px var(--pad) 0;border:2px solid var(--white)}
+  .plate{font-size:13px;letter-spacing:.1em;color:var(--g6)}
+
+  /* ------------------------------------------------- 01 · le panneau */
+  .board{display:grid;grid-template-columns:1fr 392px;min-height:690px}
+  .left{padding:46px 44px;display:flex;flex-direction:column;justify-content:space-between}
+  h1{font-weight:800;font-size:92px;line-height:.9;letter-spacing:-.04em;text-transform:uppercase;margin:26px 0 0}
+  h1 em{font-style:normal;color:var(--blue)}
+  .sub{margin-top:26px;font-size:15px;line-height:1.75;color:var(--g6);max-width:52ch}
+  .fields{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--g3)}
+  .f{padding:20px 0 0}
+  .f dt{font-size:13px;letter-spacing:.1em;color:var(--g6);margin-bottom:7px}
+  .f dd{font-family:'Syne',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em}
+  .f dd small{font-family:'DM Mono',monospace;font-weight:400;font-size:13px;
+              color:var(--g6);display:block;margin-top:5px;letter-spacing:0}
+  .right{border-left:2px solid var(--white);padding:36px 32px;background:var(--g1)}
+  .right h2{font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px}
+  .row{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:baseline;
+       padding:12px 0;border-bottom:1px solid var(--g3)}
+  .row .n{font-size:13px;color:var(--g6)}
+  .row .nm{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em}
+  .row .pl{font-size:13px;color:var(--g6);display:block;margin-top:3px}
+  .st{font-size:13px;letter-spacing:.06em;padding:3px 7px}
+  .st.liv{background:var(--green);color:var(--black)}
+  .st.ec{background:var(--g3);color:var(--white)}
+  .book{margin-top:24px;display:block;background:var(--white);color:var(--black);
+        text-align:center;padding:14px;font-size:13px;font-weight:500}
+
+  /* Chaque section suivante est sa propre plaque, avec son bandeau de titre
+     réglementaire : le même objet, reposé. */
+  section{margin:40px var(--pad) 0;border:2px solid var(--white)}
+  .bar{display:flex;justify-content:space-between;align-items:center;
+       background:var(--white);color:var(--black);padding:11px 26px;
+       font-size:13px;letter-spacing:.12em;font-weight:500}
+  .body{padding:44px 44px 48px}
+  h2.big{font-weight:800;font-size:54px;line-height:.95;letter-spacing:-.04em;text-transform:uppercase}
+  h2.big em{font-style:normal;color:var(--blue)}
+  .lede{font-size:15px;line-height:1.8;color:var(--g6);max-width:64ch;margin-top:20px}
+
+  /* ----------------------------------------- 02 · les six compétences */
+  /* Six champs d'un même formulaire réglementaire, pas six cartes : ils
+     partagent une seule grille et se séparent par le trait du cadre. */
+  .grid6{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);
+         border-top:1px solid var(--g3);border-left:1px solid var(--g3)}
+  .cell{padding:26px 24px 30px;border-right:1px solid var(--g3);border-bottom:1px solid var(--g3)}
+  .cell dt{font-size:13px;letter-spacing:.1em;color:var(--g5)}
+  .cell h3{font-weight:700;font-size:22px;margin:12px 0 10px;letter-spacing:-.025em}
+  .cell:nth-child(1) h3{color:var(--blue)} .cell:nth-child(5) h3{color:var(--green)}
+  .cell p{font-size:13px;line-height:1.7;color:var(--g6)}
+
+  /* -------------------------------------------- 03 · les dossiers d'ouvrage */
+  /* Le registre du premier écran se déplie ici : une fiche par ouvrage, aux
+     champs d'un dossier de chantier. */
+  .dossier{border-top:1px solid var(--g3);display:grid;
+           grid-template-columns:240px 1fr 180px;gap:30px;padding:26px 0;align-items:start}
+  .dossier:last-child{border-bottom:1px solid var(--g3)}
+  .dossier h3{font-weight:700;font-size:28px;letter-spacing:-.03em;line-height:1}
+  .dossier .id{font-size:13px;color:var(--g5);margin-bottom:9px;letter-spacing:.08em}
+  .dossier .meta{font-size:13px;color:var(--g6);margin-top:9px}
+  .dossier .mt{font-size:13px;line-height:1.75;color:var(--g6)}
+  .dossier .sd{justify-self:end;text-align:right}
+  .dossier .cat{font-size:13px;letter-spacing:.06em;color:var(--g6);display:block;margin-bottom:9px}
+
+  /* ------------------------------------------------- 04 · la différence */
+  .three{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .three h3{font-weight:700;font-size:21px;letter-spacing:-.02em;margin-bottom:13px}
+  .three p{font-size:13px;line-height:1.75;color:var(--g6)}
+
+  /* ------------------------------------------------- 05 · le planning */
+  /* Le calendrier de chantier : quatre phases qui se suivent, et leur durée
+     lisible dans la largeur. */
+  .gantt{margin-top:38px}
+  .ph{display:grid;grid-template-columns:168px 1fr;gap:26px;align-items:center;
+      padding:17px 0;border-top:1px solid var(--g3)}
+  .ph:last-child{border-bottom:1px solid var(--g3)}
+  .ph .lab h3{font-weight:700;font-size:17px;letter-spacing:-.02em}
+  .ph .lab span{font-size:13px;color:var(--g5);display:block;margin-top:5px}
+  .ph .track{height:40px;background:var(--g1);position:relative;display:flex;align-items:center}
+  .ph .fillb{height:100%;display:flex;align-items:center;padding:0 14px;font-size:13px;line-height:1.5}
+  .p1 .fillb{width:12%;background:var(--white);color:var(--black)}
+  .p2 .fillb{width:22%;margin-left:12%;background:var(--blue)}
+  .p3 .fillb{width:50%;margin-left:34%;background:var(--purple)}
+  .p4 .fillb{width:16%;margin-left:84%;background:var(--green);color:var(--black)}
+  .phnote{margin-top:14px;font-size:13px;color:var(--g5);letter-spacing:.06em}
+
+  /* ------------------------------------------------- 06 · le maître d'œuvre */
+  .crew{display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:start}
+  .crew p{font-size:15px;line-height:1.85;color:var(--g6);margin-top:18px;max-width:56ch}
+  .ppl{border-top:1px solid var(--g3)}
+  .ppl .p{display:flex;justify-content:space-between;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--g3)}
+  .ppl .p b{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em}
+  .ppl .p span{font-size:13px;color:var(--g6)}
+  .vals{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}
+  .vals span{font-size:13px;letter-spacing:.05em;padding:5px 11px;background:var(--g1);color:var(--g6)}
+
+  /* ------------------------------------------------------ 07 · mentions */
+  .qa2{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  .qa{padding:22px 0;border-top:1px solid var(--g3)}
+  .qa h3{font-weight:700;font-size:18px;letter-spacing:-.02em;margin-bottom:10px}
+  .qa p{font-size:13px;line-height:1.75;color:var(--g6)}
+
+  /* ------------------------------------------------------- 08 · contact */
+  .ct{background:var(--blue);display:grid;grid-template-columns:1fr 440px;gap:64px;padding:56px 44px 60px}
+  .ct h2{font-weight:800;font-size:58px;line-height:.95;letter-spacing:-.04em;text-transform:uppercase}
+  .ct .lede{color:#D7E3FD;max-width:44ch}
+  .form label{display:block;font-size:13px;letter-spacing:.06em;color:#D7E3FD;margin:0 0 7px}
+  .form .fld{background:transparent;border:1px solid #6E9AF5;padding:13px 14px;color:var(--white);margin-bottom:18px}
+  .form .fld.area{height:92px}
+  .form .send{background:var(--white);color:var(--blue);padding:15px;text-align:center;font-weight:500}
+  .orb{margin-top:18px;font-size:13px;color:#D7E3FD;text-align:center}
+
+  footer{padding:46px var(--pad) 40px;display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:var(--g5)}
+  footer .cols{display:flex;gap:64px}
+  footer .cols div{display:flex;flex-direction:column;gap:9px}
+  footer .cols b{color:var(--white);font-weight:500;font-family:'Syne',sans-serif;letter-spacing:.04em}
+  footer a{color:var(--g6);text-decoration:none}
+</style></head><body>
+  <header>
+    <div class="lockup">ICON LABS<i>.</i></div>
+    <nav><span>Ce que nous faisons</span><span>Ouvrages</span><span>Méthode</span><span>Le labo</span>
+      <span><b>FR</b> / EN</span><span class="cta">Réserver un appel</span></nav>
+  </header>
+
+  <!-- 01 · LE PANNEAU --------------------------------------------------- -->
+  <div class="plaque">
+   <div class="board">
+    <div class="left">
+      <div>
+        <div class="plate">LABORATOIRE D'INGÉNIERIE AI · COTONOU, BÉNIN · BUILT IN WEST AFRICA. SCALED WORLDWIDE.</div>
+        <h1>Systèmes<br>livrés en<br><em>production.</em></h1>
+        <div class="sub">Agents, RAG, plateformes, automatisation. Nous construisons,
+          nous mettons en ligne, nous transférons les sources. Le prix se discute en appel.</div>
+      </div>
+      <dl class="fields">
+        <div class="f"><dt>OUVRAGES LIVRÉS</dt><dd>07<small>Cotonou · Lomé · Abidjan</small></dd></div>
+        <div class="f"><dt>COMPÉTENCES</dt><dd>06<small>de l'audit au CTO</small></dd></div>
+        <div class="f"><dt>DÉLAI MVP</dt><dd>2–4<small>semaines, périmètre écrit</small></dd></div>
+        <div class="f"><dt>SOURCES</dt><dd>100 %<small>transférées au client</small></dd></div>
+      </dl>
+    </div>
+    <aside class="right">
+      <h2>Registre des ouvrages</h2>
+      <div class="row"><span class="n">01</span><span><span class="nm">MIA CORPORATE</span><span class="pl">Beauté · Cotonou</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">02</span><span><span class="nm">AURORA PÂTISSERIE</span><span class="pl">Restauration · Lomé</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">03</span><span><span class="nm">TRANSKO</span><span class="pl">Logistique · Cotonou</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">04</span><span><span class="nm">BELLA HAIR STUDIO</span><span class="pl">Mode · Abidjan</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">05</span><span><span class="nm">IMMO ELITE</span><span class="pl">Immobilier · Cotonou</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">06</span><span><span class="nm">GREEN HARVEST</span><span class="pl">Agro · Abidjan</span></span><span class="st liv">LIVRÉ</span></div>
+      <div class="row"><span class="n">07</span><span><span class="nm">ADJANI PRIVÉ</span><span class="pl">Mode · Cotonou</span></span><span class="st ec">EN COURS</span></div>
+      <span class="book">Voir les sept dossiers</span>
+    </aside>
+   </div>
+  </div>
+
+  <!-- 02 · COMPÉTENCES --------------------------------------------------- -->
+  <section>
+    <div class="bar"><span>CHAMP D'INTERVENTION</span><span>SIX COMPÉTENCES · AUCUNE SOUS-TRAITANCE</span></div>
+    <div class="body">
+      <h2 class="big">Ce que nous<br>faisons.</h2>
+      <p class="lede">Six compétences tenues par la même équipe. Les sites sont l'une d'elles, jamais l'identité de la maison.</p>
+      <div class="grid6">
+        <div class="cell"><dt>01</dt><h3>Produits IA</h3><p>Agents, intégration LLM, RAG, chatbots, pipelines de données. De la preuve de concept au système qui tourne devant des clients réels.</p></div>
+        <div class="cell"><dt>02</dt><h3>Plateformes &amp; SaaS</h3><p>Applications web, tableaux de bord, outils internes. Architecture, interface et déploiement sortent de la même table.</p></div>
+        <div class="cell"><dt>03</dt><h3>Automatisation</h3><p>n8n, Make, Zapier, scripts sur mesure. Les tâches répétitives deviennent des flux surveillés.</p></div>
+        <div class="cell"><dt>04</dt><h3>Recherche &amp; prototypage</h3><p>Recherche appliquée et prototypes rapides, pour trancher une question technique avant d'engager un budget.</p></div>
+        <div class="cell"><dt>05</dt><h3>MVP en 2 à 4 semaines</h3><p>De l'idée au produit fonctionnel. Périmètre écrit, jalons datés, sources transférées à la livraison.</p></div>
+        <div class="cell"><dt>06</dt><h3>Sites &amp; expériences</h3><p>Sites sur mesure, direction artistique et mouvement compris, par la même équipe que les systèmes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · LES DOSSIERS -------------------------------------------------- -->
+  <section>
+    <div class="bar"><span>DOSSIERS D'OUVRAGE</span><span>07 DÉPOSÉS · CLIENTS RÉELS, NOMMÉS AVEC LEUR ACCORD</span></div>
+    <div class="body">
+      <h2 class="big">Sept ouvrages,<br>déclarés <em>publiquement</em>.</h2>
+      <div style="margin-top:38px">
+        <div class="dossier"><div><div class="id">DOSSIER 01</div><h3>MIA CORPORATE</h3><div class="meta">Beauté &amp; bien-être<br>Cotonou, Bénin</div></div><div class="mt">Agent de qualification sur base documentaire, réservation en trois étapes, relances automatiques. RAG, agents, Cal.com, EmailJS.</div><div class="sd"><span class="cat">FULL AI MVP</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 02</div><h3>AURORA PÂTISSERIE</h3><div class="meta">Restauration &amp; pâtisserie<br>Lomé, Togo</div></div><div class="mt">Refonte du catalogue, moteur de recommandations, commandes WhatsApp automatisées.</div><div class="sd"><span class="cat">PRODUCTION SPRINT</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 03</div><h3>TRANSKO</h3><div class="meta">Logistique &amp; transport<br>Cotonou, Bénin</div></div><div class="mt">Agent d'affectation des coursiers, optimisation de tournées, tableau de bord expéditeur en temps réel.</div><div class="sd"><span class="cat">FULL AI MVP</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 04</div><h3>BELLA HAIR STUDIO</h3><div class="meta">Beauté &amp; mode<br>Abidjan, Côte d'Ivoire</div></div><div class="mt">Assistant conversationnel WhatsApp branché au catalogue, automatisation du service client.</div><div class="sd"><span class="cat">PRODUCTION SPRINT</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 05</div><h3>IMMO ELITE</h3><div class="meta">Immobilier<br>Cotonou, Bénin</div></div><div class="mt">Revue d'infrastructure, plan de migration vers une recherche sémantique, feuille de route chiffrée.</div><div class="sd"><span class="cat">STACK AUDIT</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 06</div><h3>GREEN HARVEST</h3><div class="meta">Agro-alimentaire<br>Abidjan, Côte d'Ivoire</div></div><div class="mt">Architecture cible des données, priorisation de la feuille de route IA, gouvernance, montée en compétence de l'équipe.</div><div class="sd"><span class="cat">FRACTIONAL AI CTO</span><span class="st liv">LIVRÉ</span></div></div>
+        <div class="dossier"><div><div class="id">DOSSIER 07</div><h3>ADJANI PRIVÉ</h3><div class="meta">Mode, héritage yoruba<br>Cotonou, Bénin</div></div><div class="mt">E-commerce de marque, direction artistique comprise. Pas encore en ligne — la fiche existe, le lien viendra.</div><div class="sd"><span class="cat">SITES &amp; EXPÉRIENCES</span><span class="st ec">EN COURS</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · DIFFÉRENCE ---------------------------------------------------- -->
+  <section>
+    <div class="bar"><span>MAÎTRISE D'ŒUVRE</span><span>UNE SEULE ÉQUIPE DU PREMIER TRAIT AU DÉPLOIEMENT</span></div>
+    <div class="body">
+      <h2 class="big">Une seule équipe,<br>toute la <em>chaîne</em>.</h2>
+      <p class="lede">La plupart des prestataires tiennent un maillon : le design, ou le code, ou l'hébergement. Nous tenons la chaîne — et c'est ce qui nous autorise à vous conseiller.</p>
+      <div class="three">
+        <div><h3>Structure d'abord, effet ensuite</h3><p>Chaque projet commence par une architecture : parcours, hiérarchie, performance. Le mouvement vient après, et il sert le propos. C'est aussi pourquoi les sites que nous livrons restent rapides.</p></div>
+        <div><h3>Pas d'intermédiaire</h3><p>Chaque projet appartient à un ingénieur qui a déjà livré en production. Vous lui parlez directement, chaque semaine, démo à l'appui. Il n'y a personne à prévenir avant lui.</p></div>
+        <div><h3>Autonome à la livraison</h3><p>Transfert de propriété, documentation, accès. La maintenance mensuelle existe, elle n'est jamais imposée : personne ne reste client parce qu'il ne peut pas partir.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · PLANNING ------------------------------------------------------ -->
+  <section>
+    <div class="bar"><span>CALENDRIER D'EXÉCUTION</span><span>04 PHASES · DU BRIEF À LA MISE EN LIGNE</span></div>
+    <div class="body">
+      <h2 class="big">Du brief à la<br>mise en ligne.</h2>
+      <div class="gantt">
+        <div class="ph p1"><div class="lab"><h3>Appel de cadrage</h3><span>GRATUIT · 30 MIN</span></div><div class="track"><div class="fillb">30 min</div></div></div>
+        <div class="ph p2"><div class="lab"><h3>Proposition chiffrée</h3><span>2–3 JOURS</span></div><div class="track"><div class="fillb">Périmètre, livrables, stack, prix fixe</div></div></div>
+        <div class="ph p3"><div class="lab"><h3>Conception &amp; build</h3><span>1–4 SEMAINES</span></div><div class="track"><div class="fillb">Maquettes animées, puis code. Démo fonctionnelle chaque semaine.</div></div></div>
+        <div class="ph p4"><div class="lab"><h3>Livraison &amp; passation</h3><span>PROPRIÉTÉ TOTALE</span></div><div class="track"><div class="fillb">Transfert</div></div></div>
+      </div>
+      <div class="phnote">LES DURÉES SONT DES ENGAGEMENTS ÉCRITS DANS LA PROPOSITION, PAS DES ESTIMATIONS.</div>
+    </div>
+  </section>
+
+  <!-- 06 · LE LABO ------------------------------------------------------- -->
+  <section>
+    <div class="bar"><span>MAÎTRE D'ŒUVRE</span><span>ICON LABS · 03 PERSONNES · COTONOU</span></div>
+    <div class="body">
+      <div class="crew">
+        <div>
+          <h2 class="big">Trois personnes,<br>une seule table.</h2>
+          <p>Icon Labs est un laboratoire d'ingénierie AI indépendant basé en Afrique de l'Ouest. La direction artistique, le mouvement et le code de production sortent de la même équipe.</p>
+          <p>Pas de chef de projet entre vous et la personne qui construit. Chaque projet appartient à un ingénieur qui a déjà livré en production.</p>
+          <p>Notre flux de travail augmenté par l'IA nous donne une vitesse que les studios traditionnels n'atteignent pas, à un coût qui rend inutile l'embauche d'un CTO à temps plein.</p>
+        </div>
+        <aside>
+          <div class="ppl">
+            <div class="p"><b>David Tonon</b><span>Fondateur · Ingénieur IA &amp; web</span></div>
+            <div class="p"><b>Kenneth Kpanou</b><span>Motion designer</span></div>
+            <div class="p"><b>Emmanuel Attiba</b><span>Contenu &amp; croissance</span></div>
+          </div>
+          <div class="vals"><span>Résilience</span><span>Innovation</span><span>Créativité</span><span>Satisfaction client</span><span>Connaître ses limites</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · MENTIONS ------------------------------------------------------ -->
+  <section>
+    <div class="bar"><span>MENTIONS ET RÉPONSES</span><span>CE QU'ON NOUS DEMANDE LE PLUS</span></div>
+    <div class="body">
+      <h2 class="big">Questions<br>fréquentes.</h2>
+      <div class="qa2">
+        <div class="qa"><h3>En combien de temps livrez-vous ?</h3><p>Un sprint se livre en 2 semaines, un MVP complet en 4. Ce sont des engagements, pas des estimations : nous ne prenons pas plus de projets que nous ne pouvons en livrer.</p></div>
+        <div class="qa"><h3>En quoi êtes-vous différents d'un freelance ?</h3><p>Nous fonctionnons comme un laboratoire : design, motion et ingénierie au même endroit, avec des jalons définis. Vous ne coordonnez pas trois prestataires.</p></div>
+        <div class="qa"><h3>Travaillez-vous avec des fondateurs non techniques ?</h3><p>Oui. Notre rôle est de rendre la technique invisible : vous restez sur le produit et le marché, nous prenons l'ingénierie.</p></div>
+        <div class="qa"><h3>À qui appartient le code après livraison ?</h3><p>À vous, entièrement. Transfert de propriété intellectuelle à la livraison, sans verrou ni licence cachée.</p></div>
+        <div class="qa"><h3>Pouvez-vous reprendre une stack existante ?</h3><p>Dans la plupart des cas, oui : Python, TypeScript, React, Next.js, Nuxt, Django, FastAPI, Node, Docker, PostgreSQL. Dites-nous la vôtre pendant l'appel.</p></div>
+        <div class="qa"><h3>Et après la mise en ligne ?</h3><p>30 jours de support inclus. Ensuite, un forfait mensuel de maintenance et d'évolutions, sans engagement de durée.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · CONTACT ------------------------------------------------------- -->
+  <section>
+    <div class="bar"><span>DÉPÔT DE DEMANDE</span><span>APPEL DE 30 MIN · GRATUIT · SANS ENGAGEMENT</span></div>
+    <div class="ct">
+      <div>
+        <h2>Parlons de ce que<br>vous construisez.</h2>
+        <p class="lede">Un appel de 30 minutes, gratuit. On regarde votre projet, on vous dit franchement si nous sommes les bons, et si non, vers qui aller.</p>
+      </div>
+      <div class="form">
+        <label>NOM</label><div class="fld">&nbsp;</div>
+        <label>E-MAIL</label><div class="fld">&nbsp;</div>
+        <label>VOTRE PROJET EN DEUX LIGNES</label><div class="fld area">&nbsp;</div>
+        <div class="send">Envoyer</div>
+        <div class="orb">ou réservez directement un créneau · contact@iconlabs.dev</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <div><b>CE QUE NOUS FAISONS</b><a>Produits IA</a><a>Plateformes &amp; SaaS</a><a>Automatisation</a><a>MVP 2–4 semaines</a></div>
+      <div><b>LE LABO</b><a>Qui nous sommes</a><a>Méthode</a><a>Ouvrages</a><a>Questions fréquentes</a></div>
+      <div><b>CONTACT</b><a>contact@iconlabs.dev</a><a>Cotonou, Bénin</a><a>Réserver un appel</a></div>
+    </div>
+    <div style="text-align:right">
+      <div class="lockup" style="font-size:17px">ICON LABS<i>.</i></div>
+      <div style="margin-top:9px">© 2026 · Tous droits réservés.</div>
+    </div>
+  </footer>
+</body></html>

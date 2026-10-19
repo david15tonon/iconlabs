@@ -1,91 +1,111 @@
 /* ==========================================================================
    Icon Labs — tokens de design
-   Source unique : DESIGN.md, à la racine du dépôt (version alpha, 2026-10-18),
-   qui remplace BRAND.md v2 dont il reprend la palette telle quelle, contrastes
-   compris. Aucune couleur, aucune police, aucune mesure de colonne ne s'écrit
-   ailleurs que dans ce fichier.
+   Source unique : DESIGN.md, à la racine du dépôt (version beta, 2026-10-19),
+   qui applique la charte de marque `iconlabs-brand.html` — celle-ci fait loi
+   depuis la décision du 2026-10-18 actée dans PRODUCT.md § Brand Commitments.
+   Aucune couleur, aucune police, aucune mesure de colonne ne s'écrit ailleurs
+   que dans ce fichier.
    ========================================================================== */
 
 :root {
-  /* — Papier, encre, signal —
-     Deux pôles et une couleur signature. Le papier est le sol, l'encre est ce
-     qui s'écrit dessus. Proportion 80 / 15 / 5 : quatre apparitions du
-     vermillon par page, pas cinq.                                           */
-  --paper:       #F4F1EC;  /* le sol : fond général, chaud                   */
-  --paper-raise: #FFFFFF;  /* le seul niveau de surélévation du système      */
+  /* — Le sol et les encres —
+     Règle de proportion 80 / 15 / 5 / 5 : le noir et le blanc tiennent 80 %,
+     Neural Blue 15 %, Signal Purple et Automation Green 5 % chacun. Le noir
+     est le sol ; les encres passent dessus. Une couleur sans rôle n'existe
+     pas.                                                                    */
+  --ground:        #0B0B0B;  /* Tech Black — le sol                          */
+  --ground-raise:  #141414;  /* le seul niveau de surélévation  (1,07)       */
+  --ground-sunken: #1E1E1E;  /* aplat neutre, barre d'encres    (1,18)       */
+  --rule:          #2A2A2A;  /* séparateur NON porteur de sens  (1,37)       */
 
-  --ink:      #0B0B0B;  /* titres, texte sur aplat signal  (17,47 / papier)  */
-  --ink-soft: #2A2621;  /* texte courant                   (13,34 / papier)  */
-  --ink-mute: #6A635B;  /* texte secondaire                 (5,25 / papier)  */
+  --on-ground:      #FFFFFF;  /* titres, texte courant         (19,68 / sol) */
+  --on-ground-soft: #BBBBB5;  /* texte secondaire              (10,21 / sol) */
+  --on-ground-mute: #8A8A86;  /* légende, numéro de passe       (5,68 / sol) */
 
-  --signal:      #F2360A;  /* vermillon — il occupe des surfaces, il ne
-                              souligne pas                                   */
-  --signal-deep: #C62A06;  /* même couleur assombrie : la seule admise pour
-                              du texte, le vermillon plein ne passant pas
-                              sur papier (3,51) ni sur blanc                 */
+  /* Neural Blue. 3,81 sur le sol : il tient l'aplat et le grand titre, jamais
+     le texte courant. Celui-ci existe sous la forme `--signal-text`.        */
+  --signal:      #2563EB;
+  --signal-text: #5B8DF6;  /* la seule forme admise en labeur   (6,17)       */
 
-  /* Bordure de champ de formulaire. Rien d'autre : la charte interdit de
-     séparer deux surfaces par un filet, le champ de saisie est la seule
-     exception nommée — un champ doit se voir.                               */
-  --outline: #CBC6BE;
+  /* Signal Purple. 3,45 : aplat et titre ≥ 32 px seulement.                 */
+  --accent:      #7C3AED;
+  --accent-text: #A78BFA;  /*                                   (7,23)       */
 
-  /* Le papier opaque sous la barre de navigation. Ni verre dépoli, ni flou :
-     la charte les exclut tous les deux.                                     */
-  --paper-bar: #F4F1EC;
+  /* Automation Green. 7,76 : la seule des trois encres qui porte du texte
+     courant sur le sol.                                                     */
+  --state: #10B981;
+
+  /* Texte posé sur un aplat. Sur aplat vert c'est le NOIR qui tient (7,76) ;
+     le blanc y tombe à 2,54. Sur aplat bleu le secondaire est #EAF1FF (4,56)
+     et non #D7E3FD (4,01) — les deux sont de part et d'autre du seuil.      */
+  --on-signal:      #FFFFFF;  /* sur aplat bleu                 (5,17)       */
+  --on-signal-soft: #EAF1FF;  /* secondaire sur aplat bleu      (4,56)       */
+  --on-signal-line: #C2D6FD;  /* bordure de champ sur aplat bleu(3,53)       */
+  --on-accent:      #FFFFFF;  /* sur aplat violet               (5,70)       */
+  --on-state:       #0B0B0B;  /* sur aplat vert                 (7,76)       */
+
+  /* Bordure de champ de formulaire. Rien d'autre : le système ne sépare pas
+     deux surfaces par un filet, le champ de saisie est la seule exception
+     nommée — un champ doit se voir.                                         */
+  --outline: #3A3A3A;
+
+  /* Le noir opaque sous la barre de navigation. Ni verre dépoli, ni flou :
+     la charte de marque les exclut tous les deux.                           */
+  --ground-bar: #0B0B0B;
 
   /* — Typographie —
-     Deux familles, pas trois. Syne porte l'affichage, Instrument Sans porte
-     tout ce qui se lit. DM Mono n'est pas déclarée ici : la charte la réserve
-     au code littéral, et il n'y a aucun bloc de code sur le site.           */
+     Deux familles, et seulement deux, celles de la charte. Syne porte
+     l'affichage ; DM Mono porte tout ce qui se lit — texte courant, légende,
+     étiquette, champ. C'est le choix de la charte, tenu jusqu'au bout.      */
   --display: 'Syne', ui-sans-serif, system-ui, sans-serif;
-  --text:    'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --text:    'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Échelle fluide. Les valeurs hautes sont celles de DESIGN.md (valeurs de
-     bureau) ; les planchers tiennent les deux règles de la charte : aucun
-     texte sous 13 px, et Syne jamais sous 32 px — en deçà elle s'effondre,
-     donc tout titre plus petit passe à Instrument Sans 500.
-
-     Une seule valeur s'écarte de la table : `display-xl` y vaut 160 px, il
-     est plafonné ici à 96. Les titres du récit portent des césures écrites à
-     la main dans `content/site.ts`, calibrées sur ce corps ; à 160 px elles
-     déborderaient, et la charte range la réduction du corps en dernier
-     recours justement parce qu'on coupe les mots d'abord — ici ils le sont
-     déjà. C'est le seul emploi de ce niveau sur le site.                    */
+  /* Échelle fluide. Les planchers tiennent les deux règles de la charte :
+     aucun texte sous 13 px, et Syne jamais sous 21 px — en deçà elle perd
+     ses jonctions, donc tout niveau plus petit passe à DM Mono 500.         */
   --fs-xs:        0.8125rem;                                     /* 13       */
-  --fs-sm:        0.9375rem;                                     /* 15       */
-  --fs-base:      clamp(0.9375rem, 0.90rem + 0.17vw, 1.0625rem); /* 15 → 17  */
-  --fs-lg:        clamp(1.0625rem, 1.03rem + 0.17vw, 1.1875rem); /* 17 → 19  */
-  --fs-statement: clamp(1.375rem,  1.00rem + 1.60vw, 2.25rem);   /* 22 → 36  */
-  --fs-xl:        clamp(2rem,      1.72rem + 1.40vw, 3rem);      /* 32 → 48  */
-  --fs-2xl:       clamp(2rem,      1.30rem + 3.60vw, 4.5rem);    /* 32 → 72  */
-  --fs-3xl:       clamp(2.75rem,   1.10rem + 7.30vw, 6rem);      /* 44 →  96 */
+  --fs-sm:        0.875rem;                                      /* 14       */
+  --fs-base:      0.875rem;                                      /* 14       */
+  --fs-lg:        0.9375rem;                                     /* 15       */
+  --fs-statement: clamp(1rem,      0.92rem + 0.40vw, 1.1875rem); /* 16 → 19  */
+  --fs-title:     clamp(1.3125rem, 1.25rem + 0.30vw, 1.5rem);    /* 21 → 24  */
+  --fs-xl:        clamp(1.75rem,   1.40rem + 1.60vw, 2.375rem);  /* 28 → 38  */
+  --fs-2xl:       clamp(2rem,      1.10rem + 4.00vw, 3.75rem);   /* 32 → 60  */
+  /* Le bas de cette échelle est tiré d'une mesure, pas d'une habitude : la
+     ligne la plus longue de la feuille est « EN PRODUCTION. », qui mesure
+     11,63 em en Syne 800 à −0,045 em d'interlettrage. À 390 px de large il
+     reste 338 px entre les gouttières, d'où un corps maximal de 29 px. C'est
+     donc le terme en vw qui gouverne en bas d'échelle, et non le plancher :
+     un plancher plus haut rendrait le débordement inévitable. */
+  --fs-3xl:       clamp(1.5rem,    0.10rem + 6.90vw, 6.5rem);    /* 28 → 104 */
 
   /* — Largeurs de colonne —
-     En `ch` : la mesure suit la police, pas une largeur figée.              */
-  --measure-tight: 44ch;
-  --measure:       54ch;
-  --measure-wide:  62ch;
+     En `ch`, et plus courtes qu'en proportionnelle : les chasses égales de DM
+     Mono allongent la ligne à nombre de caractères constant. 60 à 70, au lieu
+     de 65 à 75.                                                             */
+  --measure-tight: 42ch;
+  --measure:       52ch;
+  --measure-wide:  66ch;
 
   /* — Rythme —
-     Multiples de 8 px, avec un demi-pas de 4 px. L'écart entre deux sections
-     est nettement plus grand que tout écart à l'intérieur d'une section :
-     c'est ce rapport qui tient la page, pas les filets.                     */
+     Multiples de 8 px, avec un demi-pas de 4 px. L'écart entre deux passes
+     est nettement plus grand que tout écart à l'intérieur d'une passe :
+     c'est ce rapport qui tient la feuille, pas les filets.                  */
   --sp-xs:  4px;
   --sp-sm:  8px;
   --sp-md:  16px;
   --sp-lg:  32px;
   --sp-xl:  64px;
-  --sp-2xl: 96px;
+  --sp-2xl: 104px;
 
-  --gutter:  clamp(1.25rem, 1rem + 2.5vw, 4rem);  /*  20 →  64 */
-  --section: clamp(5rem,    3rem + 9vw,  11rem);  /*  80 → 176 */
+  --gutter:  clamp(1.25rem, 1rem + 2.5vw, 3.5rem);  /*  20 →  56 */
+  --section: clamp(4.5rem,  2.5rem + 9vw, 10rem);   /*  72 → 160 */
   --maxw: 1440px;
 
   /* — Mouvement —
-     Valeurs de DESIGN.md, elles-mêmes tirées de la méthode d'Emil Kowalski :
-     les courbes natives de CSS sont trop molles pour de l'interface. Elles
-     vivent ici et non dans le schéma de tokens, qui ne couvre pas le
-     mouvement.                                                              */
+     « Peu d'animations » est une contrainte de la charte de marque. Les
+     courbes natives de CSS sont trop molles pour de l'interface ; celles-ci
+     viennent de DESIGN.md.                                                  */
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);     /* entrées et sorties   */
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* déplacement à l'écran*/
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* panneau glissant     */
@@ -93,45 +113,54 @@
   --duration-press:    140ms;   /* retour d'appui, changement d'état         */
   --duration-tooltip:  160ms;   /* infobulle, petit popover                  */
   --duration-dropdown: 200ms;   /* menu, sélecteur                           */
-  --duration-overlay:  320ms;   /* modale, panneau, apparition au défilement */
+  --duration-overlay:  300ms;   /* panneau, apparition au défilement         */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  background: var(--paper);
+  background: var(--ground);
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ground);
+  color: var(--on-ground);
   font-family: var(--text);
   font-weight: 400;
   font-size: var(--fs-base);
-  line-height: 1.55;
-  letter-spacing: -0.005em;
+  line-height: 1.75;
+  letter-spacing: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Syne porte l'affichage, et seulement lui : au-dessous de 32 px elle perd
-   ses jonctions. h3 et h4, qui vivent sous ce seuil, sont donc en Instrument
-   Sans 500 — c'est la graisse qui les distingue, pas la famille.            */
+/* Syne porte l'affichage, et seulement lui. Elle tient jusqu'à 21 px, le
+   corps du niveau `title` ; au-dessous elle perd ses jonctions, et h4 passe
+   donc à DM Mono 500 — c'est la graisse qui le distingue, pas la famille.   */
 h1, h2 {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 0.92;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
 
-h3, h4 {
+h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-title);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h4 {
   font-family: var(--text);
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.4;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
@@ -139,9 +168,9 @@ a { color: inherit; text-decoration: none; }
 img, svg, video, canvas { display: block; max-width: 100%; }
 button, input, textarea { font: inherit; color: inherit; }
 
-/* Sur aplat vermillon le texte est en encre (4,97) : le papier n'y passe
-   qu'au-delà de 24 px, ce qui n'est jamais le cas d'une sélection. */
-::selection { background: var(--signal); color: var(--ink); }
+/* Sur aplat bleu le texte est blanc (5,17) ; le noir n'y tient que 3,81 et
+   une sélection n'est jamais du grand texte. */
+::selection { background: var(--signal); color: var(--on-signal); }
 
 :focus-visible {
   outline: 2px solid var(--signal);
@@ -158,29 +187,31 @@ button, input, textarea { font: inherit; color: inherit; }
   padding-inline: var(--gutter);
 }
 
-/* Étiquette de petit corps : casse de phrase, jamais de capitales espacées,
-   jamais de monospace. 13 px est le plancher absolu du système.             */
+/* Légende de petit corps. 13 px est le plancher absolu du système, et il
+   n'existe aucun niveau en dessous — y compris pour les numéros de passe.
+   DM Mono porte ce niveau comme tous les autres : la monospace est la voix
+   de labeur de la charte, pas une décoration réservée aux étiquettes.       */
 .label {
   font-size: var(--fs-xs);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-  color: var(--ink-mute);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  color: var(--on-ground-mute);
 }
 
 /* Le panneau : le seul niveau de surélévation. Une bande de section et un
-   panneau posé dedans portent le même blanc ; ils se distinguent par
-   l'espace, pas par une troisième teinte. Plein, sans contour, sans ombre.  */
+   panneau posé dedans portent le même ton ; ils se distinguent par l'espace,
+   pas par une troisième teinte. Plein, sans contour, sans ombre.            */
 .panel {
-  background: var(--paper-raise);
+  background: var(--ground-raise);
   padding: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .lede {
   font-size: var(--fs-lg);
-  color: var(--ink-soft);
-  line-height: 1.55;
-  max-width: var(--measure);
+  color: var(--on-ground-soft);
+  line-height: 1.8;
+  max-width: var(--measure-wide);
 }
 
 /* Une phrase posée en grand : un seul emploi par bloc, 25 mots environ.
@@ -189,9 +220,9 @@ button, input, textarea { font: inherit; color: inherit; }
   font-family: var(--text);
   font-size: var(--fs-statement);
   font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--ink);
+  line-height: 1.65;
+  letter-spacing: 0;
+  color: var(--on-ground);
   max-width: var(--measure-wide);
 }
 
@@ -201,8 +232,8 @@ button, input, textarea { font: inherit; color: inherit; }
   left: -9999px;
   top: 0;
   z-index: 999;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--on-ground);
+  color: var(--ground);
   padding: 0.75rem 1.25rem;
 }
 .skip:focus { left: 1rem; top: 1rem; }

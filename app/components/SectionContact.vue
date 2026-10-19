@@ -91,11 +91,12 @@ const feedback = computed(() => {
 </template>
 
 <style scoped>
-/* L'aplat signature. Tout le texte y passe en encre : 4,97 de contraste,
-   seule combinaison qui tienne le petit texte sur ce vermillon (BRAND.md). */
+/* La dernière passe : l'encre bleue prend toute la feuille. Tout le texte y
+   passe en blanc — 5,17 de contraste, quand le noir n'y tient que 3,81 et ne
+   passerait donc que du grand titre (DESIGN.md § Colors). */
 #contact {
   background: var(--signal);
-  color: var(--ink);
+  color: var(--on-signal);
 }
 
 .inner { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
@@ -103,19 +104,20 @@ const feedback = computed(() => {
    quatre lignes. */
 h2 { font-size: var(--fs-xl); margin: 0 0 1.5rem; }
 
-/* Rien n'est atténué sur cet aplat. L'encre y tient à 4,97 et le seuil AA
-   est à 4,50 : à 72 % d'opacité on tombe à 3,71, et la note comme les
-   libellés du formulaire — tous au plancher de 13 px — passeraient sous le
-   seuil. La hiérarchie est portée par le corps et la graisse, qui ne coûtent
-   rien au contraste. */
+/* Le secondaire sur cet aplat est `--on-signal-soft` (#EAF1FF, 4,56) et non
+   le #D7E3FD qu'on écrit d'instinct : celui-ci tombe à 4,01, de l'autre côté
+   du seuil. Et rien n'est atténué par l'opacité — à 72 % le blanc tomberait
+   à 3,52, et la note comme les libellés, tous au plancher de 13 px,
+   passeraient dessous. La hiérarchie est portée par le ton et la graisse,
+   qui ne coûtent rien au contraste. */
 #contact .lede,
-#contact .note,
-#contact label span { color: var(--ink); }
+#contact .note { color: var(--on-signal-soft); }
+#contact label span { color: var(--on-signal); }
 
 .direct { margin-top: 2rem; display: grid; gap: 0.5rem; }
 .direct a {
   font-size: var(--fs-lg);
-  color: var(--ink);
+  color: var(--on-signal);
   border-bottom: 1px solid currentColor;
   justify-self: start;
 }
@@ -126,24 +128,27 @@ label { display: grid; gap: 0.5rem; }
 label span { font-size: var(--fs-xs); font-weight: 500; }
 
 /* Le champ de saisie est la seule exception nommée par la charte à la règle
-   « pas de filet » : un champ doit se voir. Il est donc plein — blanc, le
-   seul niveau de surélévation — et bordé d'`--outline`. Le focus change le
-   remplissage de la bordure, jamais par un halo flou. */
+   « pas de filet » : un champ doit se voir. Sur l'aplat bleu il reste donc
+   vide et se signale par son contour, à `--on-signal-line` (#C2D6FD, 3,53
+   sur le bleu — le seuil d'un élément d'interface est 3,0). Un remplissage
+   sombre y poserait une boîte noire flottante sur l'encre, c'est-à-dire un
+   second niveau de surélévation que le système n'a pas. Le focus épaissit le
+   ton de la bordure, jamais par un halo flou. */
 input, textarea {
-  background: var(--paper-raise);
-  color: var(--ink);
-  border: 1px solid var(--outline);
+  background: transparent;
+  color: var(--on-signal);
+  border: 1px solid var(--on-signal-line);
   padding: var(--sp-md);
   resize: vertical;
   transition: border-color var(--duration-press) var(--ease-out);
 }
-input:focus, textarea:focus { outline: none; border-color: var(--ink); }
+input:focus, textarea:focus { outline: none; border-color: var(--on-signal); }
 
 button {
   justify-self: start;
   margin-top: 0.75rem;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--on-signal);
+  color: var(--signal);
   border: 0;
   padding: var(--sp-md) var(--sp-lg);
   font-size: var(--fs-sm);
@@ -153,14 +158,14 @@ button {
     background var(--duration-press) var(--ease-out),
     color var(--duration-press) var(--ease-out);
 }
-button:hover:not(:disabled) { background: var(--paper); color: var(--ink); }
-/* L'état en attente se distingue par le ton, pas par l'opacité : papier sur
-   `--ink-mute` donne 5,25, le même rapport que l'inverse — l'opacité, elle,
-   aurait fait passer le libellé sous le seuil. */
-button:disabled { background: var(--ink-mute); cursor: progress; }
+button:hover:not(:disabled) { background: var(--ground); color: var(--on-ground); }
+/* L'état en attente se distingue par le ton, pas par l'opacité : le sol noir
+   porte le blanc à 19,68 — l'opacité, elle, aurait fait passer le libellé
+   sous le seuil. */
+button:disabled { background: var(--ground); color: var(--on-ground-soft); cursor: progress; }
 
 /* Un message d'état se lit : pas d'opacité ici non plus (cf. plus haut). */
-.feedback { font-size: var(--fs-sm); color: var(--ink); max-width: var(--measure); }
+.feedback { font-size: var(--fs-sm); color: var(--on-signal); max-width: var(--measure); }
 
 @media (min-width: 980px) { .inner { grid-template-columns: 1fr 1fr; } }
 </style>

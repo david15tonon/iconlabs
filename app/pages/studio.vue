@@ -72,9 +72,9 @@ useJsonLd(() => ({
 <style scoped>
 .inner { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
 .prose { display: grid; gap: 1.25rem; }
-.prose p { color: var(--ink-soft); font-size: var(--fs-lg); max-width: var(--measure); }
+.prose p { color: var(--on-ground-soft); font-size: var(--fs-lg); max-width: var(--measure); }
 .origin {
-  color: var(--signal-deep) !important;
+  color: var(--signal-text) !important;
   font-size: var(--fs-xs) !important;
   font-weight: 500;
   margin-top: 0.75rem;
@@ -88,7 +88,7 @@ useJsonLd(() => ({
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0;
-  color: var(--ink);
+  color: var(--on-ground);
   margin-bottom: 1rem;
 }
 .aside .second { margin-top: 2.5rem; }
@@ -104,12 +104,12 @@ useJsonLd(() => ({
   align-items: baseline;
 }
 .team strong { font-size: var(--fs-lg); font-weight: 500; }
-.team span { font-size: var(--fs-sm); color: var(--ink-mute); }
+.team span { font-size: var(--fs-sm); color: var(--on-ground-mute); }
 
-.values { color: var(--ink-mute); font-size: var(--fs-xs); }
+.values { color: var(--on-ground-mute); font-size: var(--fs-xs); }
 
 /* Bande blanche : le pas de ton tient la section, les filets ont sauté. */
-.limits { background: var(--paper-raise); }
+.limits { background: var(--ground-raise); }
 .limits h2 { font-size: var(--fs-2xl); margin-bottom: 1rem; }
 .limits header { margin-bottom: clamp(2rem, 4vw, 3.5rem); }
 .limits ul { list-style: none; display: grid; gap: clamp(1rem, 2vw, 1.5rem); }

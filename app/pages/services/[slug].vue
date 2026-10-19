@@ -111,26 +111,26 @@ useJsonLd(() => ({
    ligne de texte secondaire. */
 .tags {
   font-size: var(--fs-xs);
-  color: var(--ink-mute);
+  color: var(--on-ground-mute);
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .head { font-size: var(--fs-2xl); margin-bottom: clamp(1.75rem, 3vw, 3rem); }
 
-/* Chaque point est un panneau blanc sur le papier : le pas de ton remplace
+/* Chaque point est un panneau surélevé sur le sol : le pas de ton remplace
    le filet d'ouverture et celui qui fermait chaque ligne. */
 .includes { list-style: none; display: grid; gap: var(--sp-sm); }
 .includes li {
   display: grid;
   gap: 0.6rem;
-  background: var(--paper-raise);
+  background: var(--ground-raise);
   padding: clamp(1.5rem, 3vw, 2.25rem);
 }
 .includes h3 { font-size: var(--fs-lg); }
-.includes p { color: var(--ink-soft); max-width: var(--measure-wide); }
+.includes p { color: var(--on-ground-soft); max-width: var(--measure-wide); }
 
 /* Bande blanche, bornée par le ton et non par deux filets. */
-.outcome { background: var(--paper-raise); }
+.outcome { background: var(--ground-raise); }
 .cols, .fit { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
 
 /* Titres de colonne en casse de phrase, sans monospace ni capitales. */
@@ -142,21 +142,21 @@ useJsonLd(() => ({
   letter-spacing: 0;
   margin-bottom: 1.25rem;
 }
-.outcome h2 { color: var(--ink-mute); }
+.outcome h2 { color: var(--on-ground-mute); }
 
 .list { list-style: none; display: grid; gap: 0.85rem; }
 .list li { font-size: var(--fs-lg); max-width: var(--measure-wide); }
-.example p { color: var(--ink-soft); max-width: var(--measure); }
+.example p { color: var(--on-ground-soft); max-width: var(--measure); }
 
 .fit ul { list-style: none; display: grid; gap: 1rem; }
-.fit li { color: var(--ink-soft); max-width: var(--measure); padding-left: 1.5rem; position: relative; }
+.fit li { color: var(--on-ground-soft); max-width: var(--measure); padding-left: 1.5rem; position: relative; }
 .fit li::before { position: absolute; left: 0; top: 0; }
-.fit .yes { color: var(--signal-deep); }
-.fit .no  { color: var(--ink-mute); }
+.fit .yes { color: var(--signal-text); }
+.fit .no  { color: var(--on-ground-mute); }
 /* Le signe est décoratif : il double une information déjà portée par le titre
    de colonne, donc il reste hors du flux accessible. */
-.fit > div:first-child li::before { content: '\002B'; color: var(--signal-deep); }
-.fit > div:last-child  li::before { content: '\2212'; color: var(--ink-mute); }
+.fit > div:first-child li::before { content: '\002B'; color: var(--signal-text); }
+.fit > div:last-child  li::before { content: '\2212'; color: var(--on-ground-mute); }
 
 @media (min-width: 880px) {
   .includes { grid-template-columns: 1fr 1fr; }

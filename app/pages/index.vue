@@ -47,9 +47,22 @@ useJsonLd(() => ({
 </script>
 
 <template>
-  <ScrollStory />
+  <!-- Les neuf passes de DESIGN.md § Layout, dans l'ordre.
+
+       `ScrollStory` ne figure plus sur la home. Le composant, ses 135 images
+       et sa route sont intacts dans le dépôt : il suffit de remettre la ligne
+       ci-dessous pour le rétablir. Trois raisons l'ont sorti :
+       1. la direction retenue veut qu'un seul champ possède le premier écran,
+          et c'est la feuille ;
+       2. la charte de marque écrit « peu d'animations » ;
+       3. ses images sont générées dans l'ancienne palette claire — remises
+          telles quelles sur le sol noir, elles seraient fausses.
+       <ScrollStory /> -->
+  <SectionHero />
+  <InkBar />
   <BlockMarkers />
   <SectionServices />
+  <SectionWork />
   <BlockDifference />
   <SectionProcess />
   <SectionStudio />

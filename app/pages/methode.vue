@@ -88,26 +88,26 @@ useJsonLd(() => ({
 .steps > li {
   display: grid;
   gap: 1rem 3rem;
-  background: var(--paper-raise);
+  background: var(--ground-raise);
   padding: clamp(1.75rem, 3vw, 2.5rem);
 }
-.num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-deep); }
+.num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-text); }
 .steps h2 { font-size: var(--fs-xl); margin-bottom: 0.75rem; }
-.steps .lede { font-size: var(--fs-base); color: var(--ink-soft); }
+.steps .lede { font-size: var(--fs-base); color: var(--on-ground-soft); }
 .meta { margin-top: 0.6rem; }
 
 .exchange { display: grid; gap: 1.5rem; margin-top: 2rem; }
 .exchange dt {
   font-size: var(--fs-xs);
   font-weight: 500;
-  color: var(--signal-deep);
+  color: var(--signal-text);
   margin-bottom: 0.5rem;
 }
-.exchange dd { color: var(--ink-soft); font-size: var(--fs-sm); max-width: var(--measure); }
+.exchange dd { color: var(--on-ground-soft); font-size: var(--fs-sm); max-width: var(--measure); }
 
 /* Bande blanche : le pas de ton remplace le filet qui ouvrait la section et
    ceux qui réglaient la liste. Les constantes sont espacées, pas lignées. */
-.constants { background: var(--paper-raise); }
+.constants { background: var(--ground-raise); }
 .constants .head { font-size: var(--fs-2xl); margin-bottom: clamp(2rem, 4vw, 3.5rem); }
 .constants ul { list-style: none; display: grid; gap: clamp(1rem, 2vw, 1.5rem); }
 .constants li {

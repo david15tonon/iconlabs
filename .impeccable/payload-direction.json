@@ -1,0 +1,246 @@
+{
+  "title": "Icon Labs — choisir la forme de la page",
+  "question": "Le monde visuel est épinglé par tes Brand Guidelines (Tech Black 80/15/5, Syne + DM Mono, dominante sombre) et ne bouge pas. Ce qui se choisit ici, c'est la forme : la composition, le premier écran et la façon dont les sept réalisations se donnent à voir. Chaque carte porte maintenant la PAGE ENTIÈRE, déroulable — premier écran, repères, six compétences, les sept réalisations, la différence, la méthode, le labo, les questions fréquentes et la prise de rendez-vous. Rien n'est supprimé du site actuel : tout est reposé dans la forme de la direction. Le tirage a assigné « Les trois passes ».",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Les trois passes",
+      "kicker": "LE TIRAGE",
+      "lineage": "affiche sérigraphiée ouest-africaine, highlife et afrobeat",
+      "thesis": "La page est une feuille sérigraphiée : trois encres passées l'une après l'autre sur du noir, et le calage visible comme preuve du métier. Elle refuse le héros centré sur dégradé que la catégorie imprime à l'identique.",
+      "palette": [
+        "#0B0B0B",
+        "#FFFFFF",
+        "#2563EB",
+        "#7C3AED",
+        "#10B981"
+      ],
+      "materials": [
+        "encre plate",
+        "repères de calage",
+        "papier qui traverse"
+      ],
+      "viewport": "Feuille pleine page. Titre monumental en Syne 800 dont chaque ligne est une passe d'encre différente, et à droite le bloc de dates d'une affiche de concert — devenu la liste réelle des créneaux d'appel. La barre d'encres 80/15/5/5 sépare les passes. En descendant : les trois engagements, une encre chacun ; les six compétences en bandes pleine largeur ; les sept réalisations dont chaque ligne est un résumé complet ; la différence, la méthode en quatre passes, le labo, les questions fréquentes ; et une dernière passe où le bleu prend toute la feuille.",
+      "risk": "Si la typo est posée timidement, la feuille redevient une page sombre ordinaire : la forme ne tient que si le titre va jusqu'au bout et que le calage reste visible.",
+      "raised": [
+        {
+          "from": "la tempête d'alphabet",
+          "raise": "La typo devient porteuse et non décorative : Syne tient la structure de la page, elle n'habille pas un gabarit."
+        },
+        {
+          "from": "l'aube en cellulos multiplans",
+          "raise": "Chaque passe d'encre porte une classe d'information distincte, et les couches se séparent à des vitesses différentes au défilement."
+        },
+        {
+          "from": "le rayon de boîtes à fenêtre",
+          "raise": "La face de chaque réalisation est un résumé complet en soi ; l'ouvrir est la vue de détail, jamais un lien vers ailleurs."
+        },
+        {
+          "from": "le portail shader",
+          "raise": "Un seul champ possède le premier écran, à pleine conviction, au lieu d'un empilement de blocs."
+        },
+        {
+          "from": "le compteur à tubes nixie",
+          "raise": "Les quantités sont à position fixe et assumées comme matière — sept, six, deux à quatre — jamais décoratives, jamais inventées."
+        }
+      ],
+      "html": ".impeccable/sketches/assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Le panneau de chantier",
+      "kicker": "IMPECCABLE'S PICK",
+      "lineage": "le panneau réglementaire posé devant un chantier",
+      "thesis": "La page est la plaque que l'on plante devant un ouvrage : qui construit, quoi, pour qui, livré quand. Le registre des sept ouvrages est affiché publiquement, à droite, dès le premier écran.",
+      "palette": [
+        "#0B0B0B",
+        "#FFFFFF",
+        "#2563EB",
+        "#10B981",
+        "#141414"
+      ],
+      "materials": [
+        "plaque cadrée",
+        "champs réglementaires",
+        "mentions de statut"
+      ],
+      "viewport": "Un cadre blanc plein écran : mentions d'autorisation, titre Syne 800, quatre champs réglementaires chiffrés, et à droite le registre des sept ouvrages avec sa pastille LIVRÉ ou EN COURS. Chaque section suivante est sa propre plaque, avec son bandeau de titre : le champ d'intervention (six compétences en grille réglementaire), les sept dossiers d'ouvrage dépliés, la maîtrise d'œuvre, le calendrier d'exécution en quatre phases dont la durée se lit dans la largeur, le maître d'œuvre, les mentions et réponses, et le dépôt de demande.",
+      "risk": "C'est la direction où la plupart des exécutions atterriraient pour une histoire de preuve : honnête et efficace, mais la plus prévisible des trois.",
+      "html": ".impeccable/sketches/model-pick.html"
+    },
+    {
+      "id": "challenger-sampler",
+      "kind": "challenger",
+      "catalogId": "graphic-worlds-publishing-sampler-alphabet-proof",
+      "label": "Le registre en bandes",
+      "verdict": "competitive",
+      "lineage": "la toile d'apprentissage brodée, bandes par ordre de difficulté, signée et datée au pied",
+      "thesis": "Sept bandes empilées dans l'ordre du temps, qui s'élargissent à mesure : l'assurance du métier se lit dans la géométrie au lieu d'être affirmée en toutes lettres.",
+      "palette": [
+        "#0B0B0B",
+        "#FFFFFF",
+        "#2563EB",
+        "#10B981",
+        "#2A2A2A"
+      ],
+      "materials": [
+        "bandes réglées",
+        "échelle croissante",
+        "signature datée"
+      ],
+      "viewport": "Titre court en haut, puis les sept bandes pleine largeur : la première serrée et petite, la dernière large et en bleu. Signé et daté au pied comme un relevé arrêté. Le même pas gouverne toute la page : la matière de chaque ouvrage en bandes qui s'ouvrent, les trois engagements dont le chiffre grandit, les six compétences, la différence, la méthode en quatre bandes de durée, le labo, les questions fréquentes, et une dernière bande — la plus large — pour la prise de rendez-vous.",
+      "case": "Il fusionne proprement : les sept réalisations sont déjà un ordre chronologique, et la montée d'assurance est vraie sans rien inventer. Il tient la clarté produit, il perd sur l'identification — l'audience de Cotonou ne lit pas le monde de la broderie d'apprentissage.",
+      "risk": "Sans contenu daté honnête, la montée d'échelle devient un effet gratuit.",
+      "html": ".impeccable/sketches/challenger-sampler.html"
+    },
+    {
+      "id": "challenger-alphabet-storm",
+      "kind": "challenger",
+      "catalogId": "dream-surreal-impossible-worlds-alphabet-storm",
+      "label": "La tempête d'alphabet",
+      "verdict": "declined",
+      "lineage": "des lettres qui se condensent en mots, éclatent en météo et refaçonnent le paysage",
+      "thesis": "Le langage devient matière physique et conséquence.",
+      "palette": [
+        "#FFFFFF",
+        "#0B0B0B",
+        "#BBBBB5"
+      ],
+      "materials": [
+        "grotesque monumentale",
+        "masse de lettres",
+        "éclat d'argent"
+      ],
+      "viewport": "Un mot monumental qui se défait en front météo sur fond clair.",
+      "risk": "Le fond clair contredit frontalement la dominante sombre de la charte.",
+      "case": "Fusionne mal : un fondateur qui évalue un laboratoire d'ingénierie ne s'identifie pas à une météo grammaticale, et l'offre y devient illisible. Perd les deux axes.",
+      "kept": "La typo porteuse, pas décorative."
+    },
+    {
+      "id": "challenger-multiplane",
+      "kind": "challenger",
+      "catalogId": "cinema-cinematography-editing-multiplane-cel-dawn",
+      "label": "L'aube en cellulos multiplans",
+      "verdict": "declined",
+      "lineage": "cinq plans peints glissant à des vitesses différentes",
+      "thesis": "La profondeur est faite de couches honnêtes, chacune à sa vitesse.",
+      "palette": [
+        "#2E3B32",
+        "#8FA3A8",
+        "#E8A33D"
+      ],
+      "materials": [
+        "gouache",
+        "cellulo",
+        "flou de bascule"
+      ],
+      "viewport": "La caméra s'enfonce dans la brume vers une fenêtre allumée.",
+      "risk": "Verts de gouache et ambre de lampe : aucun n'existe dans la palette épinglée.",
+      "case": "Fusionne mal : la forêt peinte n'a aucun rapport avec l'audience ni avec le produit, et la matière entière est hors charte. Perd les deux axes.",
+      "kept": "Une classe d'information par couche, et des vitesses distinctes."
+    },
+    {
+      "id": "challenger-toy-shelf",
+      "kind": "challenger",
+      "catalogId": "pop-culture-shelf-window-box-toy-shelf",
+      "label": "Le rayon de boîtes à fenêtre",
+      "verdict": "declined",
+      "lineage": "un mur de coffrets à fenêtre de cellophane, bordés de vichy",
+      "thesis": "Chaque coffret montre son contenu avant qu'on l'ouvre.",
+      "palette": [
+        "#F3EAD8",
+        "#5C8A4A",
+        "#B23A52",
+        "#F2C438"
+      ],
+      "materials": [
+        "carton crème",
+        "cellophane",
+        "vichy"
+      ],
+      "viewport": "Des rayonnages de coffrets, un coffret d'extrémité en vedette.",
+      "risk": "Registre enfantin : la charte dit premium, calme, ingénieur.",
+      "case": "Fusionne mal : le crème et le vichy sont l'exact opposé de la personnalité déclarée, et la boîte à jouets dévalue des systèmes en production. Perd les deux axes.",
+      "kept": "La face de chaque élément est un résumé complet ; l'ouvrir est le détail."
+    },
+    {
+      "id": "challenger-shader-portal",
+      "kind": "challenger",
+      "catalogId": "webgl-shader-portal",
+      "label": "Le portail shader",
+      "verdict": "declined",
+      "lineage": "le portail plein écran d'un studio expérientiel",
+      "thesis": "Une scène GPU occupe l'écran, l'interface flotte en typo fine par-dessus.",
+      "palette": [
+        "#0B0B0B",
+        "#2563EB",
+        "#FFFFFF"
+      ],
+      "materials": [
+        "shader plein cadre",
+        "grain de film",
+        "curseur déformant"
+      ],
+      "viewport": "Un champ qui respire en couleur lente, un compteur de chargement, des liens fins en coin.",
+      "risk": "La charte écrit « peu d'animations » ; ce monde en est fait de bout en bout.",
+      "case": "Fusionne mal : c'est le défaut de la catégorie des studios IA, l'offre et l'action y disparaissent, et il contredit une contrainte de marque explicite. Perd les deux axes.",
+      "kept": "Un seul champ possède le premier écran, à pleine conviction."
+    },
+    {
+      "id": "challenger-nixie",
+      "kind": "challenger",
+      "catalogId": "signals-instruments-nixie-laboratory-counter",
+      "label": "Le compteur à tubes nixie",
+      "verdict": "declined",
+      "lineage": "un compteur de laboratoire à tubes de verre, chiffres de plasma orange",
+      "thesis": "Les quantités sont l'interface, et chaque changement est un événement physique.",
+      "palette": [
+        "#0B0B0B",
+        "#FF7A18",
+        "#2A2A2A"
+      ],
+      "materials": [
+        "verre",
+        "acier noirci",
+        "lueur néon"
+      ],
+      "viewport": "Des bancs de tubes, une décimale par tube, légendes gravées dessous.",
+      "risk": "L'orange néon n'est dans aucune des cinq couleurs autorisées.",
+      "case": "Fusionne mal sur un point factuel : le produit n'a aucune métrique à compter — pas de chiffre d'affaires, pas de performance — et cette forme en réclame des bancs entiers. Elle pousserait à inventer. Perd les deux axes.",
+      "kept": "Les quantités à position fixe, assumées comme matière."
+    }
+  ],
+  "canon": true,
+  "canonCard": {
+    "kind": "canon",
+    "label": "Le standard de la catégorie",
+    "thesis": "Ce que la catégorie livre, exécuté proprement : pastille, titre centré, sous-titre, deux boutons, rangée de clients, trois cartes.",
+    "palette": [
+      "#0B0B0B",
+      "#FFFFFF",
+      "#2563EB",
+      "#10B981"
+    ],
+    "materials": [
+      "grille centrée",
+      "cartes égales",
+      "pastille à point"
+    ],
+    "viewport": "L'arrangement que le visiteur attend, dans la palette de la charte : pastille, titre centré, deux boutons, rangée de clients, puis six cartes de service, une grille de vignettes pour les sept réalisations, trois statistiques, trois cartes de différence, une frise de méthode en quatre temps, trois portraits, un accordéon de questions et une bande d'appel finale.",
+    "risk": "Indiscernable de la concurrence, par construction.",
+    "html": ".impeccable/sketches/canon.html"
+  },
+  "reroll": {
+    "registers": [
+      "safer",
+      "bolder"
+    ]
+  },
+  "steer": true,
+  "buildPath": {
+    "value": "code",
+    "toggle": false
+  }
+}

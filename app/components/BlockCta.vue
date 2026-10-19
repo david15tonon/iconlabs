@@ -21,10 +21,10 @@ const { tr, localePath } = useLocale()
 
 <style scoped>
 /* L'aplat signature, comme la section contact de la home : tout y passe en
-   encre (4,97), seule combinaison qui tienne le petit texte — cf. DESIGN.md. */
+   blanc (5,17), le noir n'y tenant que 3,81 — cf. DESIGN.md § Colors. */
 .cta {
   background: var(--signal);
-  color: var(--ink);
+  color: var(--on-signal);
   padding-block: clamp(4rem, 3rem + 6vw, 8rem);
 }
 .inner { display: grid; gap: 2.5rem; align-items: end; }
@@ -37,11 +37,11 @@ p { max-width: var(--measure); }
 .actions { display: grid; gap: 1rem; justify-items: start; }
 
 /* Bouton plein, sans contour : le contour redoublait le fond et ne servait
-   qu'au survol. L'inversion se fait maintenant d'un aplat à l'autre — encre
-   sur vermillon, puis papier sur vermillon, le texte suivant le fond. */
+   qu'au survol. L'inversion se fait d'un aplat à l'autre — blanc sur bleu,
+   puis noir sur bleu, le texte suivant le fond. */
 .primary {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--on-signal);
+  color: var(--signal);
   padding: var(--sp-md) var(--sp-lg);
   font-size: var(--fs-sm);
   font-weight: 500;
@@ -49,7 +49,7 @@ p { max-width: var(--measure); }
     background var(--duration-press) var(--ease-out),
     color var(--duration-press) var(--ease-out);
 }
-.primary:hover { background: var(--paper); color: var(--ink); }
+.primary:hover { background: var(--ground); color: var(--on-ground); }
 
 /* Le soulignement d'un lien n'est pas un filet de séparation : la charte le
    demande à l'épaisseur du texte. */

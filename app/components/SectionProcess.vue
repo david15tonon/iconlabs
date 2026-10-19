@@ -34,7 +34,7 @@ const { tr, localePath } = useLocale()
 
    Le numéro reste, et lui seul : c'est un vrai `<ol>`, l'ordre des étapes
    compte, et la charte autorise la numérotation à cette condition. */
-.bg { background: var(--paper-raise); }
+.bg { background: var(--ground-raise); }
 
 .steps {
   list-style: none;
@@ -47,9 +47,9 @@ const { tr, localePath } = useLocale()
   align-content: start;
   gap: 0.6rem;
 }
-.num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-deep); }
+.num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-text); }
 .steps h3 { font-size: var(--fs-lg); }
-.steps p { color: var(--ink-soft); font-size: var(--fs-sm); }
+.steps p { color: var(--on-ground-soft); font-size: var(--fs-sm); }
 .meta { margin-top: 0.4rem; }
 
 .more {
@@ -57,11 +57,11 @@ const { tr, localePath } = useLocale()
   margin-top: clamp(2rem, 4vw, 3.5rem);
   font-size: var(--fs-sm);
   font-weight: 500;
-  color: var(--signal-deep);
+  color: var(--signal-text);
   border-bottom: 1px solid currentColor;
   padding-bottom: 0.2rem;
   transition: color var(--duration-press) var(--ease-out);
 }
 .more::after { content: ' \2192'; }
-.more:hover { color: var(--ink); }
+.more:hover { color: var(--on-ground); }
 </style>

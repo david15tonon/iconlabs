@@ -33,9 +33,12 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BRAND = join(ROOT, 'public', 'brand')
 const SOURCE = join(BRAND, 'logo-source.png')
 
-const INK = '#0B0B0B'
-const PAPER = '#F4F1EC'
-const SIGNAL = '#F2360A'
+/* Les trois valeurs viennent de DESIGN.md § Colors, lui-même aligné sur la
+   charte de marque. La charte interdit au logo toute couleur non définie :
+   le clair est donc le blanc pur, et non un blanc cassé.                    */
+const INK = '#0B0B0B'     // Tech Black — le sol
+const PAPER = '#FFFFFF'   // Pure White — le mot-image sur fond sombre
+const SIGNAL = '#2563EB'  // Neural Blue
 
 /* --------------------------------------------------- lecture des pixels --- */
 
@@ -214,19 +217,20 @@ writeFileSync(
 
 /* ---- 4. l'image sociale, 1200 × 630 -------------------------------------- */
 
-/* Papier au sol, mot-image en encre, et une bande de vermillon en pied : c'est
+/* Noir au sol, mot-image en blanc, et une bande de Neural Blue en pied : c'est
    l'un des emplois que la charte réserve à la couleur signature — elle occupe
-   une surface, elle ne souligne pas.                                         */
+   une surface, elle ne souligne pas. La dominante sombre de la charte vaut
+   aussi pour l'image sociale : c'est la première chose qu'on voit du site.   */
 const OG_W = 1200, OG_H = 630
 const BAND = 24
 const markW = 560
 const scale = markW / box.w
 const markH = box.h * scale
 const ogBody = [
-  `  <rect width="${OG_W}" height="${OG_H}" fill="${PAPER}"/>`,
+  `  <rect width="${OG_W}" height="${OG_H}" fill="${INK}"/>`,
   `  <rect y="${OG_H - BAND}" width="${OG_W}" height="${BAND}" fill="${SIGNAL}"/>`,
   `  <g transform="translate(${((OG_W - markW) / 2 - box.x0 * scale).toFixed(2)} ${((OG_H - BAND - markH) / 2 - box.y0 * scale).toFixed(2)}) scale(${scale.toFixed(6)})">`,
-  ...paths.map((d) => `    <path fill="${INK}" fill-rule="evenodd" d="${d}"/>`),
+  ...paths.map((d) => `    <path fill="${PAPER}" fill-rule="evenodd" d="${d}"/>`),
   '  </g>',
 ].join('\n')
 

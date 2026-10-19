@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { services, servicesIntro } from '~~/content/site'
+import { skills, servicesIntro } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
 const { tr, localePath } = useLocale()
+
+const pad = (i: number) => String(i + 1).padStart(2, '0')
 </script>
 
 <template>
@@ -9,16 +11,24 @@ const { tr, localePath } = useLocale()
     <div class="shell">
       <header class="sectionHead" v-reveal>
         <h2 class="breaks">{{ tr(servicesIntro.heading) }}</h2>
+        <p class="lede">{{ tr(servicesIntro.lede) }}</p>
       </header>
 
-      <ul class="grid">
-        <li v-for="(s, i) in services" :key="s.slug" v-reveal="i * 90">
-          <NuxtLink class="card panel" :to="localePath(`/services/${s.slug}`)">
+      <!-- Six passes d'encre, pas six cartes : chaque compétence est une bande
+           pleine largeur. Quatre d'entre elles ont une page, deux n'en ont pas
+           — on n'invente pas une route pour faire symétrique. -->
+      <ul class="passes">
+        <li v-for="(s, i) in skills" :key="s.title.fr" v-reveal="i * 60">
+          <component
+            :is="s.page ? 'NuxtLink' : 'div'"
+            v-bind="s.page ? { to: localePath(`/services/${s.page}`) } : {}"
+            class="pass"
+            :class="{ linked: s.page }"
+          >
+            <span class="n">{{ pad(i) }}</span>
             <h3>{{ tr(s.title) }}</h3>
             <p>{{ tr(s.body) }}</p>
-            <p class="tags">{{ s.tags.join(' · ') }}</p>
-            <span class="more">{{ tr({ fr: 'Voir la page', en: 'See the page' }) }}</span>
-          </NuxtLink>
+          </component>
         </li>
       </ul>
     </div>
@@ -26,51 +36,39 @@ const { tr, localePath } = useLocale()
 </template>
 
 <style scoped>
-/* Quatre panneaux pleins sur le papier. Les filets qui ouvraient la grille et
-   fermaient chaque carte ont disparu : le blanc du panneau fait la séparation,
-   et le demi-pas de grille fait le reste.
+.passes { list-style: none; }
+.passes > li { border-top: 1px solid var(--rule); }
+.passes > li:last-child { border-bottom: 1px solid var(--rule); }
 
-   Les cartes ne sont plus numérotées : ce n'est pas une suite ordonnée, c'est
-   un ensemble de quatre services — le numéro ne portait qu'un ordre arbitraire. */
-.grid {
-  list-style: none;
+.pass {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  gap: var(--sp-sm);
-}
-.grid > li { display: grid; }
-
-/* La carte entière est le lien : la cible de clic suit la carte, et le survol
-   ne se joue pas sur trois mots en bas à gauche. */
-.card {
-  height: 100%;
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-  display: grid;
-  align-content: start;
-  gap: 0.9rem;
-}
-.card h3 { font-size: var(--fs-lg); }
-.card p { color: var(--ink-soft); max-width: var(--measure-tight); }
-
-/* Les mots-clés étaient des boîtes de 1 px : la charte les refuse. Ils
-   redeviennent ce qu'ils sont, une ligne de texte secondaire. */
-.tags {
-  font-size: var(--fs-xs);
-  color: var(--ink-mute) !important;
-  margin-top: 0.1rem;
-}
-
-.more {
-  margin-top: 1.25rem;
-  font-size: var(--fs-xs);
-  font-weight: 500;
-  color: var(--signal-deep);
+  gap: 0.5rem 1.6rem;
+  padding-block: 1.5rem;
   transition: color var(--duration-press) var(--ease-out);
 }
-.more::after { content: ' \2192'; }
-.card:hover .more { color: var(--ink); }
+
+.n { font-size: var(--fs-xs); color: var(--on-ground-mute); }
+
+h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+/* L'encre tourne de bande en bande : une classe d'information par encre, et
+   le bleu et le violet ne portent ici que du titre — 3,81 et 3,45 leur
+   interdisent le texte courant. */
+.passes > li:nth-child(2) h3 { color: var(--signal); }
+.passes > li:nth-child(4) h3 { color: var(--state); }
+.passes > li:nth-child(6) h3 { color: var(--accent); }
+
+p { color: var(--on-ground-soft); }
+
+.linked:hover h3 { color: var(--signal-text); }
 
 @media (min-width: 900px) {
-  .grid { grid-template-columns: 1fr 1fr; }
+  .pass { grid-template-columns: 52px minmax(0, 1fr) minmax(0, 1fr); align-items: baseline; }
+  .n { align-self: start; padding-top: 0.5rem; }
 }
 </style>

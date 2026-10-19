@@ -22,3 +22,14 @@ tasks/
 # ESM trouve node_modules (cf. tasks/lessons.md) — jamais du code du site
 /.*.mjs
 .taste-skill/
+
+# Outillage de compétences installé localement — pas du code du site
+.agents/
+.claude/
+skills-lock.json
+
+# Passe Impeccable : les esquisses de direction et leur description sont de la
+# matière de décision et restent suivies ; l'état de la page de question
+# (pid, port, battements) et le cache du détecteur sont des états machine.
+.impeccable/questions/
+.impeccable/hook.cache.json

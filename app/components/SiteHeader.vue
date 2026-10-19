@@ -21,7 +21,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   <header class="bar" :class="{ solid: scrolled }">
     <div class="inner">
       <NuxtLink class="logo" :to="localePath('/')" :aria-label="brand.wordmark">
-        <img src="/brand/lockup-ink.svg" :alt="brand.wordmark" width="600" height="483" />
+        <img src="/brand/lockup.svg" :alt="brand.wordmark" width="600" height="483" />
       </NuxtLink>
 
       <nav class="links" :class="{ open }" :aria-label="tr({ fr: 'Navigation principale', en: 'Main navigation' })">
@@ -58,7 +58,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 /* La barre était en verre dépoli : fond translucide, `backdrop-filter` et
    filet de 1 px en bas. La charte exclut les trois — pas de verre dépoli en
    navigation, aucun flou d'arrière-plan, et rien ne se sépare par un filet.
-   Au défilement elle devient donc simplement pleine : le papier opaque, et
+   Au défilement elle devient donc simplement pleine : le noir opaque, et
    le pas de ton avec le contenu qui passe dessous fait le reste. */
 .bar {
   position: fixed;
@@ -67,7 +67,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   background: transparent;
   transition: background var(--duration-dropdown) var(--ease-out);
 }
-.bar.solid { background: var(--paper-bar); }
+.bar.solid { background: var(--ground-bar); }
 
 .inner {
   max-width: var(--maxw);
@@ -96,10 +96,10 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 }
 .links a {
   font-size: var(--fs-sm);
-  color: var(--ink-mute);
+  color: var(--on-ground-mute);
   transition: color var(--duration-press) var(--ease-out);
 }
-.links a:hover { color: var(--ink); }
+.links a:hover { color: var(--on-ground); }
 
 .right { display: flex; align-items: center; gap: 0.75rem; }
 
@@ -113,42 +113,44 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   padding: 0.35rem 0.55rem;
   font-size: var(--fs-xs);
   font-weight: 500;
-  color: var(--ink-mute);
+  color: var(--on-ground-mute);
   transition:
     color var(--duration-press) var(--ease-out),
     background var(--duration-press) var(--ease-out);
 }
-.lang button:hover { color: var(--ink); }
-.lang button.on { color: var(--paper); background: var(--ink); }
+.lang button:hover { color: var(--on-ground); }
+.lang button.on { color: var(--ground); background: var(--on-ground); }
 
 .cta {
   font-size: var(--fs-xs);
   font-weight: 500;
   background: var(--signal);
-  color: var(--ink);            /* 4,97 sur le vermillon — cf. DESIGN.md */
+  color: var(--on-signal);            /* 5,17 sur Neural Blue — cf. DESIGN.md */
   padding: 0.6rem 1.1rem;
   white-space: nowrap;
   transition:
     background var(--duration-press) var(--ease-out),
     color var(--duration-press) var(--ease-out);
 }
-/* Au survol le fond s’assombrit : l’encre n’y tient plus que 3,50, le
-   papier y tient 4,99 — c’est donc le texte qui change, pas le fond. */
-.cta:hover { background: var(--signal-deep); color: var(--paper); }
+/* Au survol le fond s’éclaircit d’un cran — `--signal-text`, #5B8DF6 — et le
+   texte passe au noir : il y tient 6,17, quand le blanc n’y tiendrait que
+   3,19. Sur fond sombre, un survol qui éclaire se lit mieux qu’un survol qui
+   assombrit. */
+.cta:hover { background: var(--signal-text); color: var(--ground); }
 
 .burger { display: none; background: none; border: 0; cursor: pointer; padding: 0.5rem; }
-.burger span { display: block; width: 22px; height: 2px; background: var(--ink); }
+.burger span { display: block; width: 22px; height: 2px; background: var(--on-ground); }
 .burger span + span { margin-top: 5px; }
 
 @media (max-width: 900px) {
-  /* Le menu est un panneau blanc qui glisse : le pas de ton le détache du
-     papier, et ses liens sont espacés plutôt que réglés par un filet. */
+  /* Le menu est un panneau qui glisse : le pas de ton le détache du sol, et
+     ses liens sont espacés plutôt que réglés par un filet. */
   .links {
     position: absolute;
     inset: 100% 0 auto 0;
     flex-direction: column;
     gap: 0;
-    background: var(--paper-raise);
+    background: var(--ground-raise);
     max-height: 0;
     overflow: hidden;
     transition: max-height var(--duration-overlay) var(--ease-drawer);

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Icon Labs — le standard de la catégorie</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0B0B0B;--white:#FFFFFF;--blue:#2563EB;--purple:#7C3AED;--green:#10B981;
+        --g1:#141414;--g2:#1E1E1E;--g3:#2A2A2A;--g5:#8A8A86;--g6:#BBBBB5;--pad:60px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1440px;background:var(--black);color:var(--white);
+       font-family:'DM Mono',monospace;font-size:14px;text-align:center}
+  ::selection{background:var(--blue);color:var(--white)}
+  h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-.035em}
+
+  header{position:sticky;top:0;height:80px;padding:0 var(--pad);background:var(--black);
+         display:flex;align-items:center;justify-content:space-between;z-index:20;text-align:left}
+  .lockup{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em}
+  .lockup i{font-style:normal;color:var(--green)}
+  nav{display:flex;align-items:center;gap:28px;font-size:13px;color:var(--g6);letter-spacing:.04em}
+  nav b{color:var(--white);font-weight:400}
+  .cta{background:var(--blue);color:var(--white);padding:11px 20px;font-weight:500}
+
+  /* L'arrangement que le visiteur attend, exécuté proprement : pastille,
+     titre centré, sous-titre, deux boutons, rangée de clients, trois cartes.
+     C'est la sortie de secours — la catégorie, jouée droit, sans ironie. */
+  .pill{display:inline-block;margin:50px auto 26px;border:1px solid var(--g3);
+        border-radius:999px;padding:7px 16px;font-size:13px;color:var(--g6);background:var(--g1)}
+  .pill s{text-decoration:none;color:var(--green)}
+  h1{font-weight:800;font-size:72px;line-height:1.02;letter-spacing:-.035em;max-width:17ch;margin:0 auto}
+  .sub{margin:24px auto 0;max-width:62ch;font-size:16px;line-height:1.7;color:var(--g6)}
+  .btns{margin-top:34px;display:flex;gap:14px;justify-content:center}
+  .b1{background:var(--white);color:var(--black);padding:15px 28px;font-weight:500}
+  .b2{border:1px solid var(--g3);color:var(--white);padding:15px 28px}
+
+  .logos{margin-top:46px;font-size:13px;color:var(--g6);letter-spacing:.1em}
+  .logorow{margin-top:18px;display:flex;gap:46px;justify-content:center;
+           font-family:'Syne',sans-serif;font-weight:700;font-size:19px;color:var(--g5)}
+
+  section{padding:96px var(--pad) 0}
+  h2{font-weight:800;font-size:46px;line-height:1.06;letter-spacing:-.035em;max-width:20ch;margin:0 auto}
+  .lede{margin:18px auto 0;max-width:60ch;font-size:15px;line-height:1.75;color:var(--g6)}
+
+  .cards{margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left}
+  .card{background:var(--g1);border:1px solid var(--g2);padding:26px;border-radius:10px}
+  .card .ic{width:34px;height:34px;background:var(--g2);border-radius:8px;margin-bottom:16px}
+  .card h3{font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .card p{margin-top:9px;font-size:13px;line-height:1.65;color:var(--g6)}
+
+  .cards6{margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left}
+
+  /* Réalisations : la grille de vignettes, telle que la catégorie la livre. */
+  .works{margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left}
+  .wk{background:var(--g1);border:1px solid var(--g2);border-radius:10px;overflow:hidden}
+  .wk .thumb{height:150px;background:var(--g2);display:flex;align-items:center;justify-content:center;
+             font-family:'Syne',sans-serif;font-weight:700;font-size:20px;color:var(--g5);letter-spacing:-.02em}
+  .wk .in{padding:20px}
+  .wk h3{font-weight:700;font-size:17px;letter-spacing:-.01em}
+  .wk .meta{margin-top:6px;font-size:13px;color:var(--g5)}
+  .wk p{margin-top:11px;font-size:13px;line-height:1.65;color:var(--g6)}
+  .wk .tag{display:inline-block;margin-top:14px;font-size:13px;padding:3px 9px;border-radius:999px;
+           background:var(--g2);color:var(--g6)}
+  .wk.live .tag{background:rgba(16,185,129,.16);color:var(--green)}
+
+  /* Repères : la rangée de statistiques, placée après la preuve. */
+  .stats{margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .stat{background:var(--g1);border:1px solid var(--g2);border-radius:10px;padding:30px 24px}
+  .stat .v{font-family:'Syne',sans-serif;font-weight:800;font-size:52px;letter-spacing:-.04em;line-height:1}
+  .stat:nth-child(2) .v{color:var(--blue)} .stat:nth-child(3) .v{color:var(--green)}
+  .stat .l{margin-top:12px;font-size:13px;line-height:1.6;color:var(--g6)}
+
+  /* Méthode : la frise horizontale en quatre temps. */
+  .flow{margin:48px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:left}
+  .fl{position:relative;padding-top:28px;border-top:1px solid var(--g3)}
+  .fl .dot{position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--g5)}
+  .fl:nth-child(1) .dot{background:var(--white)} .fl:nth-child(2) .dot{background:var(--blue)}
+  .fl:nth-child(3) .dot{background:var(--purple)} .fl:nth-child(4) .dot{background:var(--green)}
+  .fl .n{font-size:13px;color:var(--g5);letter-spacing:.08em}
+  .fl h3{font-weight:700;font-size:18px;margin:10px 0 9px;letter-spacing:-.02em}
+  .fl p{font-size:13px;line-height:1.65;color:var(--g6)}
+  .fl .m{margin-top:12px;font-size:13px;color:var(--g5)}
+
+  /* Le labo : trois portraits en rang. */
+  .team{margin:44px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .tm{background:var(--g1);border:1px solid var(--g2);border-radius:10px;padding:28px 24px}
+  .tm .av{width:56px;height:56px;border-radius:50%;background:var(--g2);margin:0 auto 16px}
+  .tm b{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em;display:block}
+  .tm span{display:block;margin-top:7px;font-size:13px;color:var(--g6)}
+  .vals{margin-top:30px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .vals span{font-size:13px;padding:5px 13px;border-radius:999px;background:var(--g1);
+             border:1px solid var(--g2);color:var(--g6)}
+
+  /* FAQ : l'accordéon empilé, centré. */
+  .faq{margin:40px auto 0;max-width:860px;text-align:left}
+  .qa{background:var(--g1);border:1px solid var(--g2);border-radius:10px;padding:22px 24px;margin-bottom:12px}
+  .qa h3{font-weight:700;font-size:17px;letter-spacing:-.015em;display:flex;justify-content:space-between}
+  .qa h3 s{text-decoration:none;color:var(--g5);font-family:'DM Mono',monospace;font-weight:400}
+  .qa p{margin-top:11px;font-size:13px;line-height:1.75;color:var(--g6)}
+
+  /* La bande d'appel finale, centrée, telle qu'on l'attend. */
+  .ct{margin:104px var(--pad) 0;background:var(--blue);border-radius:14px;padding:72px 60px}
+  .ct h2{font-size:50px;max-width:18ch}
+  .ct .lede{color:#D7E3FD;max-width:56ch}
+  .ct .btns{margin-top:32px}
+  .ct .b1{background:var(--white);color:var(--blue)}
+  .ct .b2{border-color:#6E9AF5;color:var(--white)}
+  .ct .note{margin-top:20px;font-size:13px;color:#D7E3FD}
+
+  footer{margin-top:72px;padding:46px var(--pad) 40px;border-top:1px solid var(--g2);
+         display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:var(--g5);text-align:left}
+  footer .cols{display:flex;gap:64px}
+  footer .cols div{display:flex;flex-direction:column;gap:9px}
+  footer .cols b{color:var(--white);font-weight:500;font-family:'Syne',sans-serif;letter-spacing:.04em}
+  footer a{color:var(--g6);text-decoration:none}
+</style></head><body>
+  <header>
+    <div class="lockup">ICON LABS<i>.</i></div>
+    <nav><span>Services</span><span>Réalisations</span><span>Méthode</span><span>Le labo</span>
+      <span><b>FR</b> / EN</span><span class="cta">Réserver un appel</span></nav>
+  </header>
+
+  <!-- 01 · HERO -------------------------------------------------------- -->
+  <div class="pill"><s>●</s>&nbsp; Sept systèmes livrés en production</div>
+  <h1>Des systèmes IA qui tiennent en production.</h1>
+  <p class="sub">Agents, RAG, plateformes et automatisation pour les startups et les PME
+    qui doivent exécuter vite, sans sacrifier la qualité d'ingénierie.</p>
+  <div class="btns"><span class="b1">Réserver un appel</span><span class="b2">Voir les réalisations</span></div>
+
+  <div class="logos">ILS NOUS ONT FAIT CONFIANCE</div>
+  <div class="logorow"><span>MIA</span><span>AURORA</span><span>TRANSKO</span><span>BELLA</span><span>IMMO ELITE</span><span>GREEN HARVEST</span></div>
+
+  <!-- 02 · SERVICES ---------------------------------------------------- -->
+  <section>
+    <h2>Six compétences, une seule équipe.</h2>
+    <p class="lede">Du premier trait au déploiement. Rien n'est sous-traité.</p>
+    <div class="cards6">
+      <div class="card"><div class="ic"></div><h3>Produits IA</h3><p>Agents, intégration LLM, RAG, chatbots et pipelines de données sur mesure.</p></div>
+      <div class="card"><div class="ic"></div><h3>Plateformes &amp; SaaS</h3><p>Applications web, tableaux de bord, outils internes et plateformes complètes.</p></div>
+      <div class="card"><div class="ic"></div><h3>Automatisation</h3><p>n8n, Make, Zapier et scripts sur mesure. Les tâches répétitives deviennent des flux surveillés.</p></div>
+      <div class="card"><div class="ic"></div><h3>Recherche &amp; prototypage</h3><p>Recherche appliquée et prototypes rapides pour trancher avant d'engager un budget.</p></div>
+      <div class="card"><div class="ic"></div><h3>MVP en 2 à 4 semaines</h3><p>De l'idée au produit fonctionnel. Périmètre écrit, jalons datés, sources transférées.</p></div>
+      <div class="card"><div class="ic"></div><h3>Sites &amp; expériences</h3><p>Sites sur mesure, direction artistique et mouvement compris, par la même équipe.</p></div>
+    </div>
+  </section>
+
+  <!-- 03 · RÉALISATIONS ------------------------------------------------ -->
+  <section>
+    <h2>Sept systèmes livrés.</h2>
+    <p class="lede">Clients réels, nommés avec leur accord. Cotonou, Lomé, Abidjan.</p>
+    <div class="works">
+      <div class="wk live"><div class="thumb">MIA CORPORATE</div><div class="in"><h3>MIA Corporate</h3><div class="meta">Beauté &amp; bien-être · Cotonou</div><p>Agent de qualification sur base documentaire, réservation en trois étapes, relances automatiques.</p><span class="tag">Full AI MVP · Livré</span></div></div>
+      <div class="wk live"><div class="thumb">AURORA</div><div class="in"><h3>Aurora Pâtisserie</h3><div class="meta">Restauration · Lomé</div><p>Refonte du catalogue, moteur de recommandations, commandes WhatsApp automatisées.</p><span class="tag">Production Sprint · Livré</span></div></div>
+      <div class="wk live"><div class="thumb">TRANSKO</div><div class="in"><h3>Transko</h3><div class="meta">Logistique · Cotonou</div><p>Agent d'affectation des coursiers, optimisation de tournées, tableau de bord temps réel.</p><span class="tag">Full AI MVP · Livré</span></div></div>
+      <div class="wk live"><div class="thumb">BELLA HAIR</div><div class="in"><h3>Bella Hair Studio</h3><div class="meta">Beauté &amp; mode · Abidjan</div><p>Assistant conversationnel WhatsApp branché au catalogue, service client automatisé.</p><span class="tag">Production Sprint · Livré</span></div></div>
+      <div class="wk live"><div class="thumb">IMMO ELITE</div><div class="in"><h3>Immo Elite</h3><div class="meta">Immobilier · Cotonou</div><p>Revue d'infrastructure, plan de migration vers une recherche sémantique, feuille de route chiffrée.</p><span class="tag">Stack Audit · Livré</span></div></div>
+      <div class="wk live"><div class="thumb">GREEN HARVEST</div><div class="in"><h3>Green Harvest</h3><div class="meta">Agro-alimentaire · Abidjan</div><p>Architecture cible des données, priorisation de la feuille de route IA, gouvernance.</p><span class="tag">Fractional AI CTO · Livré</span></div></div>
+      <div class="wk"><div class="thumb">ADJANI PRIVÉ</div><div class="in"><h3>Adjani Privé</h3><div class="meta">Mode, héritage yoruba · Cotonou</div><p>E-commerce de marque, direction artistique comprise. Pas encore en ligne.</p><span class="tag">Sites &amp; expériences · En cours</span></div></div>
+    </div>
+  </section>
+
+  <!-- 04 · REPÈRES ----------------------------------------------------- -->
+  <section>
+    <h2>Des engagements, pas des moyennes.</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">2–4</div><div class="l">semaines du brief à la mise en ligne</div></div>
+      <div class="stat"><div class="v">100 %</div><div class="l">du code transféré à la livraison</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">chef de projet entre vous et l'ingénieur</div></div>
+    </div>
+  </section>
+
+  <!-- 05 · DIFFÉRENCE -------------------------------------------------- -->
+  <section>
+    <h2>Une seule équipe, toute la chaîne.</h2>
+    <p class="lede">La plupart des prestataires tiennent un maillon : le design, ou le code, ou l'hébergement. Nous tenons la chaîne — et c'est ce qui nous autorise à vous conseiller.</p>
+    <div class="cards">
+      <div class="card"><div class="ic"></div><h3>Structure d'abord, effet ensuite</h3><p>Chaque projet commence par une architecture : parcours, hiérarchie, performance. Le mouvement vient après, et il sert le propos.</p></div>
+      <div class="card"><div class="ic"></div><h3>Pas d'intermédiaire</h3><p>Chaque projet appartient à un ingénieur qui a déjà livré en production. Vous lui parlez directement, chaque semaine, démo à l'appui.</p></div>
+      <div class="card"><div class="ic"></div><h3>Autonome à la livraison</h3><p>Transfert de propriété, documentation, accès. La maintenance mensuelle existe, elle n'est jamais imposée.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 · MÉTHODE ----------------------------------------------------- -->
+  <section>
+    <h2>Du brief à la mise en ligne.</h2>
+    <div class="flow">
+      <div class="fl"><span class="dot"></span><div class="n">ÉTAPE 01</div><h3>Appel de cadrage</h3><p>30 minutes pour comprendre le problème, la stack, le délai et le budget. Pas de pitch.</p><div class="m">Gratuit · 30 min</div></div>
+      <div class="fl"><span class="dot"></span><div class="n">ÉTAPE 02</div><h3>Proposition chiffrée</h3><p>Périmètre, livrables, stack et prix fixe. Vous savez ce que vous achetez avant de signer.</p><div class="m">2–3 jours</div></div>
+      <div class="fl"><span class="dot"></span><div class="n">ÉTAPE 03</div><h3>Conception &amp; build</h3><p>Maquettes animées, puis code. Démo fonctionnelle chaque semaine, ligne directe avec l'ingénieur.</p><div class="m">1–4 semaines</div></div>
+      <div class="fl"><span class="dot"></span><div class="n">ÉTAPE 04</div><h3>Livraison &amp; passation</h3><p>Déploiement, documentation, transfert complet de propriété. Maintenance en option.</p><div class="m">Propriété totale</div></div>
+    </div>
+  </section>
+
+  <!-- 07 · LE LABO ----------------------------------------------------- -->
+  <section>
+    <h2>Trois personnes, une seule table.</h2>
+    <p class="lede">Icon Labs est un laboratoire d'ingénierie AI indépendant basé en Afrique de l'Ouest. Pas de chef de projet entre vous et la personne qui construit.</p>
+    <div class="team">
+      <div class="tm"><div class="av"></div><b>David Tonon</b><span>Fondateur · Ingénieur IA &amp; web</span></div>
+      <div class="tm"><div class="av"></div><b>Kenneth Kpanou</b><span>Motion designer</span></div>
+      <div class="tm"><div class="av"></div><b>Emmanuel Attiba</b><span>Contenu &amp; croissance</span></div>
+    </div>
+    <div class="vals"><span>Résilience</span><span>Innovation</span><span>Créativité</span><span>Satisfaction client</span><span>Connaître ses limites</span></div>
+  </section>
+
+  <!-- 08 · FAQ --------------------------------------------------------- -->
+  <section>
+    <h2>Questions fréquentes.</h2>
+    <div class="faq">
+      <div class="qa"><h3>En combien de temps livrez-vous ?<s>—</s></h3><p>Un sprint se livre en 2 semaines, un MVP complet en 4. Ce sont des engagements, pas des estimations : nous ne prenons pas plus de projets que nous ne pouvons en livrer.</p></div>
+      <div class="qa"><h3>En quoi êtes-vous différents d'un freelance ?<s>+</s></h3></div>
+      <div class="qa"><h3>Travaillez-vous avec des fondateurs non techniques ?<s>+</s></h3></div>
+      <div class="qa"><h3>À qui appartient le code après livraison ?<s>+</s></h3></div>
+      <div class="qa"><h3>Pouvez-vous reprendre une stack existante ?<s>+</s></h3></div>
+      <div class="qa"><h3>Et après la mise en ligne ?<s>+</s></h3></div>
+    </div>
+  </section>
+
+  <!-- 09 · CONTACT ----------------------------------------------------- -->
+  <div class="ct">
+    <h2>Parlons de ce que vous construisez.</h2>
+    <p class="lede">Un appel de 30 minutes, gratuit. On regarde votre projet, on vous dit franchement si nous sommes les bons, et si non, vers qui aller.</p>
+    <div class="btns"><span class="b1">Réserver un appel</span><span class="b2">Écrire à contact@iconlabs.dev</span></div>
+    <div class="note">Sans engagement · Réponse sous 24 h ouvrées</div>
+  </div>
+
+  <footer>
+    <div class="cols">
+      <div><b>SERVICES</b><a>Produits IA</a><a>Plateformes &amp; SaaS</a><a>Automatisation</a><a>MVP 2–4 semaines</a></div>
+      <div><b>LE LABO</b><a>Qui nous sommes</a><a>Méthode</a><a>Réalisations</a><a>Questions fréquentes</a></div>
+      <div><b>CONTACT</b><a>contact@iconlabs.dev</a><a>Cotonou, Bénin</a><a>Réserver un appel</a></div>
+    </div>
+    <div style="text-align:right">
+      <div class="lockup" style="font-size:17px">ICON LABS<i>.</i></div>
+      <div style="margin-top:9px">© 2026 · Tous droits réservés.</div>
+    </div>
+  </footer>
+</body></html>
