@@ -33,3 +33,6 @@ skills-lock.json
 # (pid, port, battements) et le cache du détecteur sont des états machine.
 .impeccable/questions/
 .impeccable/hook.cache.json
+
+# État local de wrangler (bundles temporaires, cache de `pages dev`)
+.wrangler/

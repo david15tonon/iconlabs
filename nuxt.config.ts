@@ -84,5 +84,40 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: { gzip: true, brotli: true },
+
+    /* Cloudflare Pages — le routage du Worker.
+     *
+     * Pages refuse un `_routes.json` de plus de 100 règles. Laissé à lui-même,
+     * le préréglage Nitro énumère **fichier par fichier** tout ce qui n'est pas
+     * un dossier d'assets déclaré : 137 images du récit, 22 fichiers de marque…
+     * puis il coupe la liste à cent, en silence
+     * (`routes.exclude.splice(100 - include.length)` dans
+     * `nitropack/dist/presets/cloudflare/utils.mjs`). Le déploiement passe, et
+     * tout ce qui est tombé après la centième règle — ici 61 images du récit —
+     * part dans le Worker au lieu d'être servi en statique.
+     *
+     * On reprend donc la main : `defaultRoutes: false` coupe l'énumération, et
+     * on déclare les quatre chemins statiques à la place. Six règles au lieu de
+     * cent, et de la marge pour longtemps.
+     *
+     * ⚠️ Tout fichier ajouté dans `public/` ailleurs que sous `brand/` ou
+     * `story/` doit être ajouté ici, sinon il passera par le Worker.
+     * `npm run check:cf` le vérifie et échoue si un fichier n'est couvert. */
+    cloudflare: {
+      pages: {
+        defaultRoutes: false,
+        routes: {
+          version: 1,
+          include: ['/*'],
+          exclude: [
+            '/_nuxt/*',
+            '/brand/*',
+            '/story/*',
+            '/favicon.png',
+            '/manifest.webmanifest',
+          ],
+        },
+      },
+    },
   },
 })

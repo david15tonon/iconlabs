@@ -7,7 +7,9 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "build:cf": "NITRO_PRESET=cloudflare_pages nuxt build",
+    "check:cf": "node tools/check-cf-routes.mjs"
   },
   "dependencies": {
     "@arclux/arc-ui": "^4.9.1",
