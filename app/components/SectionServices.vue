@@ -60,7 +60,7 @@ h3 {
    le bleu et le violet ne portent ici que du titre — 3,81 et 3,45 leur
    interdisent le texte courant. */
 .passes > li:nth-child(2) h3 { color: var(--signal); }
-.passes > li:nth-child(4) h3 { color: var(--state); }
+.passes > li:nth-child(4) h3 { color: var(--state-text); }
 .passes > li:nth-child(6) h3 { color: var(--accent); }
 
 p { color: var(--on-ground-soft); }

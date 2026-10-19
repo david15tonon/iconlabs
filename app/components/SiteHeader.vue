@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { brand, nav, cta } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
+import { useTheme } from '~/composables/useTheme'
 
 const { locale, tr, localePath, setLocale } = useLocale()
+const { theme, toggle: toggleTheme, label: themeLabel } = useTheme()
 const scrolled = ref(false)
 const open = ref(false)
 
@@ -21,7 +23,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   <header class="bar" :class="{ solid: scrolled }">
     <div class="inner">
       <NuxtLink class="logo" :to="localePath('/')" :aria-label="brand.wordmark">
-        <img src="/brand/lockup.svg" :alt="brand.wordmark" width="600" height="483" />
+        <span class="mark" />
       </NuxtLink>
 
       <nav class="links" :class="{ open }" :aria-label="tr({ fr: 'Navigation principale', en: 'Main navigation' })">
@@ -41,6 +43,26 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
             @click="setLocale(code)"
           >{{ code.toUpperCase() }}</button>
         </div>
+        <button
+          class="theme"
+          type="button"
+          :aria-label="themeLabel(locale)"
+          :title="themeLabel(locale)"
+          @click="toggleTheme"
+        >
+          <!-- Un disque mi-plein : la moitié pleine est le sol du thème vers
+               lequel on bascule. Dessiné, jamais un glyphe ni un emoji. -->
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+            <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <path
+              v-if="theme === 'dark'"
+              d="M10 1.75a8.25 8.25 0 0 0 0 16.5z"
+              fill="currentColor"
+            />
+            <path v-else d="M10 1.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor" />
+          </svg>
+        </button>
+
         <NuxtLink class="cta" :to="localePath('/#contact')">{{ tr(cta.primary) }}</NuxtLink>
         <button
           class="burger"
@@ -85,7 +107,19 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
    réglage. La zone de protection vaut la hauteur de capitale, soit 20 px à
    cette taille ; la gouttière de 2 rem entre le logo et la navigation la
    couvre. */
-.logo img { width: 96px; height: auto; }
+/* Le mot-image est posé en MASQUE et peint à `currentColor` : il suit donc le
+   thème au lieu d'exister en deux fichiers dont l'un serait invisible sur
+   l'autre sol. Le tracé est un chemin unique d'une seule couleur — c'est ce
+   qui rend le masque fidèle au fichier. Le rapport 600 × 483 est celui du
+   verrouillage serré. */
+.mark {
+  display: block;
+  width: 96px;
+  aspect-ratio: 600 / 483;
+  background: currentColor;
+  -webkit-mask: var(--lockup) center / contain no-repeat;
+  mask: var(--lockup) center / contain no-repeat;
+}
 
 /* Casse de phrase, jamais de capitales espacées, et au plancher de lecture
    et non à 10 px comme auparavant. */
@@ -137,6 +171,21 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
    3,19. Sur fond sombre, un survol qui éclaire se lit mieux qu’un survol qui
    assombrit. */
 .cta:hover { background: var(--signal-text); color: var(--ground); }
+
+/* La bascule de thème. Pas de contour au repos — la charte n'autorise le
+   filet qu'au champ de formulaire — et le disque mi-plein dit vers quoi on
+   va, pas où l'on est. */
+.theme {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--on-ground-mute);
+  cursor: pointer;
+  transition: color var(--duration-press) var(--ease-out);
+}
+.theme:hover { color: var(--on-ground); }
 
 .burger { display: none; background: none; border: 0; cursor: pointer; padding: 0.5rem; }
 .burger span { display: block; width: 22px; height: 2px; background: var(--on-ground); }

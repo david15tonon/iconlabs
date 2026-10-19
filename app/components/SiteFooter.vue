@@ -9,7 +9,7 @@ const year = new Date().getFullYear()
   <footer class="foot">
     <div class="shell inner">
       <div class="brand">
-        <img src="/brand/lockup.svg" :alt="brand.wordmark" width="600" height="483" />
+        <span class="mark" role="img" :aria-label="brand.wordmark" />
         <p>{{ tr(brand.tagline) }}</p>
         <p class="origin">{{ tr(brand.origin) }}</p>
       </div>
@@ -42,6 +42,17 @@ const year = new Date().getFullYear()
 </template>
 
 <style scoped>
+/* Même masque qu'en en-tête : le mot-image prend la couleur du texte et suit
+   donc le thème. */
+.brand .mark {
+  display: block;
+  width: 148px;
+  aspect-ratio: 600 / 483;
+  background: currentColor;
+  -webkit-mask: var(--lockup) center / contain no-repeat;
+  mask: var(--lockup) center / contain no-repeat;
+}
+
 /* Le pied de page suit toujours un aplat vermillon — la section contact sur
    la home, le bloc d'appel sur les pages internes. Le filet qui l'ouvrait
    doublait donc une séparation déjà faite par le ton ; il a disparu, comme

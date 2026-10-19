@@ -8,10 +8,50 @@ const { tr, locale } = useLocale()
    texte vient de notre propre fichier, mais la règle du dépôt est de ne
    jamais injecter de HTML depuis le contenu. */
 const factParts = computed(() => tr(hero.facts).split('**'))
+
+/* LE MOUVEMENT DE LA DIRECTION — les passes se séparent au défilement.
+ *
+ * Une feuille sérigraphiée est imprimée en plusieurs passes d'encre sur le
+ * même papier ; ici elles se décollent les unes des autres quand on quitte le
+ * premier écran. Chaque ligne du titre porte une encre et une profondeur
+ * distinctes, et c'est tout : une seule intention de mouvement par page, ce
+ * que demande DESIGN.md § Motion.
+ *
+ * Les repères de calage, eux, NE BOUGENT PAS. Ils sont la presse, pas l'encre
+ * — c'est leur immobilité qui rend la séparation lisible.
+ *
+ * Contraintes tenues : rien que `transform`, une écriture par trame via
+ * `requestAnimationFrame`, et pas d'écouteur du tout quand le visiteur
+ * demande un mouvement réduit. */
+const sheet = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+  let frame = 0
+  const onScroll = () => {
+    if (frame) return
+    frame = requestAnimationFrame(() => {
+      frame = 0
+      const el = sheet.value
+      if (!el) return
+      /* 0 au repos, 1 quand la feuille a entièrement quitté l'écran. */
+      const p = Math.min(Math.max(window.scrollY / el.offsetHeight, 0), 1)
+      el.style.setProperty('--p', String(p))
+    })
+  }
+
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', onScroll)
+    if (frame) cancelAnimationFrame(frame)
+  })
+})
 </script>
 
 <template>
-  <section class="sheet" aria-labelledby="sheet-title">
+  <section ref="sheet" class="sheet" aria-labelledby="sheet-title">
     <!-- Les repères de calage. Décalés de 2 px et dépareillés par encre :
          c'est le décalage qui prouve les passes. Décoratifs pour une liseuse
          d'écran, donc masqués. -->
@@ -26,9 +66,11 @@ const factParts = computed(() => tr(hero.facts).split('**'))
             :key="line.fr"
             class="line"
             :class="`ink-${line.ink}`"
+            :style="{ '--depth': line.depth }"
           >{{ line[locale] }}<em
             v-if="line.ink === 'paper' && line.fr === 'en '"
             :class="`ink-${hero.lastWord.ink}`"
+            :style="{ '--depth': hero.lastWord.depth }"
           >{{ hero.lastWord[locale] }}</em></span>
       </h1>
 
@@ -90,7 +132,7 @@ const factParts = computed(() => tr(hero.facts).split('**'))
 /* Posées sous la barre fixe, et non derrière elle. */
 .reg.b { color: var(--signal); left: 18px;  top: clamp(5rem, 3.5rem + 5vw, 7rem); }
 .reg.p { color: var(--accent); left: 20px;  top: calc(clamp(5rem, 3.5rem + 5vw, 7rem) + 2px); }
-.reg.g { color: var(--state);  right: 18px; top: clamp(5rem, 3.5rem + 5vw, 7rem); }
+.reg.g { color: var(--state-text);  right: 18px; top: clamp(5rem, 3.5rem + 5vw, 7rem); }
 
 .grid { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); }
 
@@ -115,10 +157,30 @@ h1 {
   text-transform: uppercase;
   text-wrap: initial;        /* les césures sont écrites, pas équilibrées */
 }
-.line { display: block; }
+/* Chaque ligne descend d'autant que sa profondeur, proportionnellement au
+   défilement. Le papier qui traverse ne bouge pas (`--depth: 0`) : c'est le
+   fond de la feuille, et les encres se décollent de lui. */
+.line {
+  display: block;
+  transform: translate3d(0, calc(var(--p, 0) * var(--depth, 0) * 1px), 0);
+  will-change: transform;
+}
 .ink-paper  { color: var(--on-ground); }
 .ink-signal { color: var(--signal); margin-left: 0.06em; }
-.ink-state  { color: var(--state); font-style: normal; }
+/* `--state-text` et non `--state` : Automation Green ne vaut que 2,54 sur le
+   sol clair, sous le seuil même pour du grand texte. La variante suit le
+   thème — elle vaut #10B981 sur le sombre, #0A7D58 sur le clair.
+
+   `inline-block` est nécessaire, pas cosmétique : une transformation ne
+   s'applique pas à une boîte en ligne, et ce mot est la troisième passe —
+   celle qui se décolle le plus. */
+.ink-state {
+  color: var(--state-text);
+  font-style: normal;
+  display: inline-block;
+  transform: translate3d(0, calc(var(--p, 0) * var(--depth, 0) * 1px), 0);
+  will-change: transform;
+}
 
 .body {
   color: var(--on-ground-soft);

@@ -35,8 +35,26 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'theme-color', content: '#0B0B0B' }  // --ground, cf. DESIGN.md,
+        { name: 'theme-color', content: '#FFFFFF' }  // --ground du thème clair, le défaut
       ],
+      /* Le thème, posé AVANT la première peinture.
+         Le rendu serveur sort toujours en clair — c'est le défaut. Sans ce
+         script, un visiteur qui a choisi le sombre verrait le clair le temps
+         que Vue s'hydrate : un éclair blanc d'une demi-seconde, exactement ce
+         qu'une bascule de thème doit éviter. Il est volontairement minuscule
+         et synchrone, et il échoue en silence si le stockage est refusé
+         (navigation privée), auquel cas le clair tient. */
+      script: [
+        {
+          tagPosition: 'head',
+          innerHTML:
+            "(function(){try{var t=localStorage.getItem('icon-theme');" +
+            "if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;" +
+            "var m=document.querySelector('meta[name=\"theme-color\"]');" +
+            "if(m)m.setAttribute('content',t==='dark'?'#0B0B0B':'#FFFFFF')}}catch(e){}})()",
+        },
+      ],
+
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/brand/favicon.svg' },
         { rel: 'icon', type: 'image/png', sizes: '64x64', href: '/favicon.png' },

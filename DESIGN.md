@@ -1,16 +1,39 @@
 ---
-version: beta
+version: beta-2
 name: Icon Labs
-description: Laboratoire d'ingénierie AI à Cotonou. Feuille sérigraphiée — trois encres passées sur du noir, et le calage visible comme preuve du métier.
+description: Laboratoire d'ingénierie AI à Cotonou. Feuille sérigraphiée — trois encres et le calage visible, sur papier blanc par défaut ou sur noir au choix du visiteur.
+# Le thème CLAIR, qui est le défaut. Le sombre est sous `colors-dark`.
 colors:
   primary: "#2563EB"
   on-primary: "#FFFFFF"
-  primary-text: "#5B8DF6"
+  primary-text: "#1D4FD8"
   secondary: "#7C3AED"
   on-secondary: "#FFFFFF"
-  secondary-text: "#A78BFA"
+  secondary-text: "#6D28D9"
   tertiary: "#10B981"
   on-tertiary: "#0B0B0B"
+  tertiary-text: "#0A7D58"
+  neutral: "#FFFFFF"
+  surface: "#FFFFFF"
+  surface-raised: "#F7F7F5"
+  surface-sunken: "#F1F1EE"
+  on-surface: "#0B0B0B"
+  on-surface-variant: "#444440"
+  on-surface-mute: "#6B6B66"
+  on-primary-variant: "#EAF1FF"
+  outline: "#8A8A86"
+  outline-on-primary: "#C2D6FD"
+  rule: "#E2E2DD"
+  error: "#6D28D9"
+# Le thème SOMBRE, sous `[data-theme='dark']`. Seuls les rôles qui dépendent
+# du sol sont redéclarés ; les couleurs posées SUR un aplat ne bougent pas.
+colors-dark:
+  primary: "#2563EB"
+  primary-text: "#5B8DF6"
+  secondary: "#7C3AED"
+  secondary-text: "#A78BFA"
+  tertiary: "#10B981"
+  tertiary-text: "#10B981"
   neutral: "#0B0B0B"
   surface: "#0B0B0B"
   surface-raised: "#141414"
@@ -18,9 +41,7 @@ colors:
   on-surface: "#FFFFFF"
   on-surface-variant: "#BBBBB5"
   on-surface-mute: "#8A8A86"
-  on-primary-variant: "#EAF1FF"
-  outline: "#3A3A3A"
-  outline-on-primary: "#C2D6FD"
+  outline: "#6B6B66"
   rule: "#2A2A2A"
   error: "#A78BFA"
 typography:
@@ -166,25 +187,72 @@ des studios IA imprime à l'identique, et contre le portail shader plein écran,
 ## Colors
 
 Cinq couleurs, et la règle de proportion **80 / 15 / 5 / 5** de la charte de
-marque. Une couleur sans rôle n'existe pas. Le noir est le sol ; les encres
-passent dessus.
+marque. Une couleur sans rôle n'existe pas.
 
-| Rôle | Valeur | Emploi | Contraste mesuré |
+Le site a **deux sols**. Le **clair est le défaut** — décision de
+l'utilisateur du 2026-10-19, qui l'emporte sur le « dark mode dominant » de la
+charte de marque et est actée dans `PRODUCT.md`. Le sombre est l'option, et le
+choix du visiteur est mémorisé.
+
+### Le renversement des encres
+
+Ce n'est pas une nuance de réglage, c'est la règle qui gouverne les deux
+thèmes, et elle est contre-intuitive :
+
+| Encre | sur sombre | sur clair | Porte du texte courant |
 |---|---|---|---|
-| `--ground` | `#0B0B0B` Tech Black | le sol, 80 % avec le blanc | — |
-| `--ground-raise` | `#141414` | panneau, le seul niveau de surélévation | 1,07 / sol |
-| `--ground-sunken` | `#1E1E1E` | aplat neutre, barre d'encres | 1,18 / sol |
-| `--rule` | `#2A2A2A` | séparateur **non porteur de sens** | 1,37 / sol |
-| `--on-ground` | `#FFFFFF` | titres et texte courant | **19,68** / sol |
-| `--on-ground-soft` | `#BBBBB5` | texte secondaire | **10,21** / sol |
-| `--on-ground-mute` | `#8A8A86` | légende, numéro de passe | **5,68** / sol |
-| `--signal` | `#2563EB` Neural Blue | **aplat et grand titre seulement** | 3,81 / sol |
-| `--signal-text` | `#5B8DF6` | la seule forme admise en texte courant | **6,17** / sol |
-| `--accent` | `#7C3AED` Signal Purple | aplat et titre ≥ 32 px | 3,45 / sol |
-| `--accent-text` | `#A78BFA` | texte courant violet, rare | **7,23** / sol |
-| `--state` | `#10B981` Automation Green | aplat **et** texte courant | **7,76** / sol |
+| Neural Blue `#2563EB` | 3,81 | **5,17** | sur le clair **seulement** |
+| Signal Purple `#7C3AED` | 3,45 | **5,70** | sur le clair **seulement** |
+| Automation Green `#10B981` | **7,76** | 2,54 | sur le sombre **seulement** |
 
-Sur aplat :
+Bleu et violet portent du texte sur le clair et pas sur le sombre ; le vert
+fait exactement l'inverse. **Aucune des trois n'est donc écrite en dur dans un
+composant** : chacune a sa variante `-text` dont la valeur change avec le
+thème, et un composant qui écrit `--state-text` ne sait pas sur quel sol il
+est posé. C'est le seul moyen d'avoir un composant unique pour deux thèmes
+sans repasser la table de contraste à chaque fois.
+
+### Le thème clair — le défaut
+
+| Rôle | Valeur | Contraste |
+|---|---|---|
+| `--ground` | `#FFFFFF` Pure White | — |
+| `--ground-raise` | `#F7F7F5` | 1,07 / sol |
+| `--ground-sunken` | `#F1F1EE` | 1,13 / sol |
+| `--rule` | `#E2E2DD` | 1,30 / sol |
+| `--on-ground` | `#0B0B0B` | **19,68** |
+| `--on-ground-soft` | `#444440` | **9,78** |
+| `--on-ground-mute` | `#6B6B66` | **5,36** |
+| `--signal` | `#2563EB` | **5,17** — aplat, titre **et** texte |
+| `--signal-text` | `#1D4FD8` | **6,64** |
+| `--accent` | `#7C3AED` | **5,70** |
+| `--accent-text` | `#6D28D9` | **7,10** |
+| `--state` | `#10B981` | 2,54 — **aplat seulement** |
+| `--state-text` | `#0A7D58` | **5,14** |
+| `--outline` | `#8A8A86` | **3,47** |
+
+### Le thème sombre — l'option
+
+| Rôle | Valeur | Contraste |
+|---|---|---|
+| `--ground` | `#0B0B0B` Tech Black | — |
+| `--ground-raise` | `#141414` | 1,07 / sol |
+| `--ground-sunken` | `#1E1E1E` | 1,18 / sol |
+| `--rule` | `#2A2A2A` | 1,37 / sol |
+| `--on-ground` | `#FFFFFF` | **19,68** |
+| `--on-ground-soft` | `#BBBBB5` | **10,21** |
+| `--on-ground-mute` | `#8A8A86` | **5,68** |
+| `--signal` | `#2563EB` | 3,81 — **aplat et grand titre seulement** |
+| `--signal-text` | `#5B8DF6` | **6,17** |
+| `--accent` | `#7C3AED` | 3,45 — aplat et titre ≥ 32 px |
+| `--accent-text` | `#A78BFA` | **7,23** |
+| `--state` | `#10B981` | **7,76** — aplat **et** texte |
+| `--state-text` | `#10B981` | **7,76** |
+| `--outline` | `#6B6B66` | **3,67** |
+
+### Sur aplat — identique dans les deux thèmes
+
+L'aplat coloré, lui, ne change pas avec le sol : ces valeurs sont communes.
 
 | Fond | Texte admis | Contraste | Texte interdit |
 |---|---|---|---|
@@ -192,21 +260,26 @@ Sur aplat :
 | `--signal` `#2563EB` | secondaire `#EAF1FF` | **4,56** | `#D7E3FD` (4,01) |
 | `--accent` `#7C3AED` | blanc `#FFFFFF` | **5,70** | noir (3,45) |
 | `--state` `#10B981` | noir `#0B0B0B` | **7,76** | **blanc (2,54)** |
-| `--on-ground` `#FFFFFF` | noir `#0B0B0B` | **19,68** | — |
 
-**Les trois règles qui tombent de ces mesures**, et qu'aucune exception ne lève :
+### Les règles qui tombent de ces mesures
 
-1. **Neural Blue et Signal Purple ne portent jamais de texte courant.** 3,81 et
-   3,45 : ils tiennent le grand titre (≥ 24 px, ou ≥ 18,66 px gras) et l'aplat,
-   rien d'autre. Le texte bleu existe sous la forme `--signal-text` `#5B8DF6`.
+1. **Aucune encre n'est écrite en dur.** Voir le renversement ci-dessus.
 2. **Sur aplat vert, c'est le noir qui tient**, jamais le blanc. 7,76 contre
    2,54 : l'erreur inverse est un échec de 44 % sous le seuil.
-3. **Le texte secondaire sur aplat bleu est `#EAF1FF`**, pas `#D7E3FD`. L'écart
-   entre les deux est de 0,5 point de contraste et de part et d'autre du seuil.
+3. **Le texte secondaire sur aplat bleu est `#EAF1FF`**, pas `#D7E3FD`.
+   L'écart entre les deux est de 0,5 point de contraste et de part et d'autre
+   du seuil.
+4. **La bordure d'un champ vaut 3,0 au minimum contre son sol** — WCAG 1.4.11.
+   `#3A3A3A`, qu'on écrit d'instinct sur du noir, n'en vaut que 1,73.
 
-La bordure d'un champ de formulaire vaut `--outline` `#3A3A3A` sur le sol, et
-`#C2D6FD` (3,53) sur aplat bleu — un champ doit se voir, c'est la seule
-séparation par filet que le système autorise.
+### La règle 80 / 15 / 5 / 5 somme à 105
+
+La charte de marque écrit quatre poids — noir et blanc 80, bleu 15, violet 5,
+vert 5 — qui font **105 et non 100**. Ce n'est pas corrigé en silence : la
+barre d'encres rend des **rapports**, donc un poids de 80 sur 105 occupe 76 %
+de la largeur. Les chiffres affichés sont ceux de la charte, les largeurs sont
+leur proportion exacte. Normaliser à 100 reviendrait à réécrire la charte sans
+le dire.
 
 ## Typography
 
@@ -235,8 +308,10 @@ les numéros de passe.
 ## Logo
 
 `public/brand/logo-source.png` vectorisé par `tools/trace-logo.mjs` (potrace).
-Le verrouillage sur fond sombre est la forme par défaut ; la variante `-ink`
-sert les rares aplats clairs. Le point final du mot-image est en
+Dans l'interface, le mot-image est posé en **masque CSS** et peint à
+`currentColor` : il suit donc le thème au lieu d'exister en deux fichiers dont
+l'un serait invisible sur l'autre sol. Les fichiers `lockup{,-ink}.svg`
+restent pour les usages hors page (documents, exports). Le point final du mot-image est en
 `--state` `#10B981` : c'est la seule couleur que le logo porte.
 
 Interdits par la charte de marque, sans exception : ombre, dégradé, effet 3D,
@@ -262,7 +337,9 @@ La page se lit en **neuf passes**, dans cet ordre, et aucune ne se saute :
 
 ## Elevation & Depth
 
-**Un seul niveau de surélévation** : `--ground-raise` `#141414` sur `--ground`.
+**Un seul niveau de surélévation** : `--ground-raise` sur `--ground` —
+`#F7F7F5` sur blanc, `#141414` sur noir. Le même pas de ton (1,07) dans les
+deux thèmes.
 Pas d'ombre portée, pas de flou d'arrière-plan, pas de verre dépoli — la charte
 de marque les exclut, et un pas de ton suffit sur fond sombre.
 
@@ -281,14 +358,53 @@ angles d'une passe, jamais au milieu, et jamais plus de quatre par écran.
 
 ## Motion
 
-*Peu d'animations* — c'est une contrainte de marque, pas une préférence.
+*Peu d'animations* — c'était une contrainte de la charte de marque, assouplie
+le 2026-10-19 à la demande de l'utilisateur. Assouplie, pas levée : **une
+seule intention de mouvement par page**, et elle est nommée.
 
-- Une seule intention par page : les passes se séparent au défilement, à des
-  vitesses légèrement différentes. Rien d'autre ne bouge de soi-même.
+**L'intention : les passes se séparent au défilement.** Une feuille
+sérigraphiée est imprimée en plusieurs passes d'encre sur le même papier ; ici
+elles se décollent les unes des autres quand on quitte le premier écran.
+Le papier qui traverse ne bouge pas, le bleu descend de 26 px, le vert de
+58 px, proportionnellement au défilement. **Les repères de calage, eux, restent
+immobiles** : ils sont la presse, pas l'encre, et c'est leur immobilité qui
+rend la séparation lisible.
+
+Le reste n'est pas de l'intention, c'est de la fonction :
+
+- **La barre d'encres se remplit** à son arrivée dans l'écran, segment par
+  segment. Sans quoi la règle 80/15/5/5 se lit comme un bandeau décoratif au
+  lieu d'une règle.
+- **Les quantités se comptent.** `arc-animated-number` (ARC UI) compte les
+  quatre poids de la barre et le « 100 % » des repères. Uniquement ceux-là :
+  « 2–4 » est un intervalle et non un nombre, et compter « 0 » revient à
+  compter de zéro à zéro. Animer les trois repères demanderait d'inventer un
+  point de départ à chacun — ce serait de la décoration déguisée en
+  information.
+- **Les états** : survol, focus, désactivé. Un état n'est pas une animation.
+
+Règles de fabrication :
+
 - `--ease-out` `cubic-bezier(0.23, 1, 0.32, 1)` pour toute entrée.
-- Rien au-dessus de **300 ms**. Retour d'appui à 140 ms.
-- `prefers-reduced-motion` coupe la séparation des passes : la page reste
-  entièrement lisible, seule la mise en scène tombe.
+- Rien au-dessus de **300 ms** en interface. Le décompte d'un nombre est une
+  lecture et non un retour d'interface : 900 ms, dans le registre marketing
+  que la charte autorise à dépasser.
+- Le défilement n'écrit qu'une variable CSS, une fois par trame
+  (`requestAnimationFrame`), et ne touche que `transform`.
+- `prefers-reduced-motion: reduce` **ne désactive pas seulement la
+  transition** : l'écouteur de défilement n'est pas posé du tout, et la barre
+  d'encres naît remplie. La page reste entièrement lisible ; seule la mise en
+  scène tombe.
+
+### Ce qui a été écarté, et pourquoi
+
+ARC UI (`arcui.dev`) est une bibliothèque d'écrans d'application : sur ses
+169 composants, cinq seulement touchent au mouvement. Trois sont refusés ici —
+**Gradient Text** parce que l'emphase vient de la graisse ou du corps et jamais
+d'un dégradé ; **Typewriter** parce qu'il se bat avec une typographie
+d'affiche, qui est posée d'un coup ou ne l'est pas ; **Marquee** parce qu'un
+bandeau défilant est le cliché de la catégorie. Reste `AnimatedNumber`, qui
+sert les quantités — et les quantités sont de la matière dans cette direction.
 
 ## Components
 
@@ -302,6 +418,16 @@ angles d'une passe, jamais au milieu, et jamais plus de quatre par écran.
   sépare deux passes à la place d'un filet.
 - **Ligne de réalisation** — numéro, nom en Syne 38 px, secteur et ville,
   résumé complet, catégorie en pastille. Quatre colonnes, pas une carte.
+  **Pas de survol** : la ligne ne mène nulle part, et un survol y promettrait
+  un clic qui n'existe pas.
+- **Bascule de thème** — un disque mi-plein, dessiné, dans l'en-tête. La
+  moitié pleine est le sol vers lequel on bascule, pas celui où l'on est. Pas
+  de contour au repos. Le choix est mémorisé, et un script synchrone dans
+  `<head>` le repose **avant la première peinture** : un visiteur qui a choisi
+  le sombre ne voit jamais le clair passer.
+- **Mot-image** — posé en masque CSS et peint à `currentColor`, il suit donc
+  le thème. Deux fichiers dont l'un serait invisible sur l'autre sol serait
+  une faute d'entretien programmée.
 
 ## Do's and Don'ts
 
@@ -327,6 +453,10 @@ angles d'une passe, jamais au milieu, et jamais plus de quatre par écran.
 - **Pas de filet pour séparer deux surfaces**, hors champ de formulaire et hors
   séparateur de liste à l'intérieur d'une passe.
 - **Pas de verre dépoli, pas de flou d'arrière-plan, pas d'ombre au repos.**
+- **Pas de couleur d'encre écrite en dur dans un composant.** Voir le
+  renversement : la même valeur qui passe sur un sol échoue sur l'autre.
+- **Pas de texte en dégradé, pas de machine à écrire, pas de bandeau
+  défilant** — même disponibles dans la bibliothèque installée.
 - **Pas de métrique inventée.** Aucun témoignage, aucun chiffre d'affaires,
   aucune performance, aucun logo client : `PRODUCT.md` les nomme comme des
   absences à ne jamais combler au jugé.

@@ -10,48 +10,73 @@
 :root {
   /* — Le sol et les encres —
      Règle de proportion 80 / 15 / 5 / 5 : le noir et le blanc tiennent 80 %,
-     Neural Blue 15 %, Signal Purple et Automation Green 5 % chacun. Le noir
-     est le sol ; les encres passent dessus. Une couleur sans rôle n'existe
-     pas.                                                                    */
-  --ground:        #0B0B0B;  /* Tech Black — le sol                          */
-  --ground-raise:  #141414;  /* le seul niveau de surélévation  (1,07)       */
-  --ground-sunken: #1E1E1E;  /* aplat neutre, barre d'encres    (1,18)       */
-  --rule:          #2A2A2A;  /* séparateur NON porteur de sens  (1,37)       */
+     Neural Blue 15 %, Signal Purple et Automation Green 5 % chacun. Une
+     couleur sans rôle n'existe pas.
 
-  --on-ground:      #FFFFFF;  /* titres, texte courant         (19,68 / sol) */
-  --on-ground-soft: #BBBBB5;  /* texte secondaire              (10,21 / sol) */
-  --on-ground-mute: #8A8A86;  /* légende, numéro de passe       (5,68 / sol) */
+     ⚠️ LE RENVERSEMENT. Les trois encres ne se comportent PAS de la même
+     façon selon le sol, et ce n'est pas une nuance : c'est la règle qui
+     gouverne les deux thèmes.
 
-  /* Neural Blue. 3,81 sur le sol : il tient l'aplat et le grand titre, jamais
-     le texte courant. Celui-ci existe sous la forme `--signal-text`.        */
-  --signal:      #2563EB;
-  --signal-text: #5B8DF6;  /* la seule forme admise en labeur   (6,17)       */
+         encre              sur sombre   sur clair
+         Neural Blue            3,81        5,17
+         Signal Purple          3,45        5,70
+         Automation Green       7,76        2,54
 
-  /* Signal Purple. 3,45 : aplat et titre ≥ 32 px seulement.                 */
-  --accent:      #7C3AED;
-  --accent-text: #A78BFA;  /*                                   (7,23)       */
+     Bleu et violet portent du texte courant sur le clair et pas sur le
+     sombre ; le vert fait exactement l'inverse. Aucune des trois n'est donc
+     écrite en dur dans un composant : chacune a sa variante `-text`, dont la
+     valeur change avec le thème. Un composant écrit `--state-text` et ne sait
+     pas sur quel sol il est posé.
 
-  /* Automation Green. 7,76 : la seule des trois encres qui porte du texte
-     courant sur le sol.                                                     */
-  --state: #10B981;
+     Le thème CLAIR est le défaut, par décision de l'utilisateur du
+     2026-10-19 : c'est `:root` nu. Le sombre est sous
+     `[data-theme='dark']`. `prefers-color-scheme` n'est volontairement pas
+     écouté — le défaut est un choix de marque, pas une préférence système ;
+     le visiteur bascule et son choix est mémorisé.                          */
+  --ground:        #FFFFFF;  /* Pure White — le sol                          */
+  --ground-raise:  #F7F7F5;  /* le seul niveau de surélévation  (1,07)       */
+  --ground-sunken: #F1F1EE;  /* aplat neutre, barre d'encres    (1,13)       */
+  --rule:          #E2E2DD;  /* séparateur NON porteur de sens  (1,30)       */
 
-  /* Texte posé sur un aplat. Sur aplat vert c'est le NOIR qui tient (7,76) ;
-     le blanc y tombe à 2,54. Sur aplat bleu le secondaire est #EAF1FF (4,56)
-     et non #D7E3FD (4,01) — les deux sont de part et d'autre du seuil.      */
+  --on-ground:      #0B0B0B;  /* titres, texte courant         (19,68 / sol) */
+  --on-ground-soft: #444440;  /* texte secondaire               (9,78 / sol) */
+  --on-ground-mute: #6B6B66;  /* légende, numéro de passe       (5,36 / sol) */
+
+  --signal:      #2563EB;  /* Neural Blue — aplat, titre, et texte  (5,17)   */
+  --signal-text: #1D4FD8;  /*                                       (6,64)   */
+
+  --accent:      #7C3AED;  /* Signal Purple — aplat et titre        (5,70)   */
+  --accent-text: #6D28D9;  /*                                       (7,10)   */
+
+  /* Automation Green ne tient que 2,54 sur le clair : il n'y est QU'un
+     aplat. Tout vert écrit passe par `--state-text`.                        */
+  --state:      #10B981;
+  --state-text: #0A7D58;   /*                                       (5,14)   */
+
+  /* Texte posé sur un aplat coloré. Ces valeurs ne dépendent pas du thème :
+     l'aplat, lui, ne change pas. Sur aplat vert c'est le NOIR qui tient
+     (7,76) ; le blanc y tombe à 2,54. Sur aplat bleu le secondaire est
+     #EAF1FF (4,56) et non #D7E3FD (4,01) — de part et d'autre du seuil.     */
   --on-signal:      #FFFFFF;  /* sur aplat bleu                 (5,17)       */
   --on-signal-soft: #EAF1FF;  /* secondaire sur aplat bleu      (4,56)       */
   --on-signal-line: #C2D6FD;  /* bordure de champ sur aplat bleu(3,53)       */
   --on-accent:      #FFFFFF;  /* sur aplat violet               (5,70)       */
   --on-state:       #0B0B0B;  /* sur aplat vert                 (7,76)       */
 
-  /* Bordure de champ de formulaire. Rien d'autre : le système ne sépare pas
-     deux surfaces par un filet, le champ de saisie est la seule exception
-     nommée — un champ doit se voir.                                         */
-  --outline: #3A3A3A;
+  /* Bordure de champ de formulaire. WCAG 1.4.11 demande 3,0 contre le sol
+     pour la limite d'un élément d'interface : #8A8A86 vaut 3,47 sur le
+     blanc. Rien d'autre ne se sépare par un filet — le champ de saisie est
+     la seule exception nommée, un champ doit se voir.                       */
+  --outline: #8A8A86;
 
-  /* Le noir opaque sous la barre de navigation. Ni verre dépoli, ni flou :
+  /* Le sol opaque sous la barre de navigation. Ni verre dépoli, ni flou :
      la charte de marque les exclut tous les deux.                           */
-  --ground-bar: #0B0B0B;
+  --ground-bar: #FFFFFF;
+
+  /* Le mot-image suit le thème : il est posé en masque et prend la couleur
+     du texte, au lieu d'exister en deux fichiers dont l'un serait invisible
+     sur l'autre sol.                                                        */
+  --lockup: url('/brand/lockup.svg');
 
   /* — Typographie —
      Deux familles, et seulement deux, celles de la charte. Syne porte
@@ -59,6 +84,13 @@
      étiquette, champ. C'est le choix de la charte, tenu jusqu'au bout.      */
   --display: 'Syne', ui-sans-serif, system-ui, sans-serif;
   --text:    'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* L'échappatoire déclarée d'ARC UI : ses composants lisent
+     `--font-mono-family` depuis leur `:host`, avec JetBrains Mono en repli.
+     C'est le seul moyen de leur imposer notre police — une règle
+     `font-family` venue du dehors est coupée par le `:host` du shadow DOM,
+     une variable CSS le traverse. */
+  --font-mono-family: 'DM Mono';
 
   /* Échelle fluide. Les planchers tiennent les deux règles de la charte :
      aucun texte sous 13 px, et Syne jamais sous 21 px — en deçà elle perd
@@ -115,6 +147,41 @@
   --duration-dropdown: 200ms;   /* menu, sélecteur                           */
   --duration-overlay:  300ms;   /* panneau, apparition au défilement         */
 }
+
+/* ========================================================================== *
+   Le thème SOMBRE — celui de la charte de marque, devenu l'option.
+   Seuls les tokens qui dépendent du sol sont redéclarés : la typographie, le
+   rythme, les mesures et le mouvement sont communs aux deux thèmes.
+   ========================================================================== */
+
+:root[data-theme='dark'] {
+  --ground:        #0B0B0B;  /* Tech Black                                   */
+  --ground-raise:  #141414;  /*                                 (1,07)       */
+  --ground-sunken: #1E1E1E;  /*                                 (1,18)       */
+  --rule:          #2A2A2A;  /*                                 (1,37)       */
+
+  --on-ground:      #FFFFFF;  /*                               (19,68 / sol) */
+  --on-ground-soft: #BBBBB5;  /*                               (10,21 / sol) */
+  --on-ground-mute: #8A8A86;  /*                                (5,68 / sol) */
+
+  /* Ici bleu et violet ne portent QUE de l'aplat et du grand titre : 3,81 et
+     3,45. C'est l'exact inverse du thème clair.                             */
+  --signal:      #2563EB;
+  --signal-text: #5B8DF6;  /*                                   (6,17)       */
+  --accent:      #7C3AED;
+  --accent-text: #A78BFA;  /*                                   (7,23)       */
+
+  /* Et le vert, lui, porte le texte courant sans rien changer.              */
+  --state:      #10B981;
+  --state-text: #10B981;   /*                                   (7,76)       */
+
+  /* 3,67 sur le sol noir — le #3A3A3A d'abord posé n'en valait que 1,73,
+     sous le seuil de 3,0 que WCAG 1.4.11 demande à la limite d'un champ.    */
+  --outline: #6B6B66;
+
+  --ground-bar: #0B0B0B;
+}
+
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

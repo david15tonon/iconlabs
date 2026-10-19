@@ -65,6 +65,15 @@ semaines, Fractional AI CTO 1 000 $/mois) — elle **ne va pas sur le site** :
 « on ne met pas les prix, le client réserve un call » (2026-10-18). Les quatre
 offres restent utiles comme **catégories de réalisation**, pas comme tarifs.
 
+**Bibliothèque de composants** : **ARC UI** (`arcui.dev`,
+`@arclux/arc-ui-vue` + `@arclux/arc-ui` + `lit`), choisie par l'utilisateur le
+2026-10-19. C'est une bibliothèque de web components Lit avec un vrai paquet
+Vue 3 — donc utilisable en Nuxt, contrairement à magicui.design et uiarc.dev
+qui sont React seulement. Elle est importée **composant par composant**, et un
+seul sert : `AnimatedNumber`. Ses composants appellent `customElements.define`
+au niveau module et ne passent pas le rendu serveur : ils vivent dans un
+fichier `.client.vue`, avec la vraie valeur rendue par le serveur en repli.
+
 **Contraintes techniques** : Nuxt 4 + Vue 3. Adresses préfixées `/fr` et `/en`
 plus `/` déduit du pays (`cf-ipcountry` lu avant `x-vercel-ip-country`).
 Hébergé sur Vercel aujourd'hui, Cloudflare Pages visé — le `_routes.json`
@@ -83,8 +92,17 @@ qui s'en écartait.
   (efficacité · ROI). Gris `--g1` `#141414` → `--g6` `#BBBBB5`.
 - **Typographie** : Syne en display (800 / 700, interlettrage −1 à −3 px),
   DM Mono en labeur et légende (400 / 300, interligne 1,6–1,75).
-- **Le site en usage** : *dark mode dominant, espace vide généreux, typo large,
-  peu d'animations, sections claires et respirantes.*
+- **Le site en usage** : la charte écrit *dark mode dominant, espace vide
+  généreux, typo large, peu d'animations, sections claires et respirantes.*
+  **Deux de ces points ont été amendés par l'utilisateur le 2026-10-19**, et
+  l'amendement l'emporte sur la charte :
+  - **le clair devient le thème par défaut**, le sombre reste disponible par
+    une bascule mémorisée. La dominante sombre n'est donc plus la règle, elle
+    est une option offerte au visiteur ;
+  - **« peu d'animations » est assoupli, pas levé** : une seule intention de
+    mouvement par page — les passes d'encre se séparent au défilement — plus
+    le remplissage de la barre d'encres et le décompte des quantités. Le texte
+    en dégradé, la machine à écrire et le bandeau défilant restent exclus.
 - **Logo** interdit de : ombres, dégradés, effets 3D, couleurs non définies,
   distorsion, fond coloré non validé.
 - **Voix** : direct, précis, technique, sans buzzwords, confiance implicite,

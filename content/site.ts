@@ -76,13 +76,19 @@ export const cta = {
    Les césures sont écrites à la main, calibrées sur `--fs-3xl` (104 px). */
 
 export const hero = {
+  /* `depth` : de combien de pixels la ligne descend quand la feuille a
+     entièrement quitté l'écran. Le papier qui traverse reste à zéro — c'est
+     le fond, et les encres se décollent de lui. Les valeurs sont petites à
+     dessein : on cherche la séparation des passes, pas un effet. */
   lines: [
-    { ink: 'paper'  as const, fr: 'De l’idée', en: 'From idea' },
-    { ink: 'signal' as const, fr: 'au système', en: 'to a system' },
-    { ink: 'paper'  as const, fr: 'en ', en: 'in ' },
+    { ink: 'paper'  as const, depth: 0,  fr: 'De l’idée', en: 'From idea' },
+    { ink: 'signal' as const, depth: 26, fr: 'au système', en: 'to a system' },
+    { ink: 'paper'  as const, depth: 0,  fr: 'en ', en: 'in ' },
   ],
   /* Le dernier mot, sur la troisième ligne, porte la troisième encre. */
-  lastWord: { ink: 'state' as const, ...t('production.', 'production.') },
+  /* La troisième encre se décolle le plus : c'est la dernière passée, celle
+     qui est au-dessus des autres sur la feuille. */
+  lastWord: { ink: 'state' as const, depth: 58, ...t('production.', 'production.') },
   body: t('Laboratoire d’ingénierie AI indépendant. Agents, RAG, plateformes, automatisation — nous construisons les systèmes et nous les mettons en production.',
           'Independent AI engineering lab. Agents, RAG, platforms, automation — we build the systems and we put them in production.'),
   facts: t('**Sept livrés** — Cotonou, Lomé, Abidjan · **Six compétences** · Le prix se discute en appel.',
@@ -119,11 +125,16 @@ export const hero = {
 /* La règle 80 / 15 / 5 / 5 de la charte, rendue littérale : les largeurs sont
    les proportions. Elle sépare deux passes à la place d'un filet. */
 
+/* `value` est séparé de `label` pour que le nombre puisse être compté à
+   l'arrivée de la barre dans l'écran : ce sont des quantités, et DESIGN.md
+   veut qu'elles soient de la matière. La largeur du segment EST sa valeur —
+   c'est la même information dite deux fois, par la géométrie et par le
+   chiffre, et c'est voulu. */
 export const inks = [
-  { role: 'ground', flex: 80, label: t('Noir / blanc — 80', 'Black / white — 80') },
-  { role: 'signal', flex: 15, label: t('Bleu 15', 'Blue 15') },
-  { role: 'accent', flex: 5,  label: t('Violet 5', 'Purple 5') },
-  { role: 'state',  flex: 5,  label: t('Vert 5', 'Green 5') },
+  { role: 'ground', flex: 80, value: 80, label: t('Noir / blanc', 'Black / white') },
+  { role: 'signal', flex: 15, value: 15, label: t('Bleu', 'Blue') },
+  { role: 'accent', flex: 5,  value: 5,  label: t('Violet', 'Purple') },
+  { role: 'state',  flex: 5,  value: 5,  label: t('Vert', 'Green') },
 ]
 
 /* ------------------------------------------------- scènes du récit au scroll */
@@ -329,12 +340,17 @@ export const workStatus = {
    doit l'être sans source. La bande est juste sous le récit, à la place qu'une
    bande de logos clients occuperait si nous en avions.                      */
 
+/* `count` marque les repères dont le chiffre peut réellement être compté à
+   l'arrivée dans l'écran. Il n'y en a qu'un : « 2–4 » est un intervalle, pas
+   un nombre, et compter « 0 » revient à compter de zéro à zéro. Animer les
+   trois demanderait d'inventer un point de départ à chacun — ce serait de la
+   décoration déguisée en information. */
 export const markers = {
   note: t('Des engagements, pas des moyennes.', 'Commitments, not averages.'),
   items: [
-    { value: '2–4',   label: t('semaines du brief à la mise en ligne', 'weeks from brief to launch') },
-    { value: '100 %', label: t('du code transféré à la livraison', 'of the code transferred on delivery') },
-    { value: '0',     label: t('chef de projet entre vous et l’ingénieur', 'project managers between you and the engineer') },
+    { value: '2–4',   count: null, label: t('semaines du brief à la mise en ligne', 'weeks from brief to launch') },
+    { value: '100 %', count: 100,  suffix: ' %', label: t('du code transféré à la livraison', 'of the code transferred on delivery') },
+    { value: '0',     count: null, label: t('chef de projet entre vous et l’ingénieur', 'project managers between you and the engineer') },
   ],
 }
 
