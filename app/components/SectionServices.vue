@@ -81,7 +81,11 @@ const pad = (i: number) => String(i + 1).padStart(2, '0')
 .inner {
   display: grid;
   gap: 0.75rem;
-  min-height: clamp(320px, 42vh, 440px);
+  /* Mesuré le 2026-10-20 : 386 px de carte pour 176 px de contenu, soit plus
+     de la moitié de vide, six fois de suite. Le plancher descend à ce qu'il
+     faut pour qu'une carte reste une carte, et c'est le contenu qui décide au
+     delà — on défile deux fois moins pour la même information. */
+  min-height: clamp(200px, 26vh, 300px);
   align-content: center;
   padding: clamp(1.75rem, 4vw, 3.5rem);
   border-radius: 24px;

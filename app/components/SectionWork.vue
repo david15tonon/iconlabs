@@ -20,8 +20,14 @@ const { tr } = useLocale()
  * la section promet qu'« il n'y a rien à ouvrir pour le savoir ». Couper les
  * résumés rendrait cette phrase fausse.
  */
-const featured = computed(() => work.filter((w) => w.featured))
-const listed = computed(() => work.filter((w) => !w.featured))
+/* La mise en avant se DÉDUIT de l'existence d'une capture, elle ne se déclare
+ * pas. Un drapeau `featured` posé à la main finissait par mettre en grille des
+ * réalisations sans image : trois cases sur quatre affichaient une plaque
+ * vide, et une case vide à cet endroit se lit comme une preuve manquante —
+ * pire que pas de case du tout. En liant la grille à `shot`, une réalisation y
+ * monte le jour où le studio fournit sa capture, et pas avant. */
+const featured = computed(() => work.filter((w) => w.shot))
+const listed = computed(() => work.filter((w) => !w.shot))
 
 const board = ref<HTMLElement | null>(null)
 const hovered = ref<number | null>(null)
@@ -188,13 +194,28 @@ h3 {
   .scatter { grid-template-columns: repeat(12, 1fr); column-gap: 2rem; }
   /* Quatre places, en zigzag. Les décalages verticaux viennent du contenu
      qu'on veut faire respirer, pas d'un effet : chaque vignette prend sa
-     hauteur et la colonne d'en face démarre plus bas. */
+     hauteur et la colonne d'en face démarre plus bas.
+     Ces règles ne s'appliquent qu'à partir de deux vignettes — `:only-child`
+     reprend la main plus bas et l'emporte à nombre de classes égal, étant
+     écrit après. */
   .scatter > li:nth-child(1) { grid-column: 1 / span 5; }
   .scatter > li:nth-child(2) { grid-column: 8 / span 5; margin-top: 9rem; }
   .scatter > li:nth-child(3) { grid-column: 2 / span 5; }
   .scatter > li:nth-child(4) { grid-column: 7 / span 5; margin-top: 5rem; }
   .scatter > li:nth-child(3) .summary,
   .scatter > li:nth-child(1) .summary { max-width: 34ch; }
+
+  /* Une seule mise en avant — l'état d'aujourd'hui, un seul client ayant un
+     site réellement en ligne. Un zigzag d'un élément n'est pas un zigzag :
+     la vignette seule occupe toute la largeur et sa légende se range à
+     côté d'elle, sinon elle flotte dans une demi-page vide. */
+  .scatter > li:only-child { grid-column: 1 / span 12; margin-top: 0; }
+  .scatter > li:only-child figure {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .scatter > li:only-child .summary { max-width: 42ch; }
 }
 
 /* ------------------------------------------------------- le bloc-index */

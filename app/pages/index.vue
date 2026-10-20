@@ -59,7 +59,14 @@ useJsonLd(() => ({
           telles quelles sur le sol noir, elles seraient fausses.
        <ScrollStory /> -->
   <SectionHero />
-  <InkBar />
+  <!-- `InkBar` est retirée de la home le 2026-10-20, à la demande de
+       l'utilisateur : « Quatre encres · Noir 80 / Bleu 15… » est une consigne
+       de charte graphique interne, elle n'apprend rien à un prospect et elle
+       occupait une passe entière juste sous le premier écran. Le composant,
+       ses compteurs ARC UI et la donnée `inks` de content/site.ts restent
+       intacts dans le dépôt — comme ScrollStory, il suffit de remettre la
+       ligne ci-dessous pour la rétablir, par exemple sur une page interne.
+       <InkBar /> -->
   <BlockMarkers />
   <SectionServices />
   <SectionWork />

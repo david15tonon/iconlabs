@@ -18,7 +18,11 @@ export const brand = {
   tagline: t('On montre ce qui tourne, pas ce qu’on promet.', 'We show what runs, not what we promise.'),
   /* Signature de la charte de marque, dans sa formulation exacte : elle ne se
      traduit pas, c'est une devise. */
-  origin: t('Built in West Africa. Scaled worldwide.', 'Built in West Africa. Scaled worldwide.'),
+  /* « Scaled worldwide » a été retiré le 2026-10-20 : les sept clients sont à
+     Cotonou, Lomé et Abidjan, la phrase affirmait une portée que rien dans le
+     site ne soutient. Ce qui reste est vérifiable, et se dit enfin en
+     français du côté français. */
+  origin: t('Construit en Afrique de l’Ouest.', 'Built in West Africa.'),
   email: 'contact@iconlabs.dev',
   domain: 'iconlabs.qzz.io',
   linkedin: 'https://www.linkedin.com/company/iconlabs',   // TODO: confirmer l'URL réelle
@@ -89,10 +93,13 @@ export const hero = {
   /* La troisième encre se décolle le plus : c'est la dernière passée, celle
      qui est au-dessus des autres sur la feuille. */
   lastWord: { ink: 'state' as const, depth: 58, ...t('production.', 'production.') },
-  body: t('Laboratoire d’ingénierie AI indépendant. Agents, RAG, plateformes, automatisation — nous construisons les systèmes et nous les mettons en production.',
+  body: t('Laboratoire d’ingénierie IA indépendant. Agents, RAG, plateformes, automatisation — nous construisons les systèmes et nous les mettons en production.',
           'Independent AI engineering lab. Agents, RAG, platforms, automation — we build the systems and we put them in production.'),
-  facts: t('**Sept livrés** — Cotonou, Lomé, Abidjan · **Six compétences** · Le prix se discute en appel.',
-           '**Seven shipped** — Cotonou, Lomé, Abidjan · **Six capabilities** · Pricing is discussed on the call.'),
+  /* « Sept livrés » se lisait « septembre » au premier coup d'œil (relevé par
+     l'utilisateur le 2026-10-20) : le chiffre lève l'ambiguïté là où le mot la
+     crée, et « systèmes » dit de quoi on parle. */
+  facts: t('**7 systèmes livrés** — Cotonou, Lomé, Abidjan · **Six compétences** · Le prix se discute en appel.',
+           '**7 systems shipped** — Cotonou, Lomé, Abidjan · **Six capabilities** · Pricing is discussed on the call.'),
   /* Le bloc de dates d'une affiche de concert, à sa place sur la feuille.
      ⚠️ Aucun créneau n'est écrit ici : les disponibilités réelles viennent de
      Cal.com, et en inventer serait affirmer une disponibilité qu'on n'a pas.
@@ -112,12 +119,13 @@ export const hero = {
   /* Le colophon se signe au PIED de la feuille, jamais au-dessus du titre :
      DESIGN.md interdit l'étiquette en surplomb d'un titre. */
   colophon: [
-    t('Icon Labs · Laboratoire d’ingénierie AI · Cotonou, Bénin',
+    t('Icon Labs · Laboratoire d’ingénierie IA · Cotonou, Bénin',
       'Icon Labs · AI engineering lab · Cotonou, Benin'),
-    t('Built in West Africa. Scaled worldwide.',
-      'Built in West Africa. Scaled worldwide.'),
-    t('Quatre encres · noir, bleu, violet, vert',
-      'Four inks · black, blue, purple, green'),
+    /* Retiré le 2026-10-20 : « Quatre encres · noir, bleu, violet, vert » est
+       une consigne de charte interne, elle ne dit rien à un prospect. Et
+       « Scaled worldwide » affirmait une portée sans preuve. Le colophon ne
+       garde que ce qu'on peut tenir. */
+    t('Construit en Afrique de l’Ouest.', 'Built in West Africa.'),
   ],
 }
 
@@ -176,8 +184,12 @@ export const story = [
 
 export const servicesIntro = {
   heading: t('Ce que nous\nfaisons.', 'What we\ndo.'),
-  lede:    t('Six compétences, tenues par la même équipe. Rien n’est sous-traité.',
-             'Six capabilities, held by the same team. Nothing is subcontracted.'),
+  /* « quatre d'entre elles ont une page dédiée » est ajouté le 2026-10-20 :
+     sans cette précision, une carte sans pastille au milieu de cartes qui en
+     portent une se lit comme un oubli. Le dire d'avance en fait une
+     structure annoncée. */
+  lede:    t('Six compétences, tenues par la même équipe. Rien n’est sous-traité — quatre d’entre elles ont une page dédiée.',
+             'Six capabilities, held by the same team. Nothing is subcontracted — four of them have a page of their own.'),
   /* L'appel de la carte empilée. « Voir la page » et non « En savoir plus » :
      il dit ce qui se trouve au bout du lien, et les deux compétences sans
      page ne le portent pas du tout.                                         */
@@ -193,7 +205,14 @@ export const skills = [
     title: t('Plateformes & SaaS', 'Platforms & SaaS'),
     body:  t('Applications web, tableaux de bord, outils internes. Architecture, interface et déploiement sortent de la même table.',
              'Web apps, dashboards, internal tools. Architecture, interface and deployment all come from the same table.') },
-  { page: 'produits-ia',
+  /* `page: null` et non `produits-ia` : la page de ce slug s'intitule
+     « Produits IA & automatisation » et elle est déjà la destination de la
+     carte « Produits IA ». Deux cartes vers la même page, sous deux noms
+     différents, donnent au visiteur l'impression d'avoir cliqué à côté.
+     L'automatisation reste une des six compétences — elle n'a simplement pas
+     de page à elle, comme « Recherche & prototypage ». Décision du
+     2026-10-20 ; le jour où la page existe, il suffit de remettre le slug. */
+  { page: null,
     title: t('Automatisation', 'Automation'),
     body:  t('n8n, Make, Zapier, scripts sur mesure. Les tâches répétitives quittent vos équipes et deviennent des flux surveillés.',
              'n8n, Make, Zapier, custom scripts. Repetitive work leaves your team and becomes a monitored flow.') },
@@ -260,8 +279,13 @@ export const services = [
 
 export const workIntro = {
   heading: t('Sept systèmes,\nen production.', 'Seven systems,\nin production.'),
-  lede:    t('Clients réels, nommés avec leur accord. Chaque ligne dit ce qui a été construit : il n’y a rien à ouvrir pour le savoir.',
-             'Real clients, named with their consent. Each line says what was built: there is nothing to open to find out.'),
+  /* Reformulé le 2026-10-20. L'ancienne phrase — « il n'y a rien à ouvrir pour
+     le savoir » — se lisait comme un défi, et entrait en contradiction avec
+     des vignettes qui, elles, donnent envie de cliquer. Elle dit maintenant
+     la même vérité sous forme d'information : il n'existe aucune fiche de
+     réalisation, et c'est pour ça que le résumé est écrit en entier ici. */
+  lede:    t('Clients réels, nommés avec leur accord. Ce qui a été construit est écrit ici, en entier — il n’existe pas de fiche à ouvrir.',
+             'Real clients, named with their consent. What was built is written here in full — there is no case study to open.'),
 }
 
 export type WorkStatus = 'live' | 'wip'
@@ -269,14 +293,20 @@ export type WorkStatus = 'live' | 'wip'
 /* L'encre d'une plaque. `ink` est le noir de la charte : c'est le défaut,
    pas une absence de choix — la règle 80/15/5/5 veut que la couleur reste
    rare. Une plaque n'est jamais une fausse capture d'écran : c'est un
-   aplat qui porte le nom et les repères de calage. Elle cède la place dès
-   qu'une vraie capture existe (`shot`).                                   */
+   aplat qui porte le secteur et les repères de calage. Elle cède la place dès
+   qu'une vraie capture existe (`shot`).
+
+   ⚠️ Depuis le 2026-10-20, la plaque ne paraît PLUS dans la grille : une case
+   de grille vide se lit comme une preuve manquante, et trois sur quatre
+   l'étaient. Elle ne sert que de vignette au survol de l'index, où elle est
+   décorative et où rien ne la double. La mise en avant se déduit de `shot` —
+   il n'y a pas de drapeau `featured` à tenir à jour : le jour où le studio
+   fournit une capture, la réalisation monte dans la grille toute seule.    */
 export type WorkInk = 'ink' | 'signal' | 'accent' | 'state'
 
 export const work = [
   {
     name: 'MIA Corporate',
-    featured: true,
     shot: '/work/mia-corporate.webp',
     ink: 'signal' as WorkInk,
     status: 'live' as WorkStatus,
@@ -288,7 +318,6 @@ export const work = [
   },
   {
     name: 'Aurora Pâtisserie',
-    featured: true,
     shot: null,
     ink: 'accent' as WorkInk,
     status: 'live' as WorkStatus,
@@ -300,7 +329,6 @@ export const work = [
   },
   {
     name: 'Transko',
-    featured: true,
     shot: null,
     ink: 'signal' as WorkInk,
     status: 'live' as WorkStatus,
@@ -312,7 +340,6 @@ export const work = [
   },
   {
     name: 'Bella Hair Studio',
-    featured: true,
     shot: null,
     ink: 'state' as WorkInk,
     status: 'live' as WorkStatus,
@@ -324,7 +351,6 @@ export const work = [
   },
   {
     name: 'Immo Elite',
-    featured: false,
     shot: null,
     ink: 'ink' as WorkInk,
     status: 'live' as WorkStatus,
@@ -336,7 +362,6 @@ export const work = [
   },
   {
     name: 'Green Harvest',
-    featured: false,
     shot: null,
     ink: 'state' as WorkInk,
     status: 'live' as WorkStatus,
@@ -348,7 +373,6 @@ export const work = [
   },
   {
     name: 'Adjani Privé',
-    featured: false,
     shot: null,
     ink: 'accent' as WorkInk,
     status: 'wip' as WorkStatus,
@@ -448,7 +472,7 @@ export const processSteps = [
 export const studioIntro = {
   heading: t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
   body: [
-    t('Icon Labs est un laboratoire d’ingénierie AI indépendant, basé en Afrique de l’Ouest. Produits IA, plateformes, automatisation : l’architecture, l’interface et le code de production sortent de la même équipe.',
+    t('Icon Labs est un laboratoire d’ingénierie IA indépendant, basé en Afrique de l’Ouest. Produits IA, plateformes, automatisation : l’architecture, l’interface et le code de production sortent de la même équipe.',
       'Icon Labs is an independent AI engineering lab based in West Africa. AI products, platforms, automation: architecture, interface and production code all come from the same team.'),
     t('Pas de chef de projet entre vous et la personne qui construit. Chaque projet appartient à un ingénieur qui a déjà livré en production.',
       'No project manager between you and the person building. Every project is owned by an engineer who has already shipped to production.'),
@@ -518,7 +542,7 @@ export const footer = {
 }
 
 export const seo = {
-  title: t('Icon Labs — Laboratoire d’ingénierie AI',
+  title: t('Icon Labs — Laboratoire d’ingénierie IA',
            'Icon Labs — Independent AI engineering lab'),
   description: t('Icon Labs transforme des idées complexes en systèmes réels : produits IA, plateformes, automatisation. Sept systèmes livrés à Cotonou, Lomé et Abidjan. Le prix se discute en appel.',
                  'Icon Labs turns complex ideas into real systems: AI products, platforms, automation. Seven systems shipped in Cotonou, Lomé and Abidjan. Pricing is discussed on the call.'),
@@ -776,7 +800,7 @@ export const methodePage = {
 
 export const studioPage = {
   title:   t('Trois personnes,\nune seule table.', 'Three people,\none table.'),
-  lede:    t('Icon Labs est un laboratoire d’ingénierie AI indépendant, basé en Afrique de l’Ouest. L’architecture, l’interface et le code de production sortent de la même équipe.',
+  lede:    t('Icon Labs est un laboratoire d’ingénierie IA indépendant, basé en Afrique de l’Ouest. L’architecture, l’interface et le code de production sortent de la même équipe.',
              'Icon Labs is an independent AI engineering lab based in West Africa. Architecture, interface and production code all come from the same team.'),
 
   /* Les paragraphes de la page, distincts de ceux du bloc de la home : le
