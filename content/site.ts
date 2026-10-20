@@ -178,6 +178,10 @@ export const servicesIntro = {
   heading: t('Ce que nous\nfaisons.', 'What we\ndo.'),
   lede:    t('Six compétences, tenues par la même équipe. Rien n’est sous-traité.',
              'Six capabilities, held by the same team. Nothing is subcontracted.'),
+  /* L'appel de la carte empilée. « Voir la page » et non « En savoir plus » :
+     il dit ce qui se trouve au bout du lien, et les deux compétences sans
+     page ne le portent pas du tout.                                         */
+  more:    t('Voir la page', 'See the page'),
 }
 
 export const skills = [
@@ -262,9 +266,19 @@ export const workIntro = {
 
 export type WorkStatus = 'live' | 'wip'
 
+/* L'encre d'une plaque. `ink` est le noir de la charte : c'est le défaut,
+   pas une absence de choix — la règle 80/15/5/5 veut que la couleur reste
+   rare. Une plaque n'est jamais une fausse capture d'écran : c'est un
+   aplat qui porte le nom et les repères de calage. Elle cède la place dès
+   qu'une vraie capture existe (`shot`).                                   */
+export type WorkInk = 'ink' | 'signal' | 'accent' | 'state'
+
 export const work = [
   {
     name: 'MIA Corporate',
+    featured: true,
+    shot: '/work/mia-corporate.webp',
+    ink: 'signal' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Full AI MVP', 'Full AI MVP'),
     sector:   t('Beauté & bien-être', 'Beauty & wellness'),
@@ -274,6 +288,9 @@ export const work = [
   },
   {
     name: 'Aurora Pâtisserie',
+    featured: true,
+    shot: null,
+    ink: 'accent' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Production Sprint', 'Production Sprint'),
     sector:   t('Restauration & pâtisserie', 'Food & pastry'),
@@ -283,6 +300,9 @@ export const work = [
   },
   {
     name: 'Transko',
+    featured: true,
+    shot: null,
+    ink: 'signal' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Full AI MVP', 'Full AI MVP'),
     sector:   t('Logistique & transport', 'Logistics & transport'),
@@ -292,6 +312,9 @@ export const work = [
   },
   {
     name: 'Bella Hair Studio',
+    featured: true,
+    shot: null,
+    ink: 'state' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Production Sprint', 'Production Sprint'),
     sector:   t('Beauté & mode', 'Beauty & fashion'),
@@ -301,6 +324,9 @@ export const work = [
   },
   {
     name: 'Immo Elite',
+    featured: false,
+    shot: null,
+    ink: 'ink' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Stack Audit', 'Stack Audit'),
     sector:   t('Immobilier', 'Real estate'),
@@ -310,6 +336,9 @@ export const work = [
   },
   {
     name: 'Green Harvest',
+    featured: false,
+    shot: null,
+    ink: 'state' as WorkInk,
     status: 'live' as WorkStatus,
     category: t('Fractional AI CTO', 'Fractional AI CTO'),
     sector:   t('Agro-alimentaire', 'Agri-food'),
@@ -319,6 +348,9 @@ export const work = [
   },
   {
     name: 'Adjani Privé',
+    featured: false,
+    shot: null,
+    ink: 'accent' as WorkInk,
     status: 'wip' as WorkStatus,
     category: t('Sites & expériences', 'Sites & experiences'),
     sector:   t('Mode, héritage yoruba', 'Fashion, Yoruba heritage'),

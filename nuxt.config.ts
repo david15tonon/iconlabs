@@ -113,6 +113,7 @@ export default defineNuxtConfig({
             '/_nuxt/*',
             '/brand/*',
             '/story/*',
+            '/work/*',
             '/favicon.png',
             '/manifest.webmanifest',
           ],
