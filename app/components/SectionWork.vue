@@ -1,20 +1,49 @@
 <script setup lang="ts">
-import { work, workIntro, workStatus } from '~~/content/site'
+import type { T } from '~~/content/site'
+import { work, workStatus, casePage, cta, hasCase } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
-const { tr } = useLocale()
+const { tr, localePath } = useLocale()
+
+/* Depuis la v10 le composant sert DEUX fois, avec le même contenu et deux
+ * étendues différentes :
+ *   · la home, passe 7 — `index: false`, et seule la grille paraît : ce qui
+ *     tourne, montré et ouvrable. Elle remplace la section « témoignages »
+ *     qui ne peut pas exister, aucune citation client n'ayant été fournie ;
+ *   · la page /cas — la grille PUIS le bloc-index, c'est-à-dire tout.
+ * `outbound` dit laquelle des deux destinations la vignette vise : le
+ * système en ligne (nouvel onglet) ou la page de cas (interne).
+ */
+withDefaults(
+  defineProps<{
+    /** Absent sur /cas : `PageHero` y porte déjà le même titre, et deux
+     *  titres identiques à la suite ne sont pas une hiérarchie. */
+    intro?: { heading: T; lede: T }
+    /** Le bloc-index des réalisations sans capture. Faux sur la home. */
+    index?: boolean
+    /** La vignette mène au système en ligne plutôt qu'à la page de cas. */
+    outbound?: boolean
+    /** Bande surélevée. Réglage de voisinage, décidé par la page. */
+    raised?: boolean
+  }>(),
+  { index: true, outbound: false, raised: false },
+)
 
 /* La disposition d'awakeagency.dev/#projects, portée sur nos sept clients :
  * une grille décalée pour les quatre mises en avant, puis un bloc-index pour
  * les trois autres, avec la vignette qui suit le curseur.
  *
  * Ce qu'on NE reprend pas, et pourquoi :
- * — pas de « voir tout » : il n'existe aucune page de réalisations, et un
- *   lien mort est pire qu'un lien absent ;
  * — pas d'année : nous n'en avons aucune de source sûre, et la colonne de
  *   droite porte donc `catégorie • statut`, qui sont dans le contenu ;
- * — pas de lien sur les lignes : aucune fiche n'existe. Le survol **montre**
- *   au lieu de promettre un clic — c'est ce qui le rend acceptable ici alors
- *   que la v8 l'avait écarté pour cette raison exacte.
+ * — pas de « voir tout » DANS la section : la page /cas EST le voir-tout,
+ *   et c'est la home qui y mène.
+ *
+ * LA RÈGLE DU SURVOL CHANGE EN V10, et pour une raison de matière. La v8
+ * l'avait écarté parce qu'une ligne qui ne mène nulle part ne doit pas
+ * promettre un clic. Depuis que les pages de cas existent, une ligne qui a
+ * sa page MÈNE quelque part : elle devient un lien, et son survol tient sa
+ * promesse. Une ligne sans page reste inerte et garde la vignette, qui
+ * montre sans promettre. DESIGN.md est corrigé en ce sens.
  *
  * Et les résumés restent, contre la ligne nue de la référence : le chapô de
  * la section promet qu'« il n'y a rien à ouvrir pour le savoir ». Couper les
@@ -28,6 +57,13 @@ const { tr } = useLocale()
  * monte le jour où le studio fournit sa capture, et pas avant. */
 const featured = computed(() => work.filter((w) => w.shot))
 const listed = computed(() => work.filter((w) => !w.shot))
+
+/* La destination d'une ligne : sa page de cas, ou rien. `null` est rendu en
+ * `<div>` et pas en lien éteint — un lien qui ne mène nulle part promet un
+ * clic qui n'existe pas, et c'est la raison pour laquelle la v8 avait
+ * écarté le survol ici. */
+const caseLink = (w: typeof work[number]) =>
+  hasCase(w) ? localePath(`/cas/${w.slug}`) : null
 
 const board = ref<HTMLElement | null>(null)
 const hovered = ref<number | null>(null)
@@ -77,11 +113,11 @@ const peeked = computed(() =>
 </script>
 
 <template>
-  <section id="work" class="section">
+  <section id="work" class="section" :class="{ bg: raised }">
     <div class="shell">
-      <header class="sectionHead" v-reveal>
-        <h2 class="breaks">{{ tr(workIntro.heading) }}</h2>
-        <p class="lede">{{ tr(workIntro.lede) }}</p>
+      <header v-if="intro" class="sectionHead" v-reveal>
+        <h2 class="breaks">{{ tr(intro.heading) }}</h2>
+        <p class="lede">{{ tr(intro.lede) }}</p>
       </header>
 
       <!-- La grille décalée. Le décalage est écrit par position et non par une
@@ -102,14 +138,35 @@ const peeked = computed(() =>
                    capture remplace la plaque. -->
               <p class="place">{{ tr(w.sector) }} · {{ tr(w.place) }}</p>
               <p class="summary">{{ tr(w.summary) }}</p>
+
+              <!-- La vignette est MONTRÉE et OUVRABLE, et c'est ce qui en
+                   fait une preuve : on peut aller vérifier. Sur la home elle
+                   mène au système lui-même, qui répond ; sur /cas elle mène
+                   à la page du cas quand elle existe. Aucun des deux liens
+                   n'est rendu quand sa destination n'existe pas. -->
+              <a
+                v-if="outbound && w.href"
+                class="open"
+                :href="w.href"
+                target="_blank"
+                rel="noopener"
+              >{{ tr(casePage.visit) }}</a>
+              <NuxtLink
+                v-else-if="!outbound && caseLink(w)"
+                class="open"
+                :to="caseLink(w)!"
+              >{{ tr(cta.seePage) }}</NuxtLink>
             </figcaption>
           </figure>
         </li>
       </ul>
 
       <!-- Le bloc-index. Une bande surélevée, pas un cadre : le pas de ton
-           porte la séparation, la charte n'autorise pas le filet. -->
+           porte la séparation, la charte n'autorise pas le filet.
+           Absent de la home : celle-ci ne montre que ce qui tourne et
+           s'ouvre, et renvoie à /cas pour le reste. -->
       <div
+        v-if="index"
         ref="board"
         class="index"
         :class="{ lit: hovered !== null }"
@@ -124,7 +181,16 @@ const peeked = computed(() =>
             :class="{ away: hovered !== null && hovered !== i }"
             @mouseenter="hovered = i"
           >
-            <div class="id">
+            <!-- Une ligne qui a sa page EST un lien ; une ligne qui n'en a
+                 pas reste un bloc inerte. Les deux cas sont écrits plutôt
+                 que choisis par `:is` : un `<a>` sans `href` n'est pas un
+                 lien éteint, c'est un lien cassé pour le clavier. -->
+            <NuxtLink v-if="caseLink(w)" class="id linked" :to="caseLink(w)!">
+              <h3>{{ w.name }}</h3>
+              <p class="place">{{ tr(w.sector) }} · {{ tr(w.place) }}</p>
+              <p class="summary">{{ tr(w.summary) }}</p>
+            </NuxtLink>
+            <div v-else class="id">
               <h3>{{ w.name }}</h3>
               <p class="place">{{ tr(w.sector) }} · {{ tr(w.place) }}</p>
               <p class="summary">{{ tr(w.summary) }}</p>
@@ -158,6 +224,8 @@ const peeked = computed(() =>
 </template>
 
 <style scoped>
+.bg { background: var(--ground-raise); }
+
 /* ------------------------------------------------- la grille décalée */
 
 .scatter { list-style: none; display: grid; gap: clamp(3rem, 6vw, 5rem); }
@@ -181,6 +249,21 @@ h3 {
 }
 
 .summary { color: var(--on-ground-soft); }
+
+/* Le lien sous la légende. Souligné à l'épaisseur du texte, comme tous les
+   liens de texte du site — ce n'est pas un filet de séparation. */
+.open {
+  justify-self: start;
+  margin-top: 0.5rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--signal-text);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.15rem;
+  transition: color var(--duration-press) var(--ease-out);
+}
+.open::after { content: ' \2192'; }
+.open:hover { color: var(--on-ground); }
 
 /* Le lieu se lit sous le nom, en ton sourd : c'est une précision, pas une
    promesse. Même traitement dans la grille et dans l'index — c'est la même
@@ -220,6 +303,12 @@ h3 {
 
 /* ------------------------------------------------------- le bloc-index */
 
+/* ⚠️ Le bloc-index est en `--ground-raise` : il ne peut donc pas vivre dans
+   une section elle-même surélevée, où il se confondrait avec elle. Les deux
+   réglages ne se rencontrent jamais — `index` est faux partout où `raised`
+   est vrai — et la règle ci-dessous le rend visible au lieu de le supposer. */
+.bg .index { background: var(--ground); }
+
 .index {
   position: relative;
   margin-top: clamp(3rem, 6vw, 6rem);
@@ -242,6 +331,13 @@ h3 {
   transition: color var(--duration-dropdown) var(--ease-out);
 }
 .index li + li { border-top: 1px solid var(--rule); }
+
+/* La ligne qui mène quelque part. Le bloc entier est la cible : c'est un
+   lien de bloc, donc rien ne se souligne — c'est l'encre qui dit, au survol,
+   que le clic existe. Le focus clavier, lui, est visible : la règle globale
+   de `main.css` pose le contour sur tout élément focalisable. */
+.id.linked { color: inherit; }
+.lit li:not(.away) .id.linked h3 { color: var(--signal-text); }
 
 .index li h3,
 .index li .meta,

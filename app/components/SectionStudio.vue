@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/* AU REPOS DEPUIS LA V10, et intact. Les neuf passes de la home ne comptent
+ * plus de section studio : ce que cette section disait vit maintenant sur
+ * /a-propos, qui le dit en entier. Le composant reste monté par personne —
+ * comme `InkBar` et `ScrollStory` — parce qu'il tient encore debout et qu'il
+ * servira à une page qui voudra le studio en résumé. */
 import { studioIntro, team, values, brand } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
 const { tr, localePath } = useLocale()
@@ -24,7 +29,7 @@ const { tr, localePath } = useLocale()
 
         <p class="values">{{ values.map((v) => tr(v)).join(' · ') }}</p>
 
-        <NuxtLink class="more" :to="localePath('/studio')">
+        <NuxtLink class="more" :to="localePath('/a-propos')">
           {{ tr({ fr: 'Qui nous sommes', en: 'Who we are' }) }}
         </NuxtLink>
       </div>

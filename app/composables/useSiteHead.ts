@@ -1,4 +1,4 @@
-import type { T } from '~~/content/site'
+import type { AmountKind, T } from '~~/content/site'
 import { prefixOf, useLocale } from '~/composables/useSite'
 
 export const SITE_URL = 'https://iconlabs.qzz.io'
@@ -62,6 +62,33 @@ export const ORG = {
   name: 'Icon Labs',
   url: SITE_URL,
 } as const
+
+/**
+ * Le prix d'une offre, dit à schema.org.
+ *
+ * Un `Offer` qui porte `priceCurrency` sans montant annonce une devise et
+ * rien d'autre : c'est ce que la home et `/offres` servaient jusqu'au
+ * 2026-10-21, au moment même où le site faisait du prix affiché son
+ * argument. Le montant entre donc dans la fiche — mais chaque nuance garde
+ * sa forme propre, parce que schema.org en a une pour chacune :
+ *   · un prix ferme est un `price` ;
+ *   · « à partir de 9 000 € » est un PLANCHER, donc un `minPrice` — l'écrire
+ *     en `price` ferait dire au studio qu'il s'engage sur 9 000 € ;
+ *   · « 390 € / mois » est un prix PAR UNITÉ DE TEMPS, donc une
+ *     `UnitPriceSpecification` en mois (`unitCode: 'MON'`, UN/CEFACT) — en
+ *     `price` nu, un moteur lirait 390 € une fois pour toutes.
+ */
+export function priceNode(amount: { eur: number; kind: AmountKind }) {
+  if (amount.kind === 'from') {
+    return { priceSpecification: {
+      '@type': 'PriceSpecification', priceCurrency: 'EUR', minPrice: amount.eur } }
+  }
+  if (amount.kind === 'monthly') {
+    return { priceSpecification: {
+      '@type': 'UnitPriceSpecification', priceCurrency: 'EUR', price: amount.eur, unitCode: 'MON' } }
+  }
+  return { priceCurrency: 'EUR', price: amount.eur }
+}
 
 /**
  * Pose une fiche JSON-LD sur la page courante. `build` est rappelé à chaque

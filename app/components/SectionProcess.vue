@@ -2,10 +2,15 @@
 import { processSteps, processIntro } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
 const { tr, localePath } = useLocale()
+
+/* La bande surélevée est un réglage de VOISINAGE, pas une propriété de la
+ * section : la charte veut que deux sections contiguës ne partagent pas la
+ * même composition, et c'est la page qui sait qui précède et qui suit. */
+withDefaults(defineProps<{ raised?: boolean }>(), { raised: true })
 </script>
 
 <template>
-  <section id="process" class="section bg">
+  <section id="process" class="section" :class="{ bg: raised }">
     <div class="shell">
       <header class="sectionHead" v-reveal>
         <h2 class="breaks">{{ tr(processIntro.heading) }}</h2>

@@ -356,3 +356,37 @@ button, input, textarea { font: inherit; color: inherit; }
    `scoped` sans `!important`. */
 .breaks { white-space: pre-line; }
 @media (max-width: 560px) { .breaks { white-space: normal; } }
+
+/* UN MOT PEUT ÊTRE PLUS LARGE QUE L'ÉCRAN, et c'est la v10 qui l'a révélé :
+   « PRODUCTION » en Syne 800 à 32 px mesure 362 px, pour 310 px disponibles
+   à 360 px de fenêtre ; « engagements, » en mesure 348. Un mot plus large que
+   sa colonne déborde quoi qu'on fasse du conteneur — un titre est une boîte
+   dont le `min-width: auto` vaut min-content, c'est-à-dire ce mot-là.
+
+   Trois sorties possibles, et une seule tient :
+   — descendre Syne sous 32 px est interdit par la charte (§ Typography) ;
+   — `min-width: 0` sur le titre rétrécit la BOÎTE sans rétrécir le mot, qui
+     continue de peindre dehors : on cacherait la mesure, pas le défaut ;
+   — couper le mot. C'est la seule qui tienne.
+
+   ⚠️ DEUX VALEURS SE RESSEMBLENT ET UNE SEULE MARCHE, mesuré le 2026-10-21 :
+   `overflow-wrap: break-word` ne change PAS la taille min-content, donc la
+   boîte reste large de son plus long mot et le document déborde toujours —
+   le mot se brise à l'écran sans que la mise en page le sache.
+   `overflow-wrap: anywhere`, lui, **entre dans le calcul intrinsèque** : la
+   boîte retombe à 310 px et `scrollWidth` à 360. C'est donc `anywhere`.
+
+   `hyphens: auto` est gardé par-dessus : quand le navigateur a le
+   dictionnaire de la langue (`<html lang>` est posé), il coupe aux syllabes
+   avec un vrai trait d'union — « PRODUC-TION » plutôt que « PRODUCTI/ON ».
+   Il ne suffit PAS à lui seul : mesuré, il n'a aucun effet là où le
+   dictionnaire n'est pas installé, et le débordement restait entier.
+
+   Sous 560 px seulement : au-delà, aucun mot de ce site n'atteint sa colonne,
+   et une césure gratuite sur un titre d'affiche serait une faute. */
+@media (max-width: 560px) {
+  h1, h2 {
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+}

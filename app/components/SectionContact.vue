@@ -4,6 +4,38 @@ import { useLocale } from '~/composables/useSite'
 
 const { locale, tr } = useLocale()
 
+/* Le composant sert la passe 9 de la home ET la page /contact. Sur la page,
+ * le titre est déjà porté par `PageHero` : le répéter donnerait deux `<h1>`
+ * de même texte à la suite. */
+withDefaults(defineProps<{ heading?: boolean }>(), { heading: true })
+
+/* L'HEURE LOCALE N'EST PAS ÉCRITE EN DUR, et ce n'est pas un raffinement :
+ * les deux fuseaux ne coïncident pas toute l'année. Cotonou est à UTC+1 en
+ * permanence ; Paris passe à UTC+2 d'avril à octobre. « GMT+1 · Paris &
+ * Cotonou » serait donc faux la moitié de l'année. Le navigateur calcule, et
+ * les deux villes sont nommées séparément.
+ *
+ * Le calcul est fait au CLIENT seulement : un rendu serveur daterait l'heure
+ * de la génération de la page, qui peut avoir des heures — et sur une page
+ * statique, des jours. Le repli ne montre donc que le nom des villes. */
+const now = ref<Date | null>(null)
+let tick: ReturnType<typeof setInterval> | undefined
+
+onMounted(() => {
+  now.value = new Date()
+  tick = setInterval(() => { now.value = new Date() }, 30_000)
+})
+onBeforeUnmount(() => clearInterval(tick))
+
+const clock = (tz: string) =>
+  now.value
+    ? new Intl.DateTimeFormat(locale.value === 'fr' ? 'fr-FR' : 'en-GB', {
+        timeZone: tz,
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(now.value)
+    : ''
+
 const form = reactive({ name: '', email: '', message: '' })
 const state = ref<'idle' | 'sending' | 'delivered' | 'mailto' | 'error'>('idle')
 
@@ -58,12 +90,34 @@ const feedback = computed(() => {
   <section id="contact" class="section">
     <div class="shell inner">
       <div v-reveal>
-        <h2 class="breaks">{{ tr(contact.heading) }}</h2>
+        <h2 v-if="heading" class="breaks">{{ tr(contact.heading) }}</h2>
         <p class="lede">{{ tr(contact.body) }}</p>
         <p class="direct">
           <a :href="`mailto:${brand.email}`">{{ brand.email }}</a>
           <span class="note label">{{ tr(cta.callNote) }}</span>
         </p>
+
+        <!-- L'AGENDA. `cal.enabled` est à `false` et RIEN n'est rendu tant
+             qu'il l'est : pas de case grise, pas de faux créneau, pas de
+             « agenda bientôt disponible ». Le jour où Cal.com est branché,
+             poser l'URL et passer le drapeau. -->
+        <a
+          v-if="contact.cal.enabled && contact.cal.url"
+          class="cal"
+          :href="contact.cal.url"
+          target="_blank"
+          rel="noopener"
+        >{{ tr(cta.call) }}</a>
+
+        <!-- Les deux villes, et leur heure. Deux lignes qui disent qu'on est
+             joignable, et quand — pas une décoration de fuseau. -->
+        <dl class="zones">
+          <span class="zones-label label">{{ tr(contact.zonesLabel) }}</span>
+          <div v-for="zone in contact.zones" :key="zone.tz">
+            <dt>{{ tr(zone.label) }}</dt>
+            <dd>{{ clock(zone.tz) }}</dd>
+          </div>
+        </dl>
       </div>
 
       <form v-reveal="120" @submit.prevent="submit">
@@ -111,6 +165,7 @@ h2 { font-size: var(--fs-xl); margin: 0 0 1.5rem; }
    passeraient dessous. La hiérarchie est portée par le ton et la graisse,
    qui ne coûtent rien au contraste. */
 #contact .lede,
+#contact .zones-label,
 #contact .note { color: var(--on-signal-soft); }
 #contact label span { color: var(--on-signal); }
 
@@ -122,6 +177,37 @@ h2 { font-size: var(--fs-xl); margin: 0 0 1.5rem; }
   justify-self: start;
 }
 .note { font-size: var(--fs-xs); }
+
+/* L'horloge. Sur l'aplat bleu comme ailleurs, le secondaire passe par
+   `--on-signal-soft` (4,56) — jamais par l'opacité, qui ferait tomber ces
+   13 px sous le seuil. L'heure reste à l'encre pleine : c'est elle qu'on
+   vient lire. */
+.zones { margin-top: 2rem; display: grid; gap: 0.5rem; }
+.zones-label { font-size: var(--fs-xs); }
+.zones > div {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  justify-content: space-between;
+  max-width: 18rem;
+}
+.zones dt { font-size: var(--fs-sm); color: var(--on-signal-soft); }
+/* Les chiffres d'une horloge se comparent de ligne à ligne : la chasse fixe
+   les aligne, et DM Mono l'est déjà — on ne demande que les tabulaires. */
+.zones dd { font-size: var(--fs-sm); color: var(--on-signal); font-variant-numeric: tabular-nums; }
+/* Tant que le navigateur n'a pas calculé, la ligne ne saute pas : la place
+   de l'heure est réservée. */
+.zones dd:empty::before { content: '\2007\2007:\2007\2007'; color: var(--on-signal-soft); }
+
+.cal {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background: var(--on-signal);
+  color: var(--signal);
+  padding: var(--sp-md) var(--sp-lg);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
 
 form { display: grid; gap: 1.25rem; }
 label { display: grid; gap: 0.5rem; }

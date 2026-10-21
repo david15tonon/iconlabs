@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { methodePage, processSteps } from '~~/content/site'
+import { methodePage, processSteps, proofsIntro, proofs } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
 import { useSiteHead, useJsonLd, ORG } from '~/composables/useSiteHead'
 
 definePageMeta({ alias: ['/fr/methode', '/en/methode'] })
 
 const { tr } = useLocale()
+
+/* Les trois engagements, rendus par la même forme que sur /offres : trois
+   colonnes de texte sur le sol nu. Ils paraissent ici parce que la méthode
+   EST ce qui les rend tenables — le périmètre écrit, la démo hebdomadaire et
+   le transfert sont des étapes avant d'être des promesses. */
+const proofItems = computed(() => proofs.map((p) => ({ lead: p.title, body: p.body })))
 
 const { url } = useSiteHead({
   title: {
@@ -42,11 +48,12 @@ useJsonLd(() => ({
 
   <section class="section">
     <div class="shell">
+      <h2 class="exchange-head" v-reveal>{{ tr(methodePage.exchange.heading) }}</h2>
       <ol class="steps">
         <li v-for="(step, i) in processSteps" :key="step.num" v-reveal="i * 70">
           <span class="num">{{ step.num }}</span>
           <div class="body">
-            <h2>{{ tr(step.title) }}</h2>
+            <h3>{{ tr(step.title) }}</h3>
             <p class="lede">{{ tr(step.body) }}</p>
             <p class="meta label">{{ tr(step.meta) }}</p>
 
@@ -77,6 +84,12 @@ useJsonLd(() => ({
     </div>
   </section>
 
+  <BlockDifference
+    id="engagements"
+    :heading="proofsIntro.heading"
+    :items="proofItems"
+  />
+
   <BlockCta />
 </template>
 
@@ -84,6 +97,11 @@ useJsonLd(() => ({
 /* Les étapes ne sont plus ouvertes par un filet : chacune est un panneau
    blanc sur le papier, et l'ordre se lit par le numéro — c'est un vrai
    `<ol>`, la seule forme sous laquelle la charte admet une numérotation. */
+/* Le sur-titre de l'échange. Il est le titre de la section, pas une
+   étiquette posée au-dessus d'un titre : la charte vise la seconde, pas le
+   premier. */
+.exchange-head { font-size: var(--fs-2xl); margin-bottom: clamp(2rem, 4vw, 3rem); }
+
 .steps { list-style: none; display: grid; gap: var(--sp-sm); }
 .steps > li {
   display: grid;
@@ -92,7 +110,7 @@ useJsonLd(() => ({
   padding: clamp(1.75rem, 3vw, 2.5rem);
 }
 .num { font-size: var(--fs-xs); font-weight: 500; color: var(--signal-text); }
-.steps h2 { font-size: var(--fs-xl); margin-bottom: 0.75rem; }
+.steps h3 { font-size: var(--fs-xl); margin-bottom: 0.75rem; }
 .steps .lede { font-size: var(--fs-base); color: var(--on-ground-soft); }
 .meta { margin-top: 0.6rem; }
 

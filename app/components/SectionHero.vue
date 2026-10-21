@@ -3,11 +3,17 @@ import { hero } from '~~/content/site'
 import { useLocale } from '~/composables/useSite'
 const { tr, locale } = useLocale()
 
-/* `facts` porte des **gras** parce que deux fragments seulement sont marqués,
-   dans les deux langues. On les coupe plutôt que de poser un v-html : le
-   texte vient de notre propre fichier, mais la règle du dépôt est de ne
-   jamais injecter de HTML depuis le contenu. */
-const factParts = computed(() => tr(hero.facts).split('**'))
+/* La profondeur du dernier mot est ABSOLUE dans le contenu (58 px sous le
+ * papier), mais le `<em>` qui le porte est imbriqué dans la dernière ligne,
+ * qui descend déjà de la sienne : les deux transformations se composent.
+ * On retranche donc la profondeur de la ligne hôte, sinon le mot descendrait
+ * de 84 px au lieu de 58 et la troisième passe doublerait la deuxième.
+ * Le contenu reste lisible tel qu'il est écrit — c'est le composant qui sait
+ * qu'il imbrique, pas le fichier de contenu. */
+const lastDepth = computed(() => {
+  const host = hero.lines[hero.lines.length - 1]
+  return hero.lastWord.depth - (host?.depth ?? 0)
+})
 
 /* LE MOUVEMENT DE LA DIRECTION — les passes se séparent au défilement.
  *
@@ -60,43 +66,42 @@ onMounted(() => {
     <span class="reg g" aria-hidden="true" />
 
     <div class="shell grid">
+      <!-- La phrase de positionnement, découpée en trois passes d'encre.
+           Le dernier mot porte la troisième encre : il est la dernière passée,
+           celle qui se décolle le plus. Il est accroché à la DERNIÈRE ligne
+           et non à une ligne reconnue par son texte — la v9 testait
+           `line.fr === 'en '`, ce qui liait le gabarit à une césure. -->
       <h1 id="sheet-title">
           <span
-            v-for="line in hero.lines"
+            v-for="(line, i) in hero.lines"
             :key="line.fr"
             class="line"
             :class="`ink-${line.ink}`"
             :style="{ '--depth': line.depth }"
-          >{{ line[locale] }}<em
-            v-if="line.ink === 'paper' && line.fr === 'en '"
+          >{{ i === hero.lines.length - 1 ? `${line[locale]} ` : line[locale] }}<em
+            v-if="i === hero.lines.length - 1"
             :class="`ink-${hero.lastWord.ink}`"
-            :style="{ '--depth': hero.lastWord.depth }"
+            :style="{ '--depth': lastDepth }"
           >{{ hero.lastWord[locale] }}</em></span>
       </h1>
 
       <div class="col">
         <p class="body">{{ tr(hero.body) }}</p>
-        <p class="facts">
-          <template v-for="(part, i) in factParts" :key="i">
-            <strong v-if="i % 2">{{ part }}</strong><template v-else>{{ part }}</template>
-          </template>
-        </p>
       </div>
 
       <!-- Le bloc de dates d'une affiche de concert, à sa place sur la
-           feuille. Il ne porte aucun créneau : les disponibilités réelles
-           viennent de Cal.com, et en inventer serait affirmer une
-           disponibilité qu'on n'a pas. -->
+           feuille. Extrait en `PriceBlock` le 2026-10-21 : la carte Sprint de
+           l'offre a exactement la même forme, et il n'y a pas deux endroits
+           où la corriger. Il mène maintenant à /contact, qui est une page
+           depuis la v10 et non plus une section de celle-ci. -->
       <aside class="booking">
-        <h2>{{ tr(hero.booking.heading) }}</h2>
-        <p class="note">{{ tr(hero.booking.note) }}</p>
-        <dl>
-          <div v-for="row in hero.booking.rows" :key="row.k.fr">
-            <dt>{{ tr(row.k) }}</dt>
-            <dd>{{ tr(row.v) }}</dd>
-          </div>
-        </dl>
-        <a class="book" href="#contact">{{ tr(hero.booking.action) }}</a>
+        <PriceBlock
+          :heading="hero.booking.heading"
+          :note="hero.booking.note"
+          :rows="hero.booking.rows"
+          :action="hero.booking.action"
+          to="/contact"
+        />
       </aside>
 
       <!-- Le colophon se signe au pied de la feuille. DESIGN.md interdit
@@ -149,8 +154,12 @@ onMounted(() => {
   .col { padding-top: 0.4rem; }
 }
 
+/* `--fs-2xl` et non `--fs-3xl` depuis la v10. « De l'idée / au système / en
+   production. » faisait trente signes ; la phrase de positionnement en fait
+   une centaine, et à 104 px elle ne tient sur aucun écran. La règle est
+   réécrite dans DESIGN.md, elle n'est pas contournée en silence. */
 h1 {
-  font-size: var(--fs-3xl);
+  font-size: var(--fs-2xl);
   font-weight: 800;
   line-height: 0.88;
   letter-spacing: -0.045em;
@@ -173,7 +182,14 @@ h1 {
 
    `inline-block` est nécessaire, pas cosmétique : une transformation ne
    s'applique pas à une boîte en ligne, et ce mot est la troisième passe —
-   celle qui se décolle le plus. */
+   celle qui se décolle le plus.
+
+   ⚠️ CONSÉQUENCE : un `inline-block` établit un conteneur de bloc, et une
+   espace en TÊTE d'un conteneur de bloc est supprimée au repli. L'espace qui
+   sépare ce mot de la ligne qui le précède est donc écrite dans le texte
+   HÔTE (voir le gabarit), jamais devant le mot — sinon on lit
+   « SEMAINES,À PRIX FIXE. », et une marge CSS ne la rétablirait qu'à l'œil :
+   le texte copié et la liseuse d'écran resteraient collés. */
 .ink-state {
   color: var(--state-text);
   font-style: normal;
@@ -186,43 +202,9 @@ h1 {
   color: var(--on-ground-soft);
   max-width: var(--measure-wide);
 }
-.facts { margin-top: 0.9rem; color: var(--on-ground-soft); max-width: var(--measure-wide); }
-.facts strong { color: var(--on-ground); font-weight: 500; }
-
-/* Le bloc d'affiche : un trait de 2 px l'ouvre, comme le filet de tête d'un
-   bloc de dates. C'est le seul filet de la feuille, et il est porteur. */
-.booking { border-top: 2px solid var(--on-ground); padding-top: 1.1rem; margin-top: 0.25rem; }
-.booking h2 {
-  font-size: var(--fs-title);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-.note { font-size: var(--fs-xs); color: var(--on-ground-soft); margin-top: 0.3rem; }
-dl { margin-top: 1.2rem; }
-dl > div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-dt { font-size: var(--fs-xs); color: var(--on-ground-mute); }
-dd { font-size: var(--fs-xs); color: var(--on-ground); text-align: right; }
-
-.book {
-  display: block;
-  margin-top: 1.4rem;
-  background: var(--on-ground);
-  color: var(--ground);
-  text-align: center;
-  padding: 0.95rem 1rem;
-  font-weight: 500;
-  transition: background var(--duration-press) var(--ease-out);
-}
-.book:hover { background: var(--signal); color: var(--on-signal); }
+/* Le bloc d'affiche. Sa forme vit dans `PriceBlock` ; il ne reste ici que
+   sa place sur la feuille. */
+.booking { margin-top: 0.25rem; }
 
 .colophon {
   margin-top: clamp(2rem, 4vw, 3rem);

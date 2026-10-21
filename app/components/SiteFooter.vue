@@ -29,8 +29,10 @@ const year = new Date().getFullYear()
       <div class="col contact">
         <h2>{{ tr({ fr: 'Contact', en: 'Contact' }) }}</h2>
         <a :href="`mailto:${brand.email}`">{{ brand.email }}</a>
+        <!-- Un seul réseau listé : le compte X n'a jamais été confirmé, et
+             un lien vers un compte qui n'existe pas est pire qu'une colonne
+             plus courte. Il revient le jour où l'adresse est vérifiée. -->
         <a :href="brand.linkedin" rel="noopener" target="_blank">LinkedIn</a>
-        <a :href="brand.x" rel="noopener" target="_blank">X</a>
       </div>
     </div>
 

@@ -1,10 +1,55 @@
-import { servicePages } from './content/site'
+import { casePages } from './content/site'
 
-/* Les adresses déclarées au sitemap : les deux langues × les sept pages.
-   Elles sont dérivées des slugs plutôt que recopiées — une page de service
-   ajoutée dans content/site.ts entre au sitemap sans qu'on y pense. */
-const PATHS = ['', '/methode', '/studio', ...servicePages.map((p) => `/services/${p.slug}`)]
+/* Les adresses déclarées au sitemap : les deux langues × les pages.
+   Les pages de cas sont DÉRIVÉES de `work` plutôt que recopiées — un client
+   qui autorise le détail de son projet entre au sitemap sans qu'on y pense,
+   et aucune adresse n'y est inscrite deux fois.
+
+   Les quatre pages `/services/:slug` et `/studio` en sont sorties le
+   2026-10-21 : elles n'existent plus, et des redirections 301 passent leur
+   signal à leurs remplaçantes. */
+const PATHS = [
+  '',
+  '/offres',
+  '/cas',
+  '/methode',
+  '/securite',
+  '/a-propos',
+  '/contact',
+  ...casePages().map((c) => `/cas/${c.slug}`),
+]
 const URLS = ['fr', 'en'].flatMap((l) => PATHS.map((p) => `/${l}${p}`))
+
+/* LES REDIRECTIONS DE LA V10.
+ *
+ * Les quatre pages de service et la page studio étaient dans le sitemap
+ * servi jusqu'ici : les laisser tomber en 404 jetterait leur signal au lieu
+ * de le passer à `/offres` et `/a-propos`. Un 301 le transmet, un 302 ne le
+ * transmet pas — d'où `statusCode: 301` écrit explicitement.
+ *
+ * Les trois variantes de chaque adresse sont posées (nue, `/fr`, `/en`) :
+ * `routeRules` travaille sur le chemin brut, il ne connaît pas les alias de
+ * langue déclarés page par page dans `definePageMeta`.
+ *
+ * ⚠️ La destination garde le préfixe de l'origine : un visiteur arrivé sur
+ * /fr/studio atterrit sur /fr/a-propos, et non sur une page dont la langue
+ * serait de nouveau déduite de son pays. */
+const GONE: Record<string, string> = {
+  '/studio': '/a-propos',
+  '/services/mvp': '/offres',
+  '/services/plateformes': '/offres',
+  '/services/produits-ia': '/offres',
+  '/services/sites-experiences': '/offres',
+}
+
+const REDIRECTS = Object.fromEntries(
+  ['', '/fr', '/en'].flatMap((prefix) =>
+    Object.entries(GONE).map(([from, to]) => [
+      `${prefix}${from}`,
+      { redirect: { to: `${prefix}${to}`, statusCode: 301 as const } },
+    ]),
+  ),
+)
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',
@@ -18,12 +63,14 @@ export default defineNuxtConfig({
     name: 'Icon Labs',
   },
 
+  routeRules: REDIRECTS,
+
   sitemap: {
     /* `excludeAppSources` coupe la découverte automatique des routes : sans
        elle, le sitemap listait aussi `/`, `/methode` et `/studio` sans
        préfixe. Or ce sont les adresses dont la langue dépend du pays du
        visiteur — une page dont le contenu change selon le lecteur ne peut pas
-       être la version de référence. Seules les quatorze adresses préfixées
+       être la version de référence d'une page. Seules les adresses préfixées
        sont déclarées, et `hreflang` les relie deux à deux. */
     excludeAppSources: true,
     urls: URLS,

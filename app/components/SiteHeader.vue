@@ -63,7 +63,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
           </svg>
         </button>
 
-        <NuxtLink class="cta" :to="localePath('/#contact')">{{ tr(cta.primary) }}</NuxtLink>
+        <NuxtLink class="cta" :to="localePath('/contact')">{{ tr(cta.primary) }}</NuxtLink>
         <button
           class="burger"
           type="button"

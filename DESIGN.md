@@ -135,10 +135,16 @@ components:
 
 ## Overview
 
-Icon Labs est un **laboratoire d'ingénierie AI indépendant** installé à
-**Cotonou**, qui transforme des idées complexes en systèmes réels — produits IA,
-plateformes, automatisations — et les livre en deux à quatre semaines, code
-intégralement transféré, sans intermédiaire entre le client et l'ingénieur.
+Icon Labs est un **studio d'ingénierie IA indépendant** installé à
+**Cotonou**, qui livre des systèmes IA en production — agents commerciaux,
+automatisations, assistants documentaires, tableaux de pilotage — **en trois
+semaines, à prix fixe**, code intégralement transféré, sans intermédiaire entre
+le client et l'ingénieur.
+
+⚠️ **« deux à quatre semaines » est périmé depuis le 2026-10-21** : la durée
+est **trois semaines**, et c'est le Sprint à 3 000 € qui la tient. Le site ne
+doit plus porter l'ancienne fourchette nulle part — elle contredisait `/methode`
+contre la home.
 
 Signature : **« On montre ce qui tourne, pas ce qu'on promet. »** Le public visé
 est une fondatrice ou un fondateur qui a déjà un prototype et doit le mettre en
@@ -174,9 +180,12 @@ pas un décor, c'est la règle de composition :
 - **le calage est visible.** Les repères de registre, décalés de 2 px et
   dépareillés par encre, sont la trace de la fabrication. Ils ne sont pas
   décoratifs : ils disent que la page a été imprimée, pas générée.
-- **les quantités sont de la matière.** Sept, six, deux à quatre, cent pour cent.
+- **les quantités sont de la matière.** Quatre, six, trois, cent pour cent.
   Elles sont à position fixe et jamais inventées — aucune n'entre sur la page
-  sans une source dans `PRODUCT.md`.
+  sans une source dans `PRODUCT.md`. Depuis la v10 elles ne sont même plus
+  écrites : `app/composables/useCounts.ts` les **calcule** depuis `work`, parce
+  qu'un chiffre recopié à la main survit toujours à la donnée qu'il décrivait
+  (« 7 systèmes livrés » était faux deux fois).
 - **la face d'une réalisation est un résumé complet.** On n'a pas besoin de
   l'ouvrir pour savoir ce qui a été construit ; l'ouvrir est la vue de détail.
 
@@ -323,17 +332,33 @@ Largeur maximale 1440 px, gouttière 56 px au bureau. La feuille occupe toute la
 largeur : il n'y a pas de colonne centrée étroite, parce qu'une affiche n'en a
 pas.
 
-La page se lit en **neuf passes**, dans cet ordre, et aucune ne se saute :
+La page se lit en **neuf passes**, dans cet ordre, et aucune ne se saute.
+**Réécrites le 2026-10-21** : la forme ne change pas, ce sont les passes qui
+changent de contenu.
 
-1. la feuille — titre monumental et les créneaux d'appel réels ;
-2. la barre d'encres 80 / 15 / 5 / 5, rendue littérale ;
-3. les repères — trois engagements, une encre chacun ;
-4. les six compétences, en bandes pleine largeur ;
-5. les sept réalisations, une ligne chacune, résumé compris ;
-6. la différence, en trois colonnes ;
-7. la méthode, en quatre passes datées ;
-8. le labo et les questions fréquentes ;
-9. la dernière passe : le bleu prend toute la feuille, et on réserve.
+1. **la feuille** — la phrase de positionnement découpée en trois encres, et le
+   bloc d'affiche (`PriceBlock`) ;
+2. **le bandeau de preuves** — quatre quantités d'activité, calculées, datées ;
+3. **les résultats** — trois colonnes, grand caractère dimensionné pour le
+   chiffre qu'il accueillera ;
+4. **quatre problèmes, quatre systèmes** — la pile qui colle ;
+5. **l'offre** — le Sprint domine, deux satellites, l'échelle à un clic ;
+6. **la méthode** — semaine 0 à semaine 3 ;
+7. **ce qui tourne** — le seul système client public, montré et ouvrable ;
+8. **la FAQ** — six questions, prix compris ;
+9. **la dernière passe** : le bleu prend toute la feuille, et on réserve.
+
+Le site compte **sept pages** : `/`, `/offres`, `/cas` (+ `/cas/:slug`),
+`/methode`, `/securite`, `/a-propos`, `/contact`. `/studio` et les quatre
+`/services/:slug` ont disparu le 2026-10-21 ; cinq redirections 301 passent
+leur signal, variantes de langue comprises.
+
+**Le corps du titre de la feuille passe de `--fs-3xl` à `--fs-2xl`.** Ce n'est
+pas un assouplissement du « laisser le titre aller jusqu'au bout » : la phrase
+de positionnement fait une centaine de signes là où « De l'idée / au système /
+en production. » en faisait trente, et à 104 px elle ne tient sur aucun écran.
+La règle vaut pour un titre de trois mots ; elle est réécrite ici plutôt que
+contournée en silence.
 
 ## Elevation & Depth
 
@@ -381,6 +406,14 @@ Le reste n'est pas de l'intention, c'est de la fonction :
   compter de zéro à zéro. Animer les trois repères demanderait d'inventer un
   point de départ à chacun — ce serait de la décoration déguisée en
   information.
+- **Les objections se traitent une par une.** La pile de cartes en `sticky`
+  (`SectionServices`) est une **seconde mise en scène**, et elle est nommée
+  ici depuis le 2026-10-21 : elle était en production depuis la v9 sans que ce
+  document la couvre. Elle n'a droit de cité que là où empiler veut dire
+  quelque chose — une objection à la fois sur la home, une gradation de cinq
+  niveaux sur `/offres` — et jamais deux fois sur la même page, où les deux
+  piles cesseraient de se distinguer. En mouvement réduit elle n'a pas lieu :
+  les cartes redeviennent une suite.
 - **Les états** : survol, focus, désactivé. Un état n'est pas une animation.
 
 Règles de fabrication :
@@ -416,10 +449,19 @@ sert les quantités — et les quantités sont de la matière dans cette directi
   sur `--rule` en texte blanc. Jamais d'autre état : il n'y en a pas d'autre.
 - **Barre d'encres** — 80 / 15 / 5 / 5 en largeurs réelles, légendée. Elle
   sépare deux passes à la place d'un filet.
-- **Ligne de réalisation** — numéro, nom en Syne 38 px, secteur et ville,
-  résumé complet, catégorie en pastille. Quatre colonnes, pas une carte.
-  **Pas de survol** : la ligne ne mène nulle part, et un survol y promettrait
-  un clic qui n'existe pas.
+- **Ligne de réalisation** — nom en Syne, secteur et ville, résumé complet,
+  catégorie et statut. Deux colonnes, pas une carte.
+  **La règle du survol a changé le 2026-10-21**, et c'est la matière qui l'a
+  changée : une ligne **qui a une page de cas mène quelque part**, donc elle
+  est un lien et son survol tient sa promesse. Une ligne sans page reste
+  inerte et garde la vignette au curseur, qui montre sans promettre. La règle
+  d'avant — « pas de survol, la ligne ne mène nulle part » — valait tant
+  qu'aucune fiche n'existait.
+- **Bloc de prix / d'affiche** (`PriceBlock`) — filet de tête de 2 px, titre en
+  capitales, `<dl>` clé/valeur, bouton pleine largeur. C'est la **seule
+  exception** à « rien ne se sépare par un filet » : celui-ci ne sépare rien,
+  il ouvre le bloc. Il sert à la feuille et à la carte Sprint, et nulle part
+  ailleurs.
 - **Bascule de thème** — un disque mi-plein, dessiné, dans l'en-tête. La
   moitié pleine est le sol vers lequel on bascule, pas celui où l'on est. Pas
   de contour au repos. Le choix est mémorisé, et un script synchrone dans
